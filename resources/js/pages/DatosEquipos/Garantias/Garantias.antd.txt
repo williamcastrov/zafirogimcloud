@@ -1,0 +1,91 @@
+import React, { useEffect, useState } from "react";
+import "../../../app.scss";
+import { Modal, Button, Form, Input } from "antd";
+import "antd/dist/antd.css";
+
+const {Item} = Form;
+
+function Garantias() {
+    const [modal, setModal] = useState(true);
+    const [garantia, setGarantia] = useState({
+        equipo_gar: "",
+        idgarantia_gar: "",
+        empresa_gar: "",
+        fechainicial_gar: "",
+        fechafinal_gar: "",
+        estado_gar: "",
+        observacion_gar: ""
+    });
+
+    const abrirModal = () => {
+        setModal(true);
+    }
+
+    const cerrarModal = () => {
+        setModal(false);
+    }
+
+    const accion = () => {
+        console.log(garantias);
+        cerrarModal();
+    }
+
+    const layout = {
+        labelCol: {
+            span: 7,
+        },
+        wrapperCol: {
+            span: 20,
+        }
+    }
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setGarantia({ ...garantia, [name]: value });
+        console.log(garantia)
+    }
+ 
+    return (
+        <div className="App" >
+            <br />
+            <Button type="primary" onClick={abrirModal} > Abrir Modal </Button>
+            <Modal
+                title="Garantias"
+                visible={modal}
+                style={{ top: 20 }}
+                onCancel={cerrarModal}
+                onOK={accion}
+                footer={[
+                    <Button onclick={cerrarModal} >Cancelar</Button>,
+                    <Button type="primary" onClick={accion} >Enviar</Button>
+                ]}
+            >
+                <Form {...layout }>
+                    <Item label="Código del Equipo" >
+                        <Input name="equipo_gar" onChange={handleChange}/>
+                    </Item>
+                    <Item label="ID Garantía" >
+                        <Input name="idgarantia_gar" onChange={handleChange}/>
+                    </Item>
+                    <Item label="Cod. Empresa" >
+                        <Input name="empresa_gar" onChange={handleChange}/>
+                    </Item>
+                    <Item label="Cod. Estado" >
+                        <Input name="estado_gar" onChange={handleChange}/>
+                    </Item>
+                    <Item label="Fecha Inicial" >
+                        <Input name="fechainicial_gar" onChange={handleChange}/>
+                    </Item>
+                    <Item label="Fecha Final" >
+                        <Input name="fechafinal_gar" onChange={handleChange}/>
+                    </Item>
+                    <Item label="Observación" >
+                        <Input name="observacion_gar" onChange={handleChange}/>
+                    </Item>
+                </Form>
+            </Modal>
+        </div>
+    );
+}
+
+export default Garantias;

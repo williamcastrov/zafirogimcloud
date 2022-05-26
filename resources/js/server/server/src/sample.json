@@ -1,0 +1,14 @@
+[
+    {
+        "id": "1",
+        "titulo": "Orden de Trabajo Incolmotos",
+        "año": "2021",
+        "maquina": "MT211" 
+    },
+    {
+        "id": "2",
+        "titulo": "Orden de Trabajo Auteco",
+        "año": "2021",
+        "maquina": "MT184" 
+    }
+]

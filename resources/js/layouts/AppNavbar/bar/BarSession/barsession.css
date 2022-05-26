@@ -1,0 +1,51 @@
+.irainicio {
+    width: 120px !important;
+    height: 50px !important;
+    font-size: 14px !important;
+}
+
+.iraordenes {
+    width: 120px !important;
+    height: 50px !important;
+    font-size: 14px !important;
+}
+
+.entregaequipos {
+    width: 200px !important;
+    height: 50px !important;
+    font-size: 14px !important;
+}
+
+.alertas {
+    width: 120px !important;
+    height: 50px !important;
+    font-size: 14px !important;
+}
+
+.indicadores {
+    width: 120px !important;
+    height: 50px !important;
+    font-size: 14px !important;
+}
+
+.pendientes {
+    width: 120px !important;
+    height: 50px !important;
+    font-size: 14px !important;
+}
+
+.logo{
+    margin-left: 100px !important; 
+}
+
+.letralogo{
+    border: white !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+    background-color: #EF8426 !important;
+    font-size: 20px !important;
+    width: 200px !important;
+    height: 50px !important;
+    font-weight: bold !important;
+    line-height: 90% !important;
+}

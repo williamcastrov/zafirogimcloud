@@ -1,0 +1,613 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Modal, TextField, Button, Select, MenuItem, FormControl, InputLabel, Typography, Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
+import ListIcon from '@material-ui/icons/List';
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@material-ui/core';
+
+// Componentes de Conexion con el Backend
+import interlocutoresServices from "../../../services/Interlocutores/Interlocutores";
+import frecuenciasServices from "../../../services/Parameters/Frecuencias";
+import estadosServices from "../../../services/Parameters/Estados";
+import empresasServices from "../../../services/Empresa";
+import interlocutores from "../../../services/Interlocutores/Interlocutores";
+
+const columns = [
+  {
+    id: 'id_int',
+    label: 'Id'
+  },
+  {
+    id: 'codigo_tipo_int',
+    label: 'Codigo',
+  },
+  {
+    id: 'nit_int',
+    label: 'Nit'
+  },
+  {
+    id: 'estado_int',
+    label: 'Estado'
+  },
+  {
+    id: 'primer_nombre_int',
+    label: 'Primero Nombre'
+  },
+  {
+    id: 'segundo_nombre_int',
+    label: 'Segundo Nombre'
+  },
+  {
+    id: 'primer_apelllido_int',
+    label: 'Primer Apelllido'
+  },
+  {
+    id: 'segundo_apellido_int',
+    label: 'Segundo Apellido'
+  },
+  {
+    id: 'razonsocial_int',
+    label: 'Razón Social'
+  },
+  {
+    id: 'ciudad_int',
+    label: 'Ciudad'
+  },
+  {
+    id: 'direccion_int',
+    label: 'Dirección'  
+  },
+  {
+    id: 'telefono_int',
+    label: 'Teléfono'
+  },
+  {
+    id: 'email_int',
+    label: 'Email'
+  },
+  {
+    id: 'empresa_int',
+    label: 'Empresa'
+  },
+  {
+    id: 'fecha_creacion_int',
+    label: 'Fecha de Creación'
+  },
+  {
+    id: 'fecha_modificacion_int',
+    label: 'Fecha de Modificación'
+  },
+  {
+    id: 'especialidad_int',
+    label: 'Especialidad'
+  }
+]
+
+function createData(  id_int, codigo_tipo_int, nit_int, estado_int, primer_nombre_int,  segundo_nombre_int, primer_apellido_int,
+                      segundo_apellido_int, razonsocial_int, ciudad_int, direccion_int, telefono_int, email_int, empresa_int,
+                      fecha_creacion_int, fecha_modificacion_int, especialidad_int) {
+            return {  id_int, codigo_tipo_int, nit_int, estado_int, primer_nombre_int,  segundo_nombre_int, primer_apellido_int,
+                      segundo_apellido_int, razonsocial_int, ciudad_int, direccion_int, telefono_int, email_int, empresa_int,
+                      fecha_creacion_int, fecha_modificacion_int, especialidad_int};
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  modal: {
+    position: 'absolute',
+    width: 600,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
+  },
+  table: {
+    width: '100%'
+  },
+  container: {
+    paddingTop: "8px",
+    maxHeight: 440,
+  },
+  contenedor: {
+    maxHeight: 440,
+  },
+  iconos: {
+    cursor: 'pointer'
+  },
+  inputMaterial: {
+    width: '100%'
+  },
+  formControl: {
+    margin: theme.spacing(0),
+    minWidth: 315,
+  }
+}));
+
+function Proveedores() {
+  const styles = useStyles();
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const [rows, setListInterlocutores] = useState([]);
+  const [modalListar, setModalListar] = useState(false);
+  const [modalInsertar, setModalInsertar] = useState(false);
+  const [modalEditar, setModalEditar] = useState(false);
+  const [modalEliminar, setModalEliminar] = useState(false);
+  const [formError, setFormError] = useState(false);
+  const [listarEstados, setListarEstados] = useState([]);
+  const [listarEmpresas, setListarEmpresas] = useState([]);
+
+  const [frecuenciasSeleccionado, setFrecuenciasSeleccionado] = useState({
+    id_fre: "",
+    codigo_fre: "",
+    nombre_fre: "",
+    empresa_fre: "",
+    estado_fre: ""
+  })
+
+  const [interlocutoresSeleccionado, setInterlocutoresSeleccionado] = useState({
+    id_int: "",
+    codigo_tipo_int: "",
+    nit_int: "",
+    estado_int: "",
+    primer_nombre_int: "", 
+    segundo_nombre_int: "",
+    primer_apellido_int: "",
+    segundo_apellido_int: "",
+    razonsocial_int: "",
+    ciudad_int: "",
+    direccion_int: "",
+    telefono_int: "",
+    email_int: "",
+    empresa_int: "",
+    fecha_creacion_int: "",
+    fecha_modificacion_int: "", 
+    especialidad_int: ""
+  })
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  useEffect(() => {
+    async function fetchDataInterlocutores() {
+      const res = await interlocutoresServices.listInterlocutores();
+      setListInterlocutores(res.data);
+      console.log(res.data);
+    }
+    fetchDataInterlocutores();
+  }, [])
+
+  useEffect(() => {
+    async function fetchDataEmpresas() {
+      const res = await empresasServices.listEmpresas();
+      setListarEmpresas(res.data)
+     // console.log(res.data);
+    }
+    fetchDataEmpresas();
+  }, [])
+
+  useEffect(() => {
+    async function fetchDataEstados() {
+      const res = await estadosServices.listEstados();
+      setListarEstados(res.data)
+     // console.log(res.data);
+    }
+    fetchDataEstados();
+  }, [])
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+
+    setFrecuenciasSeleccionado(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  }
+
+  const seleccionarInterlocutor = (interlocutor, caso) => {
+    console.log(interlocutores);
+    console.log(caso);
+    setInterlocutoresSeleccionado(interlocutor);
+    (caso === "Editar") ? abrirCerrarModalListar() : abrirCerrarModalEliminar()
+  }
+
+  const abrirCerrarModalListar = () => {
+    setModalListar(!modalListar);
+  }
+
+  const abrirCerrarModalInsertar = () => {
+    setModalInsertar(!modalInsertar);
+  }
+
+  const abrirCerrarModalEditar = () => {
+    setModalEditar(!modalEditar);
+  }
+
+  const abrirCerrarModalEliminar = () => {
+    setModalEliminar(!modalEliminar);
+  }
+
+  const grabarFrecuencia = async () => {
+
+    setFormError({});
+    let errors = {};
+    let formOk = true;
+
+    if (!frecuenciasSeleccionado.codigo_fre) {
+      errors.codigo_fre = true;
+      formOk = false;
+    }
+
+    if (!frecuenciasSeleccionado.nombre_fre) {
+      errors.nombre_fre = true;
+      formOk = false;
+    }
+
+    if (!frecuenciasSeleccionado.empresa_fre) {
+      errors.empresa_fre = true;
+      formOk = false;
+    }
+
+    if (!frecuenciasSeleccionado.estado_fre) {
+      errors.estado_fre = true;
+      formOk = false;
+    }
+
+    setFormError(errors);
+
+    if (formOk) {
+      console.log(frecuenciasSeleccionado);
+      const res = await frecuenciasServices.save(frecuenciasSeleccionado);
+
+      if (res.success) {
+        alert("Frecuencia Creada de forma Correcta")
+        console.log(res.message)
+        abrirCerrarModalInsertar();
+        delete frecuenciasSeleccionado.codigo_fre;
+        delete frecuenciasSeleccionado.nombre_fre;
+        delete frecuenciasSeleccionado.empresa_fre;
+        delete frecuenciasSeleccionado.estado_fre;
+      } else {
+        alert("Error Creando la Frecuencia");
+        console.log(res.message);
+        abrirCerrarModalInsertar();
+      }
+    }
+    else {
+      alert("Debe Ingresar Todos los Datos, Error Creando la Frecuencia");
+      console.log(res.message);
+      abrirCerrarModalInsertar();
+    }
+  }
+
+  const actualizarFrecuencia = async () => {
+
+    setFormError({});
+    let errors = {};
+    let formOk = true;
+
+    if (!frecuenciasSeleccionado.codigo_fre) {
+      errors.codigo_fre = true;
+      formOk = false;
+    }
+
+    if (!frecuenciasSeleccionado.nombre_fre) {
+      errors.nombre_fre = true;
+      formOk = false;
+    }
+
+    if (!frecuenciasSeleccionado.empresa_fre) {
+      errors.empresa_fre = true;
+      formOk = false;
+    }
+
+    if (!frecuenciasSeleccionado.estado_fre) {
+      errors.estado_fre = true;
+      formOk = false;
+    }
+
+    setFormError(errors);
+
+    if (formOk) {
+
+      const res = await frecuenciasServices.update(frecuenciasSeleccionado);
+
+      if (res.success) {
+        alert("Frecuencia actualizada de forma Correcta")
+        console.log(res.message)
+        abrirCerrarModalEditar();
+        delete frecuenciasSeleccionado.codigo_fre;
+        delete frecuenciasSeleccionado.nombre_fre;
+        delete frecuenciasSeleccionado.empresa_fre;
+        delete frecuenciasSeleccionado.estado_fre;
+      } else {
+        alert("Error Actualizando la Frecuencia");
+        console.log(res.message);
+        abrirCerrarModalEditar();
+      }
+    }
+    else {
+      alert("Debe Ingresar Todos los Datos, Error Actualizando la Frecuencia");
+      console.log(res.message);
+      abrirCerrarModalEditar();
+    }
+  }
+
+  const borrarFrecuencia = async () => {
+
+    const res = await frecuenciasServices.delete(frecuenciasSeleccionado.id_fre);
+
+    if (res.success) {
+      alert("Frecuencia Borrada de forma Correcta")
+      console.log(res.message)
+      abrirCerrarModalEliminar();
+    }
+    else {
+      alert("Error Borrando la Frecuencia");
+      console.log(res.message);
+      abrirCerrarModalEliminar();
+    }
+
+  }
+  // "string","boolean","numeric","date","datetime","time","currency"
+
+  const proveedorListar = (
+    <div className={styles.modal}>
+      <Grid container spacing={2} > 
+        <Grid item xs={12} md={6}> <TextField  name="codigo_tipo_int" label="Tipo Interlocutor" fullWidth 
+              value={interlocutoresSeleccionado&&interlocutoresSeleccionado.codigo_tipo_int} /> 
+        </Grid>
+        <Grid item xs={12} md={6}> <TextField  name="nit_int" label="Nit del Interlocutor" fullWidth /> </Grid>
+      </Grid>
+      <Grid container spacing={2} > 
+        <Grid item xs={12} md={6}> <TextField  name="estado_int" label="Estado" fullWidth /> </Grid>
+        <Grid item xs={12} md={6}> <TextField  name="primer_nombre_int" label="Primero Nombre" fullWidth /> </Grid>
+      </Grid>
+      <Grid container spacing={2} > 
+        <Grid item xs={12} md={6}> <TextField  name="segundo_nombre_int" label="Segundo Nombre" fullWidth /> </Grid>
+        <Grid item xs={12} md={6}> <TextField  name="primer_apellido_int" label="Primer Apellido" fullWidth /> </Grid>
+      </Grid>
+      <Grid container spacing={2} > 
+        <Grid item xs={12} md={6}> <TextField  name="segundo_apellido_int" label="Segundo Apellido" fullWidth /> </Grid>
+        <Grid item xs={12} md={6}> <TextField  name="razonsocial_int" label="Razon Social" fullWidth /> </Grid>
+      </Grid>
+      <Grid container spacing={2} > 
+        <Grid item xs={12} md={6}> <TextField  name="ciudad_int" label="Ciudad" fullWidth /> </Grid>
+        <Grid item xs={12} md={6}> <TextField  name="direccion_int" label="Direccion" fullWidth /> </Grid>
+      </Grid>
+      <Grid container spacing={2} > 
+        <Grid item xs={12} md={6}> <TextField  name="telefono_int" label="Telefono" fullWidth /> </Grid>
+        <Grid item xs={12} md={6}> <TextField  name="email_int" label="Email" fullWidth /> </Grid>
+      </Grid>
+      <Grid container spacing={2} > 
+        <Grid item xs={12} md={6}> <TextField  name="empresa_int" label="Empresa" fullWidth /> </Grid>
+        <Grid item xs={12} md={6}> <TextField  name="fecha_creacion_int" label="Fecha Creacion" fullWidth /> </Grid>
+      </Grid>
+      <Grid container spacing={2} > 
+        <Grid item xs={12} md={6}> <TextField  name="fecha_modificacion_int" label="Fecha Modificación" fullWidth /> </Grid>
+        <Grid item xs={12} md={6}> <TextField  name="especialidad_int" label="Especialidad" fullWidth /> </Grid>
+      </Grid>
+    </div>
+  )
+
+  const proveedorInsertar = (
+    <div className={styles.modal}>
+      <h3>Agregar Nueva Frecuencia para Mantenimiento</h3>
+      <TextField className={styles.inputMaterial} label="Código" name="codigo_fre" onChange={handleChange} />
+      <br />
+      <TextField className={styles.inputMaterial} label="Descripción" name="nombre_fre" onChange={handleChange} />
+      <br />
+      <FormControl className={styles.formControl}>
+        <InputLabel id="idselectEmpresa">Empresa</InputLabel>
+        <Select
+          labelId="selectEmpresa"
+          name="empresa_fre"
+          id="idselectEmpresa"
+          onChange={handleChange}
+        >
+          <MenuItem value=""> <em>None</em> </MenuItem>
+          {
+            listarEmpresas.map((itemselect) => {
+              return (
+                <MenuItem value={itemselect.id_emp}>{itemselect.nombre_emp}</MenuItem>
+              )
+            })
+          }
+        </Select>
+      </FormControl>
+      <FormControl className={styles.formControl}>
+        <InputLabel id="idselectEstado">Estado</InputLabel>
+        <Select
+          labelId="selectEstado"
+          name="estado_fre"
+          id="idselectEstado"
+          onChange={handleChange}
+        >
+          <MenuItem value=""> <em>None</em> </MenuItem>
+          {
+            listarEstados.map((itemselect) => {
+              return (
+                <MenuItem value={itemselect.id_est}>{itemselect.nombre_est}</MenuItem>
+              )
+            })
+          }
+        </Select>
+      </FormControl>
+      <br /><br />
+      <div align="right">
+        <Button color="primary" onClick={() => grabarFrecuencia()} >Insertar</Button>
+        <Button onClick={() => abrirCerrarModalInsertar()} >Cancelar</Button>
+      </div>
+    </div>
+  )
+
+  const proveedorEditar = (
+    <div className={styles.modal}>
+      <h3>Actualizar Frecuencia de Mantenimiento</h3>
+      <TextField className={styles.inputMaterial} label="Código" name="codigo_fre" onChange={handleChange} value={frecuenciasSeleccionado && frecuenciasSeleccionado.codigo_fre} />
+      <br />
+      <TextField className={styles.inputMaterial} label="Descripción" name="nombre_fre" onChange={handleChange} value={frecuenciasSeleccionado && frecuenciasSeleccionado.nombre_fre} />
+      <br />
+      <FormControl className={styles.formControl} value={frecuenciasSeleccionado && frecuenciasSeleccionado.empresa_fre} >
+        <InputLabel id="idselectEmpresa">Empresa</InputLabel>
+        <Select
+          labelId="selectEmpresa"
+          name="empresa_fre"
+          id="idselectEmpresa"
+          onChange={handleChange}
+        >
+          <MenuItem value=""> <em>None</em> </MenuItem>
+          {
+            listarEmpresas.map((itemselect) => {
+              return (
+                <MenuItem value={itemselect.id_emp}>{itemselect.nombre_emp}</MenuItem>
+              )
+            })
+          }
+        </Select>
+      </FormControl>
+      <FormControl className={styles.formControl} value={frecuenciasSeleccionado && frecuenciasSeleccionado.estado_fre} >
+        <InputLabel id="idselectEstado">Estado</InputLabel>
+        <Select
+          labelId="selectEstado"
+          name="estado_fre"
+          id="idselectEstado"
+          onChange={handleChange}
+        >
+          <MenuItem value=""> <em>None</em> </MenuItem>
+          {
+            listarEstados.map((itemselect) => {
+              return (
+                <MenuItem value={itemselect.id_est}>{itemselect.nombre_est}</MenuItem>
+              )
+            })
+          }
+        </Select>
+      </FormControl>
+      <br /><br />
+      <div align="right">
+        <Button color="primary" onClick={() => actualizarFrecuencia()} >Editar</Button>
+        <Button onClick={() => abrirCerrarModalEditar()}>Cancelar</Button>
+      </div>
+    </div>
+  )
+
+  const proveedorEliminar = (
+    <div className={styles.modal}>
+      <p>Estás seguro que deseas eliminar la Frecuencia <b>{frecuenciasSeleccionado && frecuenciasSeleccionado.nombre_fre}</b>? </p>
+      <div align="right">
+        <Button color="secondary" onClick={() => borrarFrecuencia()}> Confirmar </Button>
+        <Button onClick={() => abrirCerrarModalEliminar()}> Cancelar </Button>
+
+      </div>
+
+    </div>
+  )
+
+  return (
+    <div className="App">
+      <Typography  color="textSecondary" variant="h5" > Maestra de Proveedores </Typography>
+      <div className={styles.root} >
+        <Button variant="contained" startIcon={<ListIcon />} color="primary" onClick={() => seleccionarInterlocutor(rows, "Editar")   } >Listar</Button>
+        { }
+        <Button variant="contained" startIcon={<SaveIcon />} color="primary" onClick={() => abrirCerrarModalInsertar()} >Insertar</Button>
+        { }
+        <Button variant="contained" startIcon={<EditIcon />} onClick={() => abrirCerrarModalEditar()} >Editar</Button>
+        { }
+        <Button variant="contained" color="secondary" startIcon={<DeleteIcon />} onClick={() => abrirCerrarModalInsertar()} >Eliminar</Button>
+      </div>
+
+      <Paper className={styles.table}>
+      <TableContainer className={styles.contenedor}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+              return (
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  {columns.map((column) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {column.format && typeof value === 'number' ? column.format(value) : value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+    </Paper>      
+     
+
+      <Modal
+        open={modalListar}
+        onClose={abrirCerrarModalListar}
+      >
+        {proveedorListar}
+      </Modal>
+
+      <Modal
+        open={modalInsertar}
+        onClose={abrirCerrarModalInsertar}
+      >
+        {proveedorInsertar}
+      </Modal>
+
+      <Modal
+        open={modalEditar}
+        onClose={abrirCerrarModalEditar}
+      >
+        {proveedorEditar}
+      </Modal>
+
+      <Modal
+        open={modalEliminar}
+        onClose={abrirCerrarModalEliminar}
+      >
+        {proveedorEliminar}
+      </Modal>
+    </div>
+  );
+}
+
+export default Proveedores;

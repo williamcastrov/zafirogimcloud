@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.useEffectSkipFirstRender=void 0;var _react=require("react"),useEffectSkipFirstRender=function(a,b){var c=(0,_react.useRef)(!0);(0,_react.useEffect)(function(){var b;if(c.current?c.current=!1:b=a(),b&&"function"==typeof b)return b},b)};exports.useEffectSkipFirstRender=useEffectSkipFirstRender;

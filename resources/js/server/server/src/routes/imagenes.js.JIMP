@@ -1,0 +1,87 @@
+const { Router } = require('express');
+const router = Router();
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const uploader = multer();
+var namefoto = '';
+
+const diskstorage = multer.diskStorage({
+    //destination: path.join(__dirname, '../images'),
+    destination: path.join('/var/www/zafiro.bc-gim/public/images'),
+    filename: (req, file, cb) => {
+        const ext = file.mimetype.split('/')
+        var caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHJKMNPQRTUVWXYZ2346789";
+        var name = "gimcloud";
+        for (i = 0; i < 20; i++) name += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+        namefoto = name + '.' + ext[1]
+        cb(null, namefoto)
+    }
+})
+
+// este es el middleware que va a redimensionar la imagen
+const resize = async (req, res, next) => {
+    if (!req.file) {
+        next();
+        return;
+    }
+
+    const photo = await jimp.read(req.file.path);
+    console.log("FOTO : ", photo);
+    await photo.resize(512, jimp.AUTO);
+    await photo.write(`../images/${req.file.filename}`);
+
+    next();
+};
+
+const fileUpload = multer({
+    storage: diskstorage
+}).single('image')
+
+//router.get('/get/:id', (req, res) => {
+router.post('/recibedata', fileUpload, (req, res) => {
+    //console.log("NUMERO ORDEN : ", req.body.orden)
+    //console.log("ID USUARIO : ", req.body.idusuario)
+
+    req.getConnection((err, conn) => {
+        if (err) return res.status(500).send('Server Error');
+        console.log("NUMERO ORDEN : ", req.body.orden)
+
+        conn.query('SELECT * from imagenesordenes WHERE orden = ?', [req.body.orden], (err, rows) => {
+            if (err) return res.status(500).send('server error')
+
+            rows.map(img => {
+                fs.writeFileSync(path.join(__dirname, '../dbimagenes/' + img.name), img.data)
+            })
+
+            const imagedir = fs.readdirSync(path.join(__dirname, '../dbimagenes/'));
+            res.json(imagedir);
+
+            console.log(fs.readdirSync(path.join(__dirname, '../dbimagenes/')))
+        })
+    })
+})
+
+router.post('/post', fileUpload, uploader.single('avatar'), resize, (req, res) => {
+
+    req.getConnection((err, conn) => {
+        if (err) return res.status(500).send('Server Error')
+        console.log("DATOS BODY : ", req.body);
+
+        const type = req.file.mimetype
+        const name = namefoto
+        const url = req.file.path
+        const data = ''
+        //const data = fs.readFileSync(path.join(__dirname, '../images/' + req.file.filename))
+        const orden = req.body.orden
+
+        conn.query('INSERT INTO imagenesordenes set ?', [{ type, name, url, data, orden }], (err, rows) => {
+            if (err) return res.status(500).send('server error')
+            //console.log(req.file)
+            res.send('Imagen Guardada!')
+        })
+
+    })
+})
+
+module.exports = router;

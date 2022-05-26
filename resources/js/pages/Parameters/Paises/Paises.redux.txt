@@ -1,0 +1,28 @@
+import React from 'react';
+
+// hooks react redux
+import {useDispatch, useSelector} from 'react-redux';
+
+import { obtenerPaisesAccion } from "../../../redux/paisDucks";
+
+const Paises = () => {
+
+    const dispatch = useDispatch();
+    const listPaises = useSelector(store => store.paises.arrayPaises);
+    
+    return (
+        <div>
+            List de Paises
+            <button onClick={() => dispatch(obtenerPaisesAccion())}  >Leer Paises </button>
+            <ul>
+              {
+                    listPaises.map(item => (
+                        <li ley={item.id_pai} >{item.nombre_pai}</li>
+                    ))
+              }
+            </ul>
+        </div>
+    );
+};
+
+export default Paises;
