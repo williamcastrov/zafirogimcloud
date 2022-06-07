@@ -20,6 +20,15 @@ contratos.listContratos = async () => {
     return res;
 }
 
+contratos.listdatosfacturacion = async (periodo) => {
+    const urlList = baseUrl+"/listar_datosfacturacion/"+periodo
+    const res = await axios.get(urlList)
+    .then(response=>{ return response.data; })
+    .catch(error=>{ return error; })
+   
+    return res;
+}
+
 contratos.listalertasestadoscontratos = async () => {
     const urlList = baseUrl+"/listar_alertasestadoscontratos"
     const res = await axios.get(urlList)

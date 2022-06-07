@@ -168,6 +168,7 @@ import GroupedBar from "./components/Dashboard/GroupedBar";
 //Rutas Costos
 import CostosVariables from "./pages/Costos/CostosVariables";
 import TipoCostoVariable from "./pages/Costos/TipoCostoVariable";
+import FacturacionMT from "./pages/Costos/Facturacion";
 import CostosRealesEquipos from "./pages/Costos/Informes/CostosRealesEquipos";
 import CostosRealEquipoAcumulado from "./pages/Costos/Informes/CostosRealesEquipos/CostosRealEquipoAcumulado";
 import ConsumosRepuestos from "./pages/Informes/FlotaRenta/InformeConsumosRepuestos";
@@ -326,6 +327,7 @@ function Main(props) {
               <Route path="/costos/costorealequipoacumulado" component={CostosRealEquipoAcumulado} />
               <Route path="/costos/consumosrepuestos" component={ConsumosRepuestos} />
               <Route path="/costos/contrataciones" component={CostosContrataciones} />
+              <Route path="/costos/facturacion" component={FacturacionMT} />
               
               <Route path="/flotarenta/activosrenta" component={ActivosRenta} />
               <Route path="/flotarenta/informeseguros" component={InformeSeguros} />

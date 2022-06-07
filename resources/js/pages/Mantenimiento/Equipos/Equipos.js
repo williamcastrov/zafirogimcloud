@@ -292,7 +292,7 @@ function RegistraEquipos(props) {
   const [valorResidualAct, setValorResidualAct] = useState(0);
   const [cuotaDepreciacionAct, setCuotaDepreciacionAct] = useState(0);
 
-  let frecuencia = 2
+  let frecuencia = 0
 
   const [equiposSeleccionado, setEquiposSeleccionado] = useState({
     'id_equ': "",

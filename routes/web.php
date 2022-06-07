@@ -168,6 +168,7 @@ Route::get('/costos/costorealperiodo', 'App\Http\Controllers\GimController@index
 Route::get('/costos/costorealequipoacumulado', 'App\Http\Controllers\GimController@index');
 Route::get('/costos/consumosrepuestos', 'App\Http\Controllers\GimController@index');
 Route::get('/costos/contrataciones', 'App\Http\Controllers\GimController@index');
+Route::get('/costos/facturacion', 'App\Http\Controllers\GimController@index');
 
 // Rutas Dashboard
 Route::get('/dashboard/rentabilidad', 'App\Http\Controllers\GimController@index');

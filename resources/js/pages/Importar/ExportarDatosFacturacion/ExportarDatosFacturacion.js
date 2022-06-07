@@ -7,6 +7,7 @@ import CallMissedIcon from '@material-ui/icons/CallMissed';
 import Moment from 'moment';
 
 import rentabilidadService from '../../../services/Importar/RentabilidadPeriodo';
+import contratosServices from "../../../services/DatosEquipos/Contratos";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -80,22 +81,12 @@ function ExportarDatosFacturacion() {
     const [facturacionEquipos, setFacturacionEquipos] = useState([]);
     const fechaactual = Moment(new Date()).format('YYYY-MM-DD');
     const [modalPeriodo, setModalPeriodo] = useState(false);
-    const [listarEquipos, setListarEquipos] = useState([]);
+    const [listarContratos, setListarContratos] = useState([]);
     const [anno, setAnno] = useState(0);
     const [mes, setMes] = useState(0);
 
     const periodoConsultar = () => {
         setModalPeriodo(!modalPeriodo);
-    }
-
-    const handleChange = e => {
-        const { name, value } = e.target;
-        /*
-            setDepreciacionSeleccionado(prevState => ({
-              ...prevState,
-              [name]: value
-            }));
-            */
     }
 
     const procesarPeriodo = async () => {
@@ -110,6 +101,24 @@ function ExportarDatosFacturacion() {
         fetchDataPeriodo();
         periodoConsultar();
     }
+
+    useEffect(() => {
+        async function fetchDataEquipos() {
+            const res = await contratosServices.listContratos();
+            /*
+            if(res.data.controlalza_ctr === 0){
+                setAlza("N");
+            }else
+            {
+                setAlza("S");
+            }
+            */
+            setListarEquipos(res.data);
+
+            console.log("CONTRATOS : ", res.data);
+        }
+        fetchDataEquipos();
+    }, [])
 
     const periodoFacturacion = (
         <div className={styles.modal}>
@@ -128,6 +137,7 @@ function ExportarDatosFacturacion() {
             </div>
         </div>
     )
+
 
     return (
         <div>

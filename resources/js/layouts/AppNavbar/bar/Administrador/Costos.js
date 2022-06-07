@@ -1,8 +1,8 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
-import {ListSubheader, List, ListItem, ListItemIcon, ListItemText, Collapse } from "@material-ui/core";
-import {ExpandLess, ExpandMore} from "@material-ui/icons";
+import { ListSubheader, List, ListItem, ListItemIcon, ListItemText, Collapse } from "@material-ui/core";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import CenterFocusWeakIcon from '@material-ui/icons/CenterFocusWeak';
 import StoreIcon from '@material-ui/icons/Store';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
@@ -49,8 +49,8 @@ function Costos() {
   };
 
 
-  return (     
-      <div>
+  return (
+    <div>
       <ListItem button onClick={handleClick}>
         <ListItemIcon>
           <MonetizationOnIcon />
@@ -58,10 +58,10 @@ function Costos() {
         <ListItemText primary="Costos" />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
-   
+
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          
+
           <ListItem button className={classes.nested} onClick={handleClickPA} >
             <ListItemIcon>
               <ViewHeadlineIcon />
@@ -72,7 +72,7 @@ function Costos() {
 
           <Collapse in={openPA} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-            <ListItem component={Link} button to="/costos/tipocostovariable" className={classes.nested}>
+              <ListItem component={Link} button to="/costos/tipocostovariable" className={classes.nested}>
                 <ListItemIcon>
                   <StoreIcon />
                 </ListItemIcon>
@@ -84,20 +84,25 @@ function Costos() {
                 </ListItemIcon>
                 <ListItemText primary="Datos Base x Periodo" />
               </ListItem>
-
             </List>
           </Collapse>
           <Divider />
-          
-          <ListItem button className={classes.nested}  onClick={handleClickIF} >
+
+          <ListItem button className={classes.nested} onClick={handleClickIF} >
             <ListItemIcon>
               <ViewHeadlineIcon />
             </ListItemIcon>
             <ListItemText primary="Informes Costos" />
-            {openIF ? <ExpandLess /> : <ExpandMore />}  
+            {openIF ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={openIF} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
+              <ListItem component={Link} button to="/costos/facturacion" className={classes.nested} >
+                <ListItemIcon>
+                  <ViewHeadlineIcon />
+                </ListItemIcon>
+                <ListItemText primary="Informe Facturacion" />
+              </ListItem>
               <ListItem component={Link} button to="/costos/costorealperiodo" className={classes.nested} >
                 <ListItemIcon>
                   <ViewHeadlineIcon />
@@ -122,12 +127,12 @@ function Costos() {
                 </ListItemIcon>
                 <ListItemText primary="Costos Contrataciones" />
               </ListItem>
-              
+
             </List>
           </Collapse>
         </List>
       </Collapse>
-      </div>
+    </div>
   );
 }
 

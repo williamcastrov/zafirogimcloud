@@ -5,6 +5,7 @@ import { Modal, TextField, Button, Select, MenuItem, FormControl, InputLabel, Gr
 import { green, blue, blueGrey, red } from '@material-ui/core/colors';
 import { makeStyles } from "@material-ui/core/styles";
 import SaveIcon from '@material-ui/icons/Save';
+import swal from 'sweetalert';
 
 //Estilos 
 import "./Ubicaciones.css";

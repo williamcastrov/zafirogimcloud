@@ -18,8 +18,19 @@ class Facturacion extends Model
         'anno_fac',
         'mes_fac',
         'periodo_fac',
+        'id_ctr',
+        'codigocontrato_ctr',
         'equipo_fac',
-        'valor_fac'
+        'asesorcomercial_ctr',
+        'cliente_ctr',
+        'ciudad_ctr',
+        'diafacturacion_ctr',
+        'valorrentames_ctr',
+        'numerofactura_ctr',
+        'facturada_ctr',
+        'fechaalza_ctr',
+        'fechainicio_ctr',
+        'fechafinal_ctr'
     ];
 
     public $timestamps = false;

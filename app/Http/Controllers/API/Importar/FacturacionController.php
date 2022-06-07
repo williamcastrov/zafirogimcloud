@@ -7,21 +7,31 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Importar\Facturacion;
 
-
 class FacturacionController extends Controller
 {
     //
-    public function importarfacturacion(Request $request){
+    public function create(Request $request){
 
         try {
-            $insert['id_fac']       = $request['id_fac'];
-            $insert['anno_fac']     = $request['anno_fac'];
-            $insert['mes_fac']      = $request['mes_fac'];
-            $insert['periodo_fac']  = $request['periodo_fac'];
-            $insert['equipo_fac']   = $request['equipo_fac'];
-            $insert['valor_fac']    = $request['valor_fac'];
+            $insert['id_fac']             = $request['id_fac'];
+            $insert['anno_fac']           = $request['anno_fac'];
+            $insert['mes_fac']            = $request['mes_fac'];
+            $insert['periodo_fac']        = $request['periodo_fac'];
+            $insert['id_ctr']             = $request['id_ctr'];
+            $insert['codigocontrato_ctr'] = $request['codigocontrato_ctr'];
+            $insert['equipo_fac']         = $request['equipo_fac'];
+            $insert['asesorcomercial_ctr']= $request['asesorcomercial_ctr'];
+            $insert['cliente_ctr']        = $request['cliente_ctr'];
+            $insert['ciudad_ctr']         = $request['ciudad_ctr'];
+            $insert['diafacturacion_ctr'] = $request['diafacturacion_ctr'];
+            $insert['valorrentames_ctr']  = $request['valorrentames_ctr'];
+            $insert['numerofactura_ctr']  = $request['numerofactura_ctr'];
+            $insert['facturada_ctr']      = $request['facturada_ctr'];
+            $insert['fechaalza_ctr']      = $request['fechaalza_ctr'];
+            $insert['fechainicio_ctr']    = $request['fechainicio_ctr'];
+            $insert['fechafinal_ctr']     = $request['fechafinal_ctr'];
   
-            Contrataciones::insert($insert);
+            Facturacion::insert($insert);
     
             $response['message'] = "Factura Grabada de forma correcta";
             $response['success'] = true;
@@ -198,36 +208,57 @@ class FacturacionController extends Controller
           }
           return $response;
       }
+
+      public function itemfacturado($id_fac){
+        try {
+          $res = DB::update('update facturacion set facturada_ctr = 1 where id_fac = ?', [$id_fac]);
     
-      public function update(Request $request, $id_inv){
-            try {
-              $data['tipooperacion_inv']        = $request['tipooperacion_inv'];
-              $data['almacen_inv']              = $request['almacen_inv'];
-              $data['descripcion_inv']          = $request['descripcion_inv'];
-              $data['referencia_inv']           = $request['referencia_inv'];
-              $data['tipoproducto_inv']         = $request['tipoproducto_inv'];
-              $data['fechaactualizacion_inv']   = $request['fechaactualizacion_inv'];
-              $data['horaactualizacion_inv']    = $request['horaactualizacion_inv'];
-              $data['existencia_inv']           = $request['existencia_inv'];
-              $data['costounitponderado_inv']   = $request['costounitponderado_inv'];
-              $data['costototalponderado_inv']  = $request['costototalponderado_inv'];
-              $data['estado_inv']               = $request['estado_inv'];
+          $response['res'] = $res;
+          $response['message'] = "Updated successful";
+          $response['success'] = true;
+        } catch (\Exception $e) {
+          $response['message'] = $e->getMessage();
+          $response['success'] = false;
+        }
+        return $response;
+      } 
     
-              //Console::info('mymessage');
-    
-              $res = Contrataciones::where("id_inv",$id_inv)->update($data);
-    
-              $response['res'] = $res;
-              $response['message'] = "Updated successful";
-              $response['success'] = true;
-      
-            } catch (\Exception $e) {
-              $response['message'] = $e->getMessage();
-              $response['success'] = false;
-            }
-            return $response;
-      
-          }
+      public function update(Request $request, $id_fac){
+  
+        try {
+            $data['id_fac']             = $request['id_fac'];
+            $data['anno_fac']           = $request['anno_fac'];
+            $data['mes_fac']            = $request['mes_fac'];
+            $data['periodo_fac']        = $request['periodo_fac'];
+            $data['id_ctr']             = $request['id_ctr'];
+            $data['codigocontrato_ctr'] = $request['codigocontrato_ctr'];
+            $data['equipo_fac']         = $request['equipo_fac'];
+            $data['asesorcomercial_ctr']= $request['asesorcomercial_ctr'];
+            $data['cliente_ctr']        = $request['cliente_ctr'];
+            $data['ciudad_ctr']         = $request['ciudad_ctr'];
+            $data['diafacturacion_ctr'] = $request['diafacturacion_ctr'];
+            $data['valorrentames_ctr']  = $request['valorrentames_ctr'];
+            $data['numerofactura_ctr']  = $request['numerofactura_ctr'];
+            $data['facturada_ctr']      = $request['facturada_ctr'];
+            $data['fechaalza_ctr']      = $request['fechaalza_ctr'];
+            $data['fechainicio_ctr']    = $request['fechainicio_ctr'];
+            $data['fechafinal_ctr']     = $request['fechafinal_ctr'];
+
+          //Console::info('mymessage');
+
+          $res = Facturacion::where("id_fac",$id_fac)->update($data);
+
+          $response['res'] = $res;
+          $response['message'] = "Updated successful";
+          $response['success'] = true;
+  
+        } catch (\Exception $e) {
+          $response['message'] = $e->getMessage();
+          $response['success'] = false;
+        }
+        return $response;
+  
+      }
     
           public function delete($id_inv){
     

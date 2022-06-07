@@ -77,6 +77,26 @@ class ContratosController extends Controller
           return $response;
     }
 
+    public function listar_datosfacturacion($periodo){  
+      try {
+        $data = DB::select("SELECT t0.*, t1.primer_nombre_emp, t1.primer_apellido_emp, t2.razonsocial_cli, t3.nombre_ciu
+        FROM facturacion AS t0 INNER JOIN interlocutores_emp AS t1 INNER JOIN interlocutores_cli AS t2
+                               INNER JOIN ciudades           AS t3
+        WHERE t0.asesorcomercial_ctr = t1.id_emp AND t0.cliente_ctr = t2.id_cli
+          AND t0.ciudad_ctr  = t3.id_ciu and t0.periodo_fac = $periodo");
+
+        $response['data'] = $data;
+        // $response['data'] = $data1;
+        $response['message'] = "load successful";
+        $response['success'] = true;
+    
+      } catch (\Exception $e) {
+        $response['message'] = $e->getMessage();
+        $response['success'] = false;
+      }
+        return $response;
+  }
+
     public function listar_alertasestadoscontratos(){  
       try {
         $data = DB::select("SELECT t0.*, t2.nombre_est, t3.descripcion_equ, t4.razonsocial_cli, t5.primer_nombre_emp,
@@ -236,7 +256,7 @@ class ContratosController extends Controller
                                  INNER JOIN datosadicionalequipos as t6
             WHERE t0.ciudad_ctr  = t1.id_ciu and t0.estado_ctr          = t2.id_est and t0.id_ctr = t3.id_equ and
                   t0.cliente_ctr = t4.id_cli and t0.asesorcomercial_ctr = t5.id_emp and t0.id_ctr = t6.id_dequ and
-                  t0.id_ctr = $id_ctr");
+                    and t0.id_ctr = $id_ctr");
           
           if ($data) {
               $response['data'] = $data;
