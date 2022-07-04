@@ -73,7 +73,7 @@ function Images(props) {
         formdata.append('orden', numeroorden)
         console.log("FORM DATA : ", formdata)
 
-        fetch('https://imagenes.gimcloud.co/api/imagenes/post', {
+        fetch('https://simagenes.gimcloud.co/api/imagenes/post', {
             method: 'POST',
             body: formdata
         })

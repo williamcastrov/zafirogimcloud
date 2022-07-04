@@ -147,7 +147,7 @@ function ConsultarPdfsContratos(props) {
   ]
 
   const mostrarPDF = (nombrepdf) => {
-    window.open("https://imagenes.gimcloud.co/" + nombrepdf, "PDF")
+    window.open("https://simagenes.gimcloud.co/" + nombrepdf, "PDF")
   }
 
   const pdfContratoEliminar = (

@@ -234,7 +234,7 @@ function OrdenesPdfCliente(props) {
     formdata.append('idusuario', metadata)
     //console.log("FORM DATA : ", formdata)
 
-    fetch('https://imagenes.gimcloud.co/api/imagenes/recibedata', {
+    fetch('https://simagenes.gimcloud.co/api/imagenes/recibedata', {
       method: 'POST',
       body: formdata
     })

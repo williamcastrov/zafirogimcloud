@@ -152,8 +152,10 @@ Route::get('/flotarenta/informeequipos', 'App\Http\Controllers\GimController@ind
 Route::get('/flotarenta/informeot', 'App\Http\Controllers\GimController@index');
 Route::get('/flotarenta/informependientes', 'App\Http\Controllers\GimController@index');
 Route::get('/flotarenta/controlalzas', 'App\Http\Controllers\GimController@index');
+Route::get('/flotarenta/controlfacturacion', 'App\Http\Controllers\GimController@index');
 Route::get('/flotarenta/informehojavidaequipos', 'App\Http\Controllers\GimController@index');
 Route::get('/flotarenta/informeubicacionesequipos', 'App\Http\Controllers\GimController@index');
+Route::get('/flotarenta/informeubicacionesequipostotales', 'App\Http\Controllers\GimController@index');
 Route::get('/flotarenta/confiabilidadMT', 'App\Http\Controllers\GimController@index');
 Route::get('/flotarenta/calificacionot', 'App\Http\Controllers\GimController@index');
 Route::get('/flotarenta/ListarMT', 'App\Http\Controllers\GimController@index');

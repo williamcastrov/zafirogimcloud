@@ -130,6 +130,7 @@ import ConceptosRentabilidad from './pages/Informes/Parameters/ConceptosRentabil
 import ConceptosRentabilidadPeriodo from './pages/Informes/Parameters/ConceptosRentabilidadPeriodo';
 import InformePendientes from './pages/Informes/FlotaRenta/InformePendientes';
 import ControlAlzas from './pages/Informes/FlotaRenta/ControlAlzas';
+import InformeFacturacion from './pages/Informes/FlotaRenta/InformeFacturacion';
 
 //Impresión PDF
 import ActivosRenta from "./pages/Informes/FlotaRenta/ActivosRenta/ActivosRenta";
@@ -138,6 +139,7 @@ import InformeEquipos from "./pages/Informes/FlotaRenta/InformeEquipos";
 import InformeOT from "./pages/Informes/FlotaRenta/InformeOT";
 import InformeHojaVidaEquipos from "./pages/Informes/FlotaRenta/HojaVidaEquipo";
 import InformeUbicacionesEquipos from "./pages/Informes/FlotaRenta/UbicacionesEquipos";
+import InformeUbicacionesEquiposTotales from "./pages/Informes/FlotaRenta/UbicacionesEquiposTotal";
 import InformeCalificacionOT from "./pages/Informes/FlotaRenta/CalificacionOT";
 import ConfiabilidadMT from "./pages/Informes/FlotaRenta/ConfiabilidadMT";
 import ListarMT from "./pages/Informes/FlotaRenta/ListarMT";
@@ -336,8 +338,11 @@ function Main(props) {
               <Route path="/flotarenta/informependientes" component={InformePendientes} />
               <Route path="/flotarenta/informehojavidaequipos" component={InformeHojaVidaEquipos} />
               <Route path="/flotarenta/informeubicacionesequipos" component={InformeUbicacionesEquipos} />
+              <Route path="/flotarenta/informeubicacionesequipostotales" component={InformeUbicacionesEquiposTotales} />
               <Route path="/flotarenta/calificacionot" component={InformeCalificacionOT} />
               <Route path="/flotarenta/controlalzas" component={ControlAlzas} />
+              <Route path="/flotarenta/controlfacturacion" component={InformeFacturacion} />
+
               <Route path="/flotarenta/confiabilidadMT" component={ConfiabilidadMT} />
               <Route path="/flotarenta/listarMT" component={ListarMT } />
 

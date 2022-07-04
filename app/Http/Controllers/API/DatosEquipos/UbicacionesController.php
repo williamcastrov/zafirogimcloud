@@ -44,11 +44,13 @@ class UbicacionesController extends Controller
             //$data = Especialidades::with("empresa")->get();
              
             $data = DB::select("SELECT t0.*,       t1.nombre_est,  t2.descripcion_equ, t2.codigo_equ,
-                               t3.razonsocial_cli, t4.nombre_ciu
+                               t3.razonsocial_cli, t4.nombre_ciu, t5.serie_dequ, t5.referencia_dequ,
+                               t5.modelo_dequ
             FROM ubicaciones as t0 INNER JOIN estados            as t1 INNER JOIN equipos  as t2 
                                    INNER JOIN interlocutores_cli as t3 INNER JOIN ciudades as t4
+                                   INNER JOIN datosadicionalequipos as t5
             WHERE t0.estado_ubi = t1.id_est and t0.equipo_ubi = t2.id_equ and t0.cliente_ubi = t3.id_cli 
-              and t0.ciudad_ubi  = t4.id_ciu");
+              and t0.ciudad_ubi  = t4.id_ciu and t5.id_dequ = t0.equipo_ubi and t0.estado_ubi = 31");
            
             $response['data'] = $data;
             $response['message'] = "load successful";

@@ -15,7 +15,7 @@ app.use(myconn(mysql, {
     port    :   3306,
     user    :   'admon',
     password:   '12345678',
-    database:   'gimbc_sys'
+    database:   'zafirogimbc_sys'
 }))
 
 app.use(cors())
@@ -24,7 +24,7 @@ app.use(express.static('/var/www/zafiro.bc-gim/public/images'));
 
 
 //settings
-app.set('port', process.env.PORT || 6000);
+app.set('port', process.env.PORT || 7000);
 app.set('json spaces', 2);
 
 // middlewares
@@ -57,6 +57,6 @@ app.listen(app.get('port'), () => {
 
 //app.use(require('./routes/routes'));
 
-app.listen(6000, () => {
-    console.log('server running on port', 6000);
+app.listen(7000, () => {
+    console.log('server running on port', 7000);
 });

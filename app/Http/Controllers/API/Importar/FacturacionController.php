@@ -20,12 +20,15 @@ class FacturacionController extends Controller
             $insert['id_ctr']             = $request['id_ctr'];
             $insert['codigocontrato_ctr'] = $request['codigocontrato_ctr'];
             $insert['equipo_fac']         = $request['equipo_fac'];
+            $insert['tipofacturas_fac']   = $request['tipofacturas_fac'];
             $insert['asesorcomercial_ctr']= $request['asesorcomercial_ctr'];
             $insert['cliente_ctr']        = $request['cliente_ctr'];
             $insert['ciudad_ctr']         = $request['ciudad_ctr'];
             $insert['diafacturacion_ctr'] = $request['diafacturacion_ctr'];
             $insert['valorrentames_ctr']  = $request['valorrentames_ctr'];
             $insert['numerofactura_ctr']  = $request['numerofactura_ctr'];
+            $insert['datoscliente_ctr']  = $request['datoscliente_ctr'];
+            $insert['observacion_ctr']  = $request['observacion_ctr'];
             $insert['facturada_ctr']      = $request['facturada_ctr'];
             $insert['fechaalza_ctr']      = $request['fechaalza_ctr'];
             $insert['fechainicio_ctr']    = $request['fechainicio_ctr'];
@@ -47,9 +50,10 @@ class FacturacionController extends Controller
       public function listar_facturacion(){
         try {
             //$data = Especialidades::with("empresa")->get();
-            $data = DB::select("SELECT t0.*, t1.descripcion_equ, cliente_ctr, razonsocial_cli
-            FROM  facturacion as t0 INNER JOIN equipos as t1 INNER JOIN contratos as t2 INNER JOIN interlocutores_cli as t3
-            WHERE t0.equipo_fac = t1.codigo_equ and t1.id_equ = t2.id_ctr and t2.cliente_ctr = t3.id_cli");
+            $data = DB::select("SELECT t0.*, razonsocial_cli, t2.descripcion_tpf, t3.nombre_ciu
+            FROM  facturacion as t0 INNER JOIN interlocutores_cli as t1 INNER JOIN tipofacturacion as t2 
+                                    INNER JOIN ciudades as t3
+            WHERE t0.cliente_ctr = t1.id_cli and t2.id_tpf = t0.tipofacturas_fac and t0.ciudad_ctr = t3.id_ciu");
   
             $response['data'] = $data;
             $response['message'] = "load successful";
@@ -232,6 +236,7 @@ class FacturacionController extends Controller
             $data['periodo_fac']        = $request['periodo_fac'];
             $data['id_ctr']             = $request['id_ctr'];
             $data['codigocontrato_ctr'] = $request['codigocontrato_ctr'];
+            $data['tipofacturas_fac']   = $request['tipofacturas_fac'];
             $data['equipo_fac']         = $request['equipo_fac'];
             $data['asesorcomercial_ctr']= $request['asesorcomercial_ctr'];
             $data['cliente_ctr']        = $request['cliente_ctr'];
@@ -239,6 +244,8 @@ class FacturacionController extends Controller
             $data['diafacturacion_ctr'] = $request['diafacturacion_ctr'];
             $data['valorrentames_ctr']  = $request['valorrentames_ctr'];
             $data['numerofactura_ctr']  = $request['numerofactura_ctr'];
+            $data['datoscliente_ctr']   = $request['datoscliente_ctr'];
+            $data['observacion_ctr']    = $request['observacion_ctr'];
             $data['facturada_ctr']      = $request['facturada_ctr'];
             $data['fechaalza_ctr']      = $request['fechaalza_ctr'];
             $data['fechainicio_ctr']    = $request['fechainicio_ctr'];

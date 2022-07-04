@@ -73,6 +73,15 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: blue[700],
         },
     },
+    button3: {
+        color: theme.palette.getContrastText(blueGrey[500]),
+        backgroundColor: green[700],
+        margin: theme.spacing(1),
+        fontSize: 12,
+        '&:hover': {
+            backgroundColor: blue[700],
+        },
+    },
 }));
 
 function Facturacion(props) {
@@ -92,7 +101,11 @@ function Facturacion(props) {
     const [cliente, setCliente] = useState(0);
     const [valorFactura, setValorFactura] = useState(0);
     const [diaFactura, setDiaFactura] = useState(0);
+    const [datosFacturacion, setDatosFacturacion] = useState(0);
+    const [observacion, setObservacion] = useState(0);
     const [numeroFactura, setNumeroFactura] = useState("");
+    const [facturadoMes, setFacturadoMes] = useState(0);
+    const [pendienteMes, setPendienteMes] = useState(0);
 
     const [botonGrabar, setBotonGrabar] = useState(false);
     const [editarEquipo, setEditarEquipo] = useState([]);
@@ -145,6 +158,16 @@ function Facturacion(props) {
         setNumeroFactura(value)
     }
 
+    const handleChangeDatosFacturacion = e => {
+        const { name, value } = e.target;
+        setDatosFacturacion(value)
+    }
+
+    const handleChangeObservacion = e => {
+        const { name, value } = e.target;
+        setObservacion(value)
+    }
+
 
     const periodoConsultar = () => {
         setModalPeriodo(!modalPeriodo);
@@ -178,7 +201,10 @@ function Facturacion(props) {
             ciudad_ctr: ciudad,
             diafacturacion_ctr: diaFactura,
             valorrentames_ctr: valorFactura,
+            tipofacturas_fac: editarEquipo.tipofacturas_fac,
             numerofactura_ctr: numeroFactura,
+            datoscliente_ctr: datosFacturacion,
+            observacion_ctr: observacion,
             facturada_ctr: 0,
             fechaalza_ctr: editarEquipo.fechaalza_ctr,
             fechafinal_ctr: editarEquipo.fechafinal_ctr,
@@ -196,6 +222,8 @@ function Facturacion(props) {
                     swal("Facturación", "Registro Facturación actualizado de forma Correcta!", "success", { button: "Aceptar" });
                     console.log(res.message)
                     facturacionModal();
+                    periodoConsultar();
+                    procesarPeriodo();
                 } else {
                     swal("Facturación", "Error Actualizando registro facturación!", "error", { button: "Aceptar" });
                     console.log(res.message);
@@ -212,28 +240,144 @@ function Facturacion(props) {
         //actualizadatos();
     }
 
+    const porFacturar = () => {
+        const newDet = [];
+
+        facturacionEquipos && facturacionEquipos.forEach((row) => {
+            if (
+                (Number.parseInt(row.facturada_ctr) ===
+                    Number.parseInt(0)) &&
+                (Number.parseInt(row.valorrentames_ctr) >
+                    Number.parseInt(0))
+            ) {
+                //console.log("TIPO DE PRODUCTO SELECCIONADO ES : ", row.tipodeproducto)
+                let item = {
+                    anno_fac: row.anno_fac,
+                    mes_fac: row.mes_fac,
+                    periodo_fac: row.periodo_fac,
+                    id_ctr: row.id_ctr,
+                    codigocontrato_ctr: row.codigocontrato_ctr,
+                    equipo_fac: row.equipo_fac,
+                    asesorcomercial_ctr: row.asesorcomercial_ctr,
+                    cliente_ctr: row.cliente_ctr,
+                    ciudad_ctr: row.ciudad_ctr,
+                    diafacturacion_ctr: row.diafacturacion_ctr,
+                    valorrentames_ctr: row.valorrentames_ctr,
+                    tipofacturas_fac: row.tipofacturas_fac,
+                    numerofactura_ctr: row.numerofactura_ctr,
+                    datoscliente_ctr: row.datoscliente_ctr,
+                    observacion_ctr: row.observacion_ctr,
+                    facturada_ctr: row.facturada_ctr,
+                    fechaalza_ctr: row.fechaalza_ctr,
+                    fechafinal_ctr: row.fechafinal_ctr,
+                    fechainicio_ctr: row.fechainicio_ctr
+                };
+                newDet.push(item);
+            }
+        });
+        setFacturacionEquipos(newDet);
+    }
+
+    const facturadoPeriodo = () => {
+        const newDet = [];
+
+        facturacionEquipos && facturacionEquipos.forEach((row) => {
+            if (
+                (Number.parseInt(row.facturada_ctr) ===
+                    Number.parseInt(1)) &&
+                (Number.parseInt(row.valorrentames_ctr) >
+                    Number.parseInt(0))
+            ) {
+                //console.log("TIPO DE PRODUCTO SELECCIONADO ES : ", row.tipodeproducto)
+                let item = {
+                    anno_fac: row.anno_fac,
+                    mes_fac: row.mes_fac,
+                    periodo_fac: row.periodo_fac,
+                    id_ctr: row.id_ctr,
+                    codigocontrato_ctr: row.codigocontrato_ctr,
+                    equipo_fac: row.equipo_fac,
+                    asesorcomercial_ctr: row.asesorcomercial_ctr,
+                    cliente_ctr: row.cliente_ctr,
+                    ciudad_ctr: row.ciudad_ctr,
+                    diafacturacion_ctr: row.diafacturacion_ctr,
+                    tipofacturas_fac: row.tipofacturas_fac,
+                    valorrentames_ctr: row.valorrentames_ctr,
+                    numerofactura_ctr: row.numerofactura_ctr,
+                    datoscliente_ctr: row.datoscliente_ctr,
+                    observacion_ctr: row.observacion_ctr,
+                    facturada_ctr: row.facturada_ctr,
+                    fechaalza_ctr: row.fechaalza_ctr,
+                    fechafinal_ctr: row.fechafinal_ctr,
+                    fechainicio_ctr: row.fechainicio_ctr
+                };
+                newDet.push(item);
+            }
+        });
+        setFacturacionEquipos(newDet);
+    }
+
     const procesarPeriodo = async () => {
+
         let periodo = anno + mes;
         //console.log("PERIODO : ", periodo);
+        let pendiente = 0;
+        let facturado = 0;
+        let contador = 0;
+        let longitud = 0;
 
         async function fetchDataPeriodo() {
             const res = await contratosServices.listdatosfacturacion(periodo);
             setFacturacionEquipos(res.data);
             //console.log("FACTURACION EQUIPOS : ", res.data);
+            longitud = res.data.length;
+
+            if (res.data.length > 0) {
+                res.data && res.data.forEach((row) => {
+                    contador = contador + 1;
+                    if (Number.parseInt(row.facturada_ctr) ===
+                        Number.parseInt(0)) {
+                        pendiente = pendiente + row.valorrentames_ctr
+                    } else {
+                        facturado = facturado + row.valorrentames_ctr
+                    }
+                    if (longitud === contador) {
+                        setFacturadoMes(facturado)
+                        setPendienteMes(pendiente)
+                    }
+                });
+                console.log("VALORES : ", pendiente, facturado);
+            }
         }
         fetchDataPeriodo();
-        periodoConsultar();
+        //periodoConsultar();
     }
-
 
     const marcaComoFacturada = async (id) => {
         //console.log("ID ITEM : ", id)
-        const res = await facturacionServices.itemfacturado(id);
+        swal({
+            title: "Facturación El Zafiro.",
+            text: "Oprima OK para confirmar!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    const actualiza = async (fac) => {
+                        //console.log("ID ITEM : ", id)
+                        const res = await facturacionServices.itemfacturado(fac);
 
-        if (res.success) {
-            swal("Marca Facturación", "Item marcado de Correctamente!", "success", { button: "Aceptar" });
-        } else
-            swal("Marca Facturación", "Error al marcar el item!", "success", { button: "Aceptar" });
+                        if (res.success) {
+                            swal("Marca Facturación", "Item marcado de Correctamente!", "success", { button: "Aceptar" });
+                            procesarPeriodo();
+                        } else
+                            swal("Marca Facturación", "Error al marcar el item!", "success", { button: "Aceptar" });
+                    }
+                    actualiza(id);
+                } else {
+                    console.log("Falso")
+                }
+            });
     }
 
     const actualizadatos = async () => {
@@ -280,9 +424,12 @@ function Facturacion(props) {
                             asesorcomercial_ctr: row.asesorcomercial_ctr,
                             cliente_ctr: row.cliente_ctr,
                             ciudad_ctr: row.ciudad_ctr,
-                            diafacturacion_ctr: row.diafacturacion_ctr,
-                            valorrentames_ctr: row.valorrentames_ctr,
-                            numerofactura_ctr: row.numerofactura_ctr,
+                            tipofacturas_fac: 0,
+                            diafacturacion_ctr: 0, //row.diafacturacion_ctr,
+                            valorrentames_ctr: 0, //row.valorrentames_ctr,
+                            numerofactura_ctr: 0, //row.numerofactura_ctr,
+                            datoscliente_ctr: 0, //row.datoscliente_ctr,
+                            observacion_ctr: 0, //row.observacion_ctr,
                             facturada_ctr: 0,
                             fechaalza_ctr: row.fechaalza_ctr,
                             fechafinal_ctr: row.fechafinal_ctr,
@@ -294,6 +441,7 @@ function Facturacion(props) {
 
                             if (res.success) {
                                 console.log(ok)
+                                //procesarPeriodo();
                             } else {
                                 ok = false;
                             }
@@ -308,22 +456,281 @@ function Facturacion(props) {
             }
         }
         fetchDataPeriodo();
+
     }
 
-    useEffect(() => {
-        async function fetchDataEquipos() {
-            const res = await contratosServices.listContratos();
-            setListarEquipos(res.data);
-            //console.log("CONTRATOS : ", res.data);
-        }
-        fetchDataEquipos();
-    }, [])
+    const serviciosEsporadicos = async () => {
+        let date = new Date();
+        let anno = String(date.getFullYear());
+        let mes = String(date.getMonth() + 1);
+        mes = "0" + mes;
 
-    const columnas = [
-        {
+        let periodo = anno + mes;
+        //console.log("PERIODO : ", periodo);
+
+        const newDet = [];
+        let ok = true;
+        let contador = 0;
+
+        async function fetchDataPeriodo() {
+            contador = contador + 1;
+            let item = {
+                anno_fac: anno,
+                mes_fac: mes,
+                periodo_fac: periodo,
+                id_ctr: 1,
+                codigocontrato_ctr: 1,
+                equipo_fac: "SESP",
+                asesorcomercial_ctr: 4,
+                cliente_ctr: 0,
+                ciudad_ctr: 167,
+                tipofacturas_fac: 1,
+                diafacturacion_ctr: 0,
+                valorrentames_ctr: 0,
+                numerofactura_ctr: 0,
+                datoscliente_ctr: 0, //row.datoscliente_ctr,
+                observacion_ctr: 0, //row.observacion_ctr,
+                facturada_ctr: 0,
+                fechaalza_ctr: fechaactual,
+                fechafinal_ctr: fechaactual,
+                fechainicio_ctr: fechaactual
+            };
+
+            const crearconcepto = async () => {
+                const res = await facturacionServices.save(item);
+
+                if (res.success) {
+                    swal("Facturación", "Registro Servicios Esporadicos Correcto!", "success", { button: "Aceptar" });
+                    procesarPeriodo();
+                } else {
+                    console.log("ERROR Creando Servicio")
+                }
+            }
+            crearconcepto();
+        }
+        fetchDataPeriodo();
+    }
+
+    const serviciosGrua = async () => {
+        let date = new Date();
+        let anno = String(date.getFullYear());
+        let mes = String(date.getMonth() + 1);
+        mes = "0" + mes;
+
+        let periodo = anno + mes;
+        //console.log("PERIODO : ", periodo);
+
+        const newDet = [];
+        let ok = true;
+        let contador = 0;
+
+        async function fetchDataPeriodo() {
+            contador = contador + 1;
+            let item = {
+                anno_fac: anno,
+                mes_fac: mes,
+                periodo_fac: periodo,
+                id_ctr: 2,
+                codigocontrato_ctr: 2,
+                equipo_fac: "SGRU",
+                asesorcomercial_ctr: 4,
+                cliente_ctr: 0,
+                ciudad_ctr: 167,
+                tipofacturas_fac: 2,
+                diafacturacion_ctr: 0,
+                valorrentames_ctr: 0,
+                numerofactura_ctr: 0,
+                datoscliente_ctr: 0, //row.datoscliente_ctr,
+                observacion_ctr: 0, //row.observacion_ctr,
+                facturada_ctr: 0,
+                fechaalza_ctr: fechaactual,
+                fechafinal_ctr: fechaactual,
+                fechainicio_ctr: fechaactual
+            };
+
+            const crearconcepto = async () => {
+                const res = await facturacionServices.save(item);
+
+                if (res.success) {
+                    swal("Facturación", "Registro Servicios de Grua Correcto!", "success", { button: "Aceptar" });
+                    procesarPeriodo();
+                } else {
+                    console.log("ERROR Creando Servicio")
+                }
+            }
+            crearconcepto();
+        }
+        fetchDataPeriodo();
+    }
+
+    const ventaMontaCargas = async () => {
+        let date = new Date();
+        let anno = String(date.getFullYear());
+        let mes = String(date.getMonth() + 1);
+        mes = "0" + mes;
+
+        let periodo = anno + mes;
+        //console.log("PERIODO : ", periodo);
+
+        const newDet = [];
+        let ok = true;
+        let contador = 0;
+
+        async function fetchDataPeriodo() {
+            contador = contador + 1;
+            let item = {
+                anno_fac: anno,
+                mes_fac: mes,
+                periodo_fac: periodo,
+                id_ctr: 3,
+                codigocontrato_ctr: 3,
+                equipo_fac: "VTMT",
+                asesorcomercial_ctr: 3,
+                cliente_ctr: 0,
+                ciudad_ctr: 167,
+                tipofacturas_fac: 3,
+                diafacturacion_ctr: 0,
+                valorrentames_ctr: 0,
+                numerofactura_ctr: 0,
+                datoscliente_ctr: 0, //row.datoscliente_ctr,
+                observacion_ctr: 0, //row.observacion_ctr,
+                facturada_ctr: 0,
+                fechaalza_ctr: fechaactual,
+                fechafinal_ctr: fechaactual,
+                fechainicio_ctr: fechaactual
+            };
+
+            const crearconcepto = async () => {
+                const res = await facturacionServices.save(item);
+
+                if (res.success) {
+                    swal("Facturación", "Registro Servicios Venta Montacargas Correcto!", "success", { button: "Aceptar" });
+                    procesarPeriodo();
+                } else {
+                    console.log("ERROR Creando Servicio")
+                }
+            }
+            crearconcepto();
+        }
+        fetchDataPeriodo();
+    }
+
+    const ventaCertificados = async () => {
+        let date = new Date();
+        let anno = String(date.getFullYear());
+        let mes = String(date.getMonth() + 1);
+        mes = "0" + mes;
+
+        let periodo = anno + mes;
+        //console.log("PERIODO : ", periodo);
+
+        const newDet = [];
+        let ok = true;
+        let contador = 0;
+
+        async function fetchDataPeriodo() {
+            contador = contador + 1;
+            let item = {
+                anno_fac: anno,
+                mes_fac: mes,
+                periodo_fac: periodo,
+                id_ctr: 4,
+                codigocontrato_ctr: 4,
+                equipo_fac: "VCER",
+                asesorcomercial_ctr: 4,
+                cliente_ctr: 0,
+                ciudad_ctr: 167,
+                tipofacturas_fac: 4,
+                diafacturacion_ctr: 0,
+                valorrentames_ctr: 0,
+                numerofactura_ctr: 0,
+                datoscliente_ctr: 0, //row.datoscliente_ctr,
+                observacion_ctr: 0, //row.observacion_ctr,
+                facturada_ctr: 0,
+                fechaalza_ctr: fechaactual,
+                fechafinal_ctr: fechaactual,
+                fechainicio_ctr: fechaactual
+            };
+
+            const crearconcepto = async () => {
+                const res = await facturacionServices.save(item);
+
+                if (res.success) {
+                    swal("Facturación", "Registro Servicios Venta Certificados Correcto!", "success", { button: "Aceptar" });
+                    procesarPeriodo();
+                } else {
+                    console.log("ERROR Creando Servicio")
+                }
+            }
+            crearconcepto();
+        }
+        fetchDataPeriodo();
+    }
+
+    const ventaOtros = async () => {
+        let date = new Date();
+        let anno = String(date.getFullYear());
+        let mes = String(date.getMonth() + 1);
+        mes = "0" + mes;
+
+        let periodo = anno + mes;
+        //console.log("PERIODO : ", periodo);
+
+        const newDet = [];
+        let ok = true;
+        let contador = 0;
+
+        async function fetchDataPeriodo() {
+            contador = contador + 1;
+            let item = {
+                anno_fac: anno,
+                mes_fac: mes,
+                periodo_fac: periodo,
+                id_ctr: 6,
+                codigocontrato_ctr: 6,
+                equipo_fac: "VOTR",
+                asesorcomercial_ctr: 6,
+                cliente_ctr: 0,
+                ciudad_ctr: 167,
+                tipofacturas_fac: 6,
+                diafacturacion_ctr: 0,
+                valorrentames_ctr: 0,
+                numerofactura_ctr: 0,
+                datoscliente_ctr: 0, //row.datoscliente_ctr,
+                observacion_ctr: 0, //row.observacion_ctr,
+                facturada_ctr: 0,
+                fechaalza_ctr: fechaactual,
+                fechafinal_ctr: fechaactual,
+                fechainicio_ctr: fechaactual
+            };
+
+            const crearconcepto = async () => {
+                const res = await facturacionServices.save(item);
+
+                if (res.success) {
+                    swal("Facturación", "Registro Ventas Otros Servicios Correcto!", "success", { button: "Aceptar" });
+                    procesarPeriodo();
+                } else {
+                    console.log("ERROR Creando Servicio")
+                }
+            }
+            crearconcepto();
+        }
+        fetchDataPeriodo();
+    }
+    /*
+{
             title: 'Imagen',
             field: 'imageUrl',
             render: rowData => <img src={img} style={{ width: 50, height: 50 }} />
+        },
+        
+    */
+
+    const columnas = [
+        {
+            title: 'Tipo',
+            field: 'descripcion_tpf'
         },
         {
             title: 'Periodo',
@@ -336,6 +743,14 @@ function Facturacion(props) {
         {
             title: 'Cliente',
             field: 'razonsocial_cli'
+        },
+        {
+            title: 'Información',
+            field: 'datoscliente_ctr'
+        },
+        {
+            title: 'Observación',
+            field: 'observacion_ctr'
         },
         {
             title: 'Ciudad',
@@ -511,6 +926,18 @@ function Facturacion(props) {
                         name="diafacturacion_ctr" onChange={handleChangeDiaFactura}
                         /*defaultValue={editarEquipo && editarEquipo.diafacturacion_ctr}*/ />
                 </Grid>
+                <Grid item xl={12} lg={12} xs={12} md={12}>
+                    <br />
+                    <TextField className={styles.formControl} label="Datos Cliente"
+                        name="datoscliente_ctr" onChange={handleChangeDatosFacturacion}
+                        /*defaultValue={editarEquipo && editarEquipo.diafacturacion_ctr}*/ />
+                </Grid>
+                <Grid item xl={12} lg={12} xs={12} md={12}>
+                    <br />
+                    <TextField className={styles.formControl} label="Observación"
+                        name="observacion_ctr" onChange={handleChangeObservacion}
+                        /*defaultValue={editarEquipo && editarEquipo.diafacturacion_ctr}*/ />
+                </Grid>
             </Grid>
             <br /><br />
             <div align="right">
@@ -572,7 +999,10 @@ function Facturacion(props) {
         <Fragment>
             <div>
                 <Grid container spacing={2} >
-                    <Grid item lg={4} xl={4} xs={4} md={4}></Grid>
+                    <Grid item lg={1} xl={1} xs={1} md={1}></Grid>
+                    <Grid item lg={1} xl={1} xs={1} md={1} className="textofacturado">
+                        Facturado : {facturadoMes}
+                    </Grid>
                     <Grid item lg={2} xl={2} xs={2} md={2}>
                         <div align="center" >
                             <Button className={styles.button2} onClick={() => periodoConsultar()}>Seleccionar Periodo</Button>
@@ -583,7 +1013,49 @@ function Facturacion(props) {
                             <Button className={styles.button} onClick={() => facturacionDuplicar()}>Duplicar Periodo</Button>
                         </div>
                     </Grid>
+                    <Grid item lg={2} xl={2} xs={2} md={2}>
+                        <div align="center" >
+                            <Button className={styles.button3} onClick={() => porFacturar()}>Por Facturar</Button>
+                        </div>
+                    </Grid>
+                    <Grid item lg={2} xl={2} xs={2} md={2}>
+                        <div align="center" >
+                            <Button className={styles.button3} onClick={() => facturadoPeriodo()}>Facturado</Button>
+                        </div>
+                    </Grid>
+                    <Grid item lg={1} xl={1} xs={1} md={1} className="textofacturado">
+                        Pendiente : {pendienteMes}
+                    </Grid>
                 </Grid>
+                <div className='espacios'>
+                    <Grid container spacing={2} >
+                        <Grid item lg={2} xl={2} xs={2} md={2}>
+                            <div align="center" >
+                                <Button className="espaciosuperior" onClick={() => serviciosEsporadicos()}>Servicios Esporadicos</Button>
+                            </div>
+                        </Grid>
+                        <Grid item lg={2} xl={2} xs={2} md={2}>
+                            <div align="center" >
+                                <Button className="espaciosuperior" onClick={() => serviciosGrua()}>Servicios de Grua</Button>
+                            </div>
+                        </Grid>
+                        <Grid item lg={2} xl={2} xs={2} md={2}>
+                            <div align="center" >
+                                <Button className="espaciosuperior" onClick={() => ventaMontaCargas()}>Venta de Montacargas</Button>
+                            </div>
+                        </Grid>
+                        <Grid item lg={2} xl={2} xs={2} md={2}>
+                            <div align="center" >
+                                <Button className="espaciosuperior" onClick={() => ventaCertificados()}>Venta de Certificados</Button>
+                            </div>
+                        </Grid>
+                        <Grid item lg={2} xl={2} xs={2} md={2}>
+                            <div align="center" >
+                                <Button className="espaciosuperior" onClick={() => ventaOtros()}>Otros Servicios</Button>
+                            </div>
+                        </Grid>
+                    </Grid>
+                </div>
 
                 <MaterialTable
                     title="FACTURACION EL ZAFIRO"

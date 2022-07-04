@@ -115,6 +115,12 @@ function Informes() {
                 </ListItemIcon>
                 <ListItemText primary="Informe Pendientes" />
               </ListItem>
+              <ListItem component={Link} button to="/flotarenta/controlfacturacion" className={classes.nested}>
+                <ListItemIcon>
+                  <ReorderIcon />
+                </ListItemIcon>
+                <ListItemText primary="Control Facturación" />
+              </ListItem>
               <ListItem component={Link} button to="/flotarenta/controlalzas" className={classes.nested}>
                 <ListItemIcon>
                   <ReorderIcon />
@@ -172,9 +178,14 @@ function Informes() {
                 </ListItemIcon>
                 <ListItemText primary="Ubicaciones Equipos" />
               </ListItem>
+              <ListItem component={Link} button to="/flotarenta/InformeUbicacionesEquiposTotales" className={classes.nested}>
+                <ListItemIcon>
+                  < ListAltIcon />
+                </ListItemIcon>
+                <ListItemText primary="Ubicaciones Equipos Totales" />
+              </ListItem>
             </List>
           </Collapse>
-
         </List>
       </Collapse>
     </div>

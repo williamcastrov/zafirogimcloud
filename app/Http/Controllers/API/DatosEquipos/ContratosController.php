@@ -79,11 +79,12 @@ class ContratosController extends Controller
 
     public function listar_datosfacturacion($periodo){  
       try {
-        $data = DB::select("SELECT t0.*, t1.primer_nombre_emp, t1.primer_apellido_emp, t2.razonsocial_cli, t3.nombre_ciu
+        $data = DB::select("SELECT t0.*, t1.primer_nombre_emp, t1.primer_apellido_emp, t2.razonsocial_cli, t3.nombre_ciu,
+                                   t4.descripcion_tpf
         FROM facturacion AS t0 INNER JOIN interlocutores_emp AS t1 INNER JOIN interlocutores_cli AS t2
-                               INNER JOIN ciudades           AS t3
+                               INNER JOIN ciudades           AS t3 INNER JOIN tipofacturacion    AS t4
         WHERE t0.asesorcomercial_ctr = t1.id_emp AND t0.cliente_ctr = t2.id_cli
-          AND t0.ciudad_ctr  = t3.id_ciu and t0.periodo_fac = $periodo");
+          AND t0.ciudad_ctr  = t3.id_ciu and t0.periodo_fac = $periodo and t4.id_tpf = t0.tipofacturas_fac");
 
         $response['data'] = $data;
         // $response['data'] = $data1;

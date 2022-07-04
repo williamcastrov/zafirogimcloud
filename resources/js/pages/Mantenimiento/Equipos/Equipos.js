@@ -8,6 +8,8 @@ import SaveIcon from '@material-ui/icons/Save';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import AddCommentIcon from '@material-ui/icons/AddComment';
+
 import NumberFormat from 'react-number-format';
 import swal from 'sweetalert';
 import { useHistory } from "react-router-dom";
@@ -27,6 +29,7 @@ import estadosmttoServices from "../../../services/Mantenimiento/EstadosMtto";
 import estadoscalidadServices from "../../../services/Mantenimiento/EstadosCalidad";
 import activosServices from "../../../services/Activos/Activos";
 import unidadesServices from "../../../services/Parameters/Unidades";
+import facturacionServices from "../../../services/Importar/Facturacion";
 
 // Datos Adicionales de los Equipos
 import MenuEquipos from "../../DatosEquipos/MenuEquipos";
@@ -182,7 +185,7 @@ function Equipos(props) {
 
     async function fetchDataSubGruposEquipos() {
       const res = await subgruposequiposServices.listSubGrupospartesequipos();
-      let valor = equipo + (res.data[0].consecutivo_sgre + 1);
+      let valor = (res.data[0].consecutivo_sgre + 1) + equipo;
       //console.log("DATOS SUBGRUPOS : ", res.data[0].tipoconsecutivo_sgre);
       //console.log("DATOS CONSECUTIVO : ", valor);
       setConsecutivo(valor)
@@ -243,8 +246,8 @@ function Equipos(props) {
       <br />
       <Button variant="contained" startIcon={<SaveIcon />} color="primary" onClick={() => leerGrupoEquipos()} >Agregar Equipo</Button>
       <br />
-      <RegistraEquipos consecutivo={consecutivo} prefijo={prefijo} idUsu={idUsu} 
-                       consecutivoActivo={consecutivoActivo} crearEquipo={crearEquipo} />
+      <RegistraEquipos consecutivo={consecutivo} prefijo={prefijo} idUsu={idUsu}
+        consecutivoActivo={consecutivoActivo} crearEquipo={crearEquipo} />
       <Modal
         open={modalGrupoEquipo}
         onClose={leerModalGrupoEquipo}
@@ -462,7 +465,7 @@ function RegistraEquipos(props) {
   }, [])
 
   useEffect(() => {
-    if(crearEquipo){
+    if (crearEquipo) {
       abrirCerrarModalInsertar();
     }
   }, [crearEquipo])
@@ -483,6 +486,50 @@ function RegistraEquipos(props) {
       (caso === "Editar") ? abrirCerrarModalEditarTipoEquipo() : abrirCerrarModalEliminar()
     else
       (caso === "Editar") ? abrirCerrarModalEditar() : abrirCerrarModalEliminar()
+  }
+
+  const grabarEquipoFacturar = (equipo, caso) => {
+    //console.log("DATOS EQUIPO : ", equipo)
+    var fecha = new Date();
+    let annoactual = fecha.getFullYear(0);
+    let mesactual = fecha.getMonth() + 1;
+    let mesfacturar = "";
+    if(mesactual <10){
+      mesfacturar = "0"+mesactual
+    }
+    let periodo = ""+annoactual+mesfacturar;
+
+    let item = {
+      anno_fac: annoactual,
+      mes_fac: mesfacturar,
+      periodo_fac: periodo,
+      id_ctr: equipo.id_equ,
+      codigocontrato_ctr: equipo.id_equ,
+      equipo_fac: equipo.codigo_equ,
+      asesorcomercial_ctr: 4,
+      cliente_ctr: 0,
+      ciudad_ctr: 167,
+      diafacturacion_ctr: 0,
+      valorrentames_ctr: 0,
+      numerofactura_ctr: 0,
+      facturada_ctr: 0,
+      fechaalza_ctr: fechaactual,
+      fechafinal_ctr: fechaactual,
+      fechainicio_ctr: fechaactual
+    };
+
+    //console.log("EQUIPO GRABAR: ", item)
+
+    const duplicar = async () => {
+      const res = await facturacionServices.save(item);
+
+      if (res.success) {
+        swal("Equipo Facturación", "Registro Facturación Grabado de forma Correcta!", "success", { button: "Aceptar" });
+      } else {
+        swal("Equipo Facturación", "Error Registrando Equipos Facturacion!", "error", { button: "Aceptar" });
+      }
+    }
+    duplicar();
   }
 
   const seleccionarFotoEquipo = (foto, caso) => {
@@ -1791,6 +1838,11 @@ function RegistraEquipos(props) {
         data={listarEquipos}
         title=" MAESTRA DE EQUIPOS"
         actions={[
+          {
+            icon: AddCommentIcon,
+            tooltip: 'Editar Equipo',
+            onClick: (event, rowData) => grabarEquipoFacturar(rowData, "Editar")
+          },
           {
             icon: 'edit',
             tooltip: 'Editar Equipo',
