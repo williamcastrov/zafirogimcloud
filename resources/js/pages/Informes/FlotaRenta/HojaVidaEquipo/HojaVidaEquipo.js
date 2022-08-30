@@ -152,6 +152,7 @@ function HojaVidaEquipos() {
                         <th>FECHA OT</th>
                         <th>HOROMETRO</th>
                         <th>ACTIVIDAD REALIZADA</th>
+                        <th>INSUMOS/REPUESTOS OT</th>
                         <th>FECHA PENDIENTE</th>
                         <th>PENDIENTES</th>
                         <th>EQUIPO OPERATIVO</th>
@@ -170,6 +171,7 @@ function HojaVidaEquipos() {
                                     <td>{hojavida.fechaprogramada_cosv}</td>
                                     <td>{hojavida.horometro_cosv}</td>
                                     <td>{hojavida.descripcion_cosv}</td>
+                                    <td>{hojavida.observacion_cosv}</td>
                                     <td>{hojavida.fecha_pot}</td>
                                     <td>{hojavida.descripcion_pot}</td>
                                     <td>{hojavida.nombre_est}</td>

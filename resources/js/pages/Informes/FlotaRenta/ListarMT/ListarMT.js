@@ -112,6 +112,8 @@ function ListarMT() {
                     <tr>
                         <th>PROPIETARIO</th>
                         <th>DATO AUXILIAR PROPIETARIO</th>
+                        <th>UBICACION-CLIENTE</th>
+                        <th>UBICACION-CIUDAD</th>
                         <th>ESTADO CLIENTE</th>
                         <th>ID EQUIPO</th>
                         <th>ESTADO MMTO</th>
@@ -142,6 +144,8 @@ function ListarMT() {
                                 <tr>
                                     <td>{seguros.razonsocial_int}</td>
                                     <td>{seguros.datoauxiliarpropietario_equ}</td>
+                                    <td>{seguros.razonsocial_cli}</td>
+                                    <td>{seguros.nombre_ciu}</td>
                                     <td>{seguros.nombre_estcli}</td>
                                     <td>{seguros.codigo_equ}</td>
                                     <td>{seguros.nombre_estmtto}</td>

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 const BarSessionSiete = (props) => {
     const { idusuario } = props;
-    console.log("ID DE USUARIO BAR SESSION : ", idusuario);
+    //console.log("ID DE USUARIO BAR SESSION : ", idusuario);
     const classes = useStyles();
     const history = useHistory();
 

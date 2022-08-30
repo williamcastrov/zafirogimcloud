@@ -9,7 +9,7 @@ import BarSessionTres from "./BarSessionTres";
 
 export default function SelectSubGrupoAccesorio(props) {
   const {  tipousuario } = props;
-  console.log("TIPO DE USUARIO : ", tipousuario);
+  //console.log("TIPO DE USUARIO : ", tipousuario);
 
   const [selectedForm, setSelectedForm] = useState(0);
   //const [listarUsuarios, setListUsuarios] = useState([]);

@@ -51,9 +51,9 @@ class FichaTecnicaController extends Controller
     public function listar_fichatecnica(){  
         try {
           
-          $data = DB::select("SELECT t0.*, t1.razonsocial_int, t2.descripcion_llan, t3.descripcion_tequ
-          FROM fichatecnica as t0 INNER JOIN interlocutores as t1 INNER JOIN tiposdellantas as t2 INNER JOIN tiposequipos as t3
-          WHERE t0.proveedor_fit = t1.id_int and t0.tipoderuedafrontal_fit = t2.id_llan and t0.tipodeoperacion_fit = t3.id_tequ");
+          $data = DB::select("SELECT t0.*, t3.descripcion_tequ
+          FROM fichatecnica as t0 INNER JOIN tiposequipos as t3
+          WHERE t0.tipodeoperacion_fit = t3.id_tequ");
   
           $response['data'] = $data;
           // $response['data'] = $data1;
@@ -70,10 +70,9 @@ class FichaTecnicaController extends Controller
     public function get($id_fit){
         try { 
 
-          $data = DB::select("SELECT t0.*, t1.razonsocial_int, t2.descripcion_llan, t3.descripcion_tequ
-          FROM fichatecnica as t0 INNER JOIN interlocutores as t1 INNER JOIN tiposdellantas as t2 INNER JOIN tiposequipos as t3
-          WHERE t0.id_fit              = $id_fit    and t0.proveedor_fit          = t1.id_int 
-          and t0.tipoderuedafrontal_fit = t2.id_llan and t0.tipodeoperacion_fit = t3.id_tequ ");
+          $data = DB::select("SELECT t0.*, t3.descripcion_tequ
+          FROM fichatecnica as t0 INNER JOIN tiposequipos as t3
+          WHERE t0.id_fit = $id_fit and t0.tipodeoperacion_fit = t3.id_tequ");
           
           if ($data) {
               $response['data'] = $data;

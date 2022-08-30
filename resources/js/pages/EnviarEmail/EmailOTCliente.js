@@ -155,6 +155,11 @@ function EmailOTCliente(props) {
       cellStyle: { minWidth: 50 }
     },
     {
+      field: 'id_actividad',
+      title: '# Actvidad',
+      cellStyle: { minWidth: 50 }
+    },
+    {
       field: 'nombre_est',
       title: 'Estado',
       cellStyle: { minWidth: 250 }

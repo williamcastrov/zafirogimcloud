@@ -32,6 +32,7 @@ class Facturacion extends Model
         'observacion_ctr',
         'facturada_ctr',
         'fechaalza_ctr',
+        'cencosto_fac',
         'fechainicio_ctr',
         'fechafinal_ctr'
     ];

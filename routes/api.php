@@ -323,6 +323,7 @@ Route::get('/equipos/leerultimoequipo', 'App\Http\Controllers\API\Mantenimiento\
 Route::get('/equipos/listar_reporteequipos', 'App\Http\Controllers\API\Mantenimiento\EquiposController@listar_reporteequipos');
 Route::get('/equipos/listar_bajasequiposhistoricos', 'App\Http\Controllers\API\Mantenimiento\EquiposController@listar_bajasequiposhistoricos');
 Route::get('/equipos/listar_equiposmontacargas', 'App\Http\Controllers\API\Mantenimiento\EquiposController@listar_equiposmontacargas');
+Route::get('/equipos/consultar_equiposmontacargas', 'App\Http\Controllers\API\Mantenimiento\EquiposController@consultar_equiposmontacargas');
 Route::get('/equipos/listar_equiposmontacargasusuario', 'App\Http\Controllers\API\Mantenimiento\EquiposController@listar_equiposmontacargasusuario');
 Route::get('/equipos/listar_alertasestadosequipos/{id}', 'App\Http\Controllers\API\Mantenimiento\EquiposController@listar_alertasestadosequipos');
 Route::get('/equipos/sumatotalequipos', 'App\Http\Controllers\API\Mantenimiento\EquiposController@sumatotalequipos');
@@ -463,6 +464,7 @@ Route::get('/ordenesserv/listar_listarot', 'App\Http\Controllers\API\GestionOrde
 Route::get('/ordenesserv/generarPdf/{id}', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@generarPdf');
 Route::get('/mantenimiento/generarPdfAlza/{id}', 'App\Http\Controllers\API\Mantenimiento\IncrementoCanonController@generarPdfAlza');
 Route::get('/ordenesserv/listar_ordenesservactivas', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@listar_ordenesservactivas');
+Route::get('/ordenesserv/listar_ordenescreadas', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@listar_ordenescreadas');
 Route::get('/ordenesserv/listar_ordenesservactivasusuario', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@listar_ordenesservactivasusuario');
 Route::get('/ordenesserv/totalotactivas', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@totalotactivas');
 Route::get('/ordenesserv/totalotprogramadas', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@totalotprogramadas');
@@ -472,6 +474,7 @@ Route::get('/ordenesserv/totalotterminadasmes', 'App\Http\Controllers\API\Gestio
 Route::get('/ordenesserv/cumplimientotalotmes/{id}', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@cumplimientotalotmes');
 Route::get('/ordenesserv/cumplimientootterminadasmes/{id}', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@cumplimientootterminadasmes');
 Route::get('/ordenesserv/listar_ordenesservterminadas', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@listar_ordenesservterminadas');
+Route::get('/ordenesserv/ordenesasignadas', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@ordenesasignadas');
 Route::get('/ordenesserv/listar_ordenesservactivasrevision', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@listar_ordenesservactivasrevision');
 Route::get('/ordenesserv/listar_ordenesservactivasrevisionusuario', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@listar_ordenesservactivasrevisionusuario');
 Route::get('/ordenesserv/listar_ordeneschequeo', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@listar_ordeneschequeo');
@@ -486,6 +489,7 @@ Route::get('/ordenesserv/leetodasordentecnico/{id}', 'App\Http\Controllers\API\G
 Route::delete('/ordenesserv/delete/{id}', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@delete');
 Route::put('/ordenesserv/update/{id}', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@update');
 Route::put('/ordenesserv/cancelar/{id}', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@cancelar');
+Route::put('/ordenesserv/otasignada/{id}', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@otasignada');
 Route::put('/ordenesserv/ordenprogramada/{id}', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@ordenprogramada');
 Route::put('/ordenesserv/pasararevision/{id}', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@pasararevision');
 Route::put('/ordenesserv/sumartiempoactividades/{id}', 'App\Http\Controllers\API\GestionOrdenes\OrdenesController@sumartiempoactividades');
@@ -503,6 +507,10 @@ Route::get('/cumplimiento/actividadesactivasxot/{id}', 'App\Http\Controllers\API
 Route::get('/cumplimiento/actividadestotalesxot/{id}', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@actividadestotalesxot');
 Route::get('/cumplimiento/getoser/{id}', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@getoser');
 Route::get('/cumplimiento/listar_actividadesotrevision', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@listar_actividadesotrevision');
+Route::get('/cumplimiento/ordenesasignadas', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@ordenesasignadas');
+Route::get('/cumplimiento/ordenesterminadas', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@ordenesterminadas');
+Route::get('/cumplimiento/ordenespreventivo', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@ordenespreventivo');
+Route::get('/cumplimiento/ordenescorrectivo', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@ordenescorrectivo');
 Route::delete('/cumplimiento/delete/{id}', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@delete');
 Route::put('/cumplimiento/update/{id}', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@update');
 Route::put('/cumplimiento/cerraractividad/{id}', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@cerraractividad');

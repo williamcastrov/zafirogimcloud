@@ -22,7 +22,7 @@ export default function SelectMenuBar(props) {
 
   const handlerForm = () => {
     //setSelectedForm(tipo_usu)
-    console.log("TIPO DE USUARIO : ", tipousuario)
+    //console.log("TIPO DE USUARIO : ", tipousuario)
     switch (tipousuario) {
       case 13:
         return <BarSessionSuperAdmin />

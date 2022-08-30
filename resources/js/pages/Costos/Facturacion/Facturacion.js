@@ -319,7 +319,7 @@ function Facturacion(props) {
     const procesarPeriodo = async () => {
 
         let periodo = anno + mes;
-        //console.log("PERIODO : ", periodo);
+        console.log("PERIODO : ", periodo);
         let pendiente = 0;
         let facturado = 0;
         let contador = 0;
@@ -328,7 +328,7 @@ function Facturacion(props) {
         async function fetchDataPeriodo() {
             const res = await contratosServices.listdatosfacturacion(periodo);
             setFacturacionEquipos(res.data);
-            //console.log("FACTURACION EQUIPOS : ", res.data);
+            console.log("FACTURACION EQUIPOS : ", res.data);
             longitud = res.data.length;
 
             if (res.data.length > 0) {
@@ -340,7 +340,7 @@ function Facturacion(props) {
                     } else {
                         facturado = facturado + row.valorrentames_ctr
                     }
-                    if (longitud === contador) {
+                    if (longitud === (contador)) {
                         setFacturadoMes(facturado)
                         setPendienteMes(pendiente)
                     }
@@ -407,12 +407,20 @@ function Facturacion(props) {
 
             if (newDet.length > 0) {
                 //console.log("FACTURACION EQUIPOS  NEW DET: ", newDet);
+              
                 let longitud = newDet[0].length;
                 //console.log("LONGITUD : ", longitud);
 
                 newDet[0] &&
                     newDet[0].forEach((row, index) => {
                         //console.log("EQUIPO : ", row.equipo_fac)
+                        let val = row.equipo_fac.substr(0, 3)
+                        let otr = parseInt(val)
+                        
+                        if (isNaN(parseInt(otr)))
+                            otr = 0
+                        //console.log("VALOR : ", otr);
+
                         contador = contador + 1;
                         let item = {
                             anno_fac: annodestino,
@@ -421,10 +429,11 @@ function Facturacion(props) {
                             id_ctr: row.id_ctr,
                             codigocontrato_ctr: row.codigocontrato_ctr,
                             equipo_fac: row.equipo_fac,
+                            cencosto_fac: otr,
                             asesorcomercial_ctr: row.asesorcomercial_ctr,
                             cliente_ctr: row.cliente_ctr,
                             ciudad_ctr: row.ciudad_ctr,
-                            tipofacturas_fac: 0,
+                            tipofacturas_fac: 1,
                             diafacturacion_ctr: 0, //row.diafacturacion_ctr,
                             valorrentames_ctr: 0, //row.valorrentames_ctr,
                             numerofactura_ctr: 0, //row.numerofactura_ctr,
@@ -484,7 +493,7 @@ function Facturacion(props) {
                 asesorcomercial_ctr: 4,
                 cliente_ctr: 0,
                 ciudad_ctr: 167,
-                tipofacturas_fac: 1,
+                tipofacturas_fac: 2,
                 diafacturacion_ctr: 0,
                 valorrentames_ctr: 0,
                 numerofactura_ctr: 0,
@@ -530,13 +539,13 @@ function Facturacion(props) {
                 anno_fac: anno,
                 mes_fac: mes,
                 periodo_fac: periodo,
-                id_ctr: 2,
+                id_ctr: 3,
                 codigocontrato_ctr: 2,
                 equipo_fac: "SGRU",
                 asesorcomercial_ctr: 4,
                 cliente_ctr: 0,
                 ciudad_ctr: 167,
-                tipofacturas_fac: 2,
+                tipofacturas_fac: 3,
                 diafacturacion_ctr: 0,
                 valorrentames_ctr: 0,
                 numerofactura_ctr: 0,
@@ -588,7 +597,7 @@ function Facturacion(props) {
                 asesorcomercial_ctr: 3,
                 cliente_ctr: 0,
                 ciudad_ctr: 167,
-                tipofacturas_fac: 3,
+                tipofacturas_fac: 4,
                 diafacturacion_ctr: 0,
                 valorrentames_ctr: 0,
                 numerofactura_ctr: 0,
@@ -640,7 +649,7 @@ function Facturacion(props) {
                 asesorcomercial_ctr: 4,
                 cliente_ctr: 0,
                 ciudad_ctr: 167,
-                tipofacturas_fac: 4,
+                tipofacturas_fac: 5,
                 diafacturacion_ctr: 0,
                 valorrentames_ctr: 0,
                 numerofactura_ctr: 0,
@@ -692,7 +701,7 @@ function Facturacion(props) {
                 asesorcomercial_ctr: 6,
                 cliente_ctr: 0,
                 ciudad_ctr: 167,
-                tipofacturas_fac: 6,
+                tipofacturas_fac: 7,
                 diafacturacion_ctr: 0,
                 valorrentames_ctr: 0,
                 numerofactura_ctr: 0,

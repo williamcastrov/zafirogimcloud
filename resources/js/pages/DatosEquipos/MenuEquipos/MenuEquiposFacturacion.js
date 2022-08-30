@@ -18,7 +18,7 @@ import { Container, Button, Link, lightColors, darkColors } from 'react-floating
 import Garantias from "../Garantias";
 import DatosEquipos from "../DatosEquipos";
 import Contratos from "../Contratos";
-import FichaTecnica from "../FichaTecnica";
+import FichaTecnica from "../FichaTecnica/FichaTecnicaBasica";
 import Ubicaciones from "../Ubicaciones";
 import ExtrasEquipos from "../../Mantenimiento/ExtrasEquipos";
 import Seguros from "../Seguros";
@@ -235,10 +235,10 @@ export default function MenuEquiposFacturacion(props) {
 
       <Container className={styles.floatingbutton} >
         <Button
-          tooltip="Contratos"
+          tooltip="Ficha técnica"
           rotate={true}
           styles={{ backgroundColor: darkColors.red, color: lightColors.white }}
-          onClick={() => setModalContratos(true)} ><SupervisorAccountIcon />
+          onClick={() => setModalFichaTecnica(true)} ><SettingsApplicationsIcon />
         </Button>
         <Button
           tooltip="Información Equipos!"

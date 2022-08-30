@@ -503,6 +503,10 @@ function GestionarPendientes(props) {
       field: 'codigo_equ'
     },
     {
+      title: 'Cliente',
+      field: 'razonsocial_cli'
+    },
+    {
       title: 'Fecha Creación',
       field: 'fecha_pot',
     },

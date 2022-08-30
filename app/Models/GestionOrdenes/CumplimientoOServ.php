@@ -50,6 +50,7 @@ class CumplimientoOServ extends Model
 		'estadocomponentes',
 		'estadooperacionequipo_cosv',
 		'comentarios_cosv',
+		'proveedorexterno_cosv',
 		'placavehiculo_cosv'
     ];
 

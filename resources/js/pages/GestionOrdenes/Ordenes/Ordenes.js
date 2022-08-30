@@ -6,14 +6,18 @@ import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import PeopleIcon from '@material-ui/icons/People';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import RestorePageIcon from '@material-ui/icons/RestorePage';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 
 // Paginas 
 import CrearOrdenes from "../../GestionOrdenes/CrearOrdenes";
-import CumplirOrden from "../../GestionOrdenes/CumplirOrden";
-import CumplirOrdenTecnico from "../../GestionOrdenes/CumplirOrden/CumplirOrdenTecnico";
 import RevisarAprobarOT from "../../GestionOrdenes/RevisarAprobarOT";
-import OrdenesVencidas from '../../ListadoOrdenes/OrdenesVencidas.js';
-import OrdenesVencenHoy from '../../ListadoOrdenes/OrdenesVencenHoy.js';
+import OTAsignadas from "../../GestionOrdenes/OTAsignadas";
+import OTTerminadas from "../../GestionOrdenes/OTTerminadas";
+import OTCorrectivas from "../../GestionOrdenes/OTCorrectivas";
+import OTPreventivo from "../../GestionOrdenes/OTPreventivo";
+import ConsultarEquipos from "../../Mantenimiento/ConsultarEquipos";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -81,26 +85,34 @@ function Ordenes(props) {
         <div className={classes.tabs} >
           <Tabs variant="fullWidth" value={value} onChange={handleChange} aria-label="wrapped label tabs example">
             <Tab value="1" label="Crear Orden" {...selectTab('1')} icon={<AddBoxOutlinedIcon />} />
-            <Tab value="2" label="Actividades x OT" {...selectTab('2')} icon={<ExitToAppIcon />} />
-            <Tab value="3" label="Revisar y Aprobar" {...selectTab('3')} icon={< CheckBoxIcon />} />
-            <Tab value="4" label="Mano de Obra" {...selectTab('4')} icon={<PeopleIcon />} />
-            <Tab value="5" label="Costos y Gastos" {...selectTab('5')} icon={< MonetizationOnIcon />} />
+            <Tab value="2" label="Mtto Preventivo" {...selectTab('2')} icon={<AssignmentTurnedInIcon />} />
+            <Tab value="3" label="Mtto Correctivo" {...selectTab('3')} icon={<RestorePageIcon />} />
+            <Tab value="4" label="Revisar y Aprobar" {...selectTab('4')} icon={< CheckBoxIcon />} />
+            <Tab value="5" label="Consultar Equipos" {...selectTab('5')} icon={<SettingsApplicationsIcon />} />
+            <Tab value="6" label="Ordenes Asignadas" {...selectTab('5')} icon={<PeopleIcon />} />
+            <Tab value="7" label="Ordenes Terminadas" {...selectTab('6')} icon={< MonetizationOnIcon />} />
           </Tabs>
         </div>
         <TabPanel value={value} index="1">
           <CrearOrdenes operarioot={operario}  idUsuario={idUsuario}  />
         </TabPanel>
         <TabPanel value={value} index="2">
-          <CumplirOrden operario={operario}  idUsuario={idUsuario}  />
+          <OTPreventivo operario={operario}  idUsuario={idUsuario}  />
         </TabPanel>
         <TabPanel value={value} index="3">
-          < RevisarAprobarOT operarioot={operario}  idUsuario={idUsuario}  />
+          <OTCorrectivas operario={operario}  idUsuario={idUsuario}  />
         </TabPanel>
         <TabPanel value={value} index="4">
-          <OrdenesVencidas />
+          < RevisarAprobarOT operarioot={operario}  idUsuario={idUsuario}  />
         </TabPanel>
         <TabPanel value={value} index="5">
-          <OrdenesVencenHoy />
+          < ConsultarEquipos operarioot={operario}  idUsuario={idUsuario}  />
+        </TabPanel>
+        <TabPanel value={value} index="6">
+          <OTAsignadas />
+        </TabPanel>
+        <TabPanel value={value} index="7">
+          <OTTerminadas />
         </TabPanel>
       </div>
     </div>

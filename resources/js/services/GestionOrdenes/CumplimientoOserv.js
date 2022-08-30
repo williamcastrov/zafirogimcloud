@@ -39,6 +39,42 @@ cumplimientooserv.listar_actividadesotrevision = async () => {
     return res;
 }
 
+cumplimientooserv.ordenesasignadas = async () => {
+    const urlList = baseUrl+"/ordenesasignadas"
+    const res = await axios.get(urlList)
+    .then(response=>{ return response.data; })
+    .catch(error=>{ return error; })
+   
+    return res;
+}
+
+cumplimientooserv.ordenesterminadas = async () => {
+    const urlList = baseUrl+"/ordenesterminadas"
+    const res = await axios.get(urlList)
+    .then(response=>{ return response.data; })
+    .catch(error=>{ return error; })
+   
+    return res;
+}
+
+cumplimientooserv.ordenescorrectivo = async () => {
+    const urlList = baseUrl+"/ordenescorrectivo"
+    const res = await axios.get(urlList)
+    .then(response=>{ return response.data; })
+    .catch(error=>{ return error; })
+   
+    return res;
+}
+
+cumplimientooserv.ordenespreventivo = async () => {
+    const urlList = baseUrl+"/ordenespreventivo"
+    const res = await axios.get(urlList)
+    .then(response=>{ return response.data; })
+    .catch(error=>{ return error; })
+   
+    return res;
+}
+
 cumplimientooserv.listUnCumplimiento = async (id_actividad) => {
     console.log("DATO ACTIVIDAD : ",id_actividad)
     const urlList = baseUrl+"/get/"+id_actividad

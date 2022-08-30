@@ -199,7 +199,7 @@ function OrdenesPdfCliente(props) {
         return
       }
 
-      window.open("https://gimcloud.co/api/ordenesserv/generarPdf/" + orden.id_actividad, "PDF")
+      window.open("https://zafiro.gimcloud.co/api/ordenesserv/generarPdf/" + orden.id_actividad, "PDF")
     }
   }
 

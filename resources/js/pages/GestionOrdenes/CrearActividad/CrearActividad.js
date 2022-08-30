@@ -61,6 +61,7 @@ function CrearActividad(props) {
     const [operario, setOperario] = React.useState(0);
     const [operarioDos, setOperarioDos] = React.useState(0);
     const [comentarios, setComentarios] = React.useState(0);
+    const [proveedorExterno, setProveedorExterno] = React.useState(0);
     const [grabar, setGrabar] = React.useState(false);
 
     const [listarOrdenes, setListarOrdenes] = useState([]);
@@ -112,6 +113,7 @@ function CrearActividad(props) {
         estadocomponentes: 0,
         estadooperacionequipo_cosv: 81,
         comentarios_cosv: comentarios,
+        proveedorexterno_cosv: proveedorExterno,
         placavehiculo_cosv: 0
     });
 
@@ -173,6 +175,7 @@ function CrearActividad(props) {
                     estadocomponentes: 0,
                     estadooperacionequipo_cosv: 81,
                     comentarios_cosv: comentarios,
+                    proveedorexterno_cosv: proveedorExterno,
                     placavehiculo_cosv: 0
                 }])
             ))
@@ -218,8 +221,18 @@ function CrearActividad(props) {
 
                 if (res.success) {
                     swal("Crear Actividad OT", "Actividad de la OT Creada de forma Correcta!", "success", { button: "Aceptar" });
-                    console.log(res.message)
-                    window.location.reload();
+                    
+                    const rest = await crearordenesServices.asignarot(cumplimientoSeleccionado[0].id_cosv);
+
+                    if (rest.success) {
+                        swal("Orden de Servicio", "Asignada de forma Correcta!", "success", { button: "Aceptar" });
+                        console.log(rest.message)
+                        window.location.reload();
+                    }
+                    else {
+                        swal("Orden de Servicio", "Error Asignando la Orden de Servicio!", "error", { button: "Aceptar" });
+                        console.log(rest.message);
+                    }
                 } else {
                     swal("Crear actividad OT", "Error Creando la Actividad de la OT!", "error", { button: "Aceptar" });
                     console.log(res.message);
@@ -312,6 +325,8 @@ function CrearActividad(props) {
                                 }
                             </Select>
                         </FormControl>
+                        <TextField name="proveedoreexterno_cosv" label="Nombre proveedor externo" fullWidth
+                                   onChange={(e) => setProveedorExterno(e.target.value)} />
                         <TextField name="comentarios_cosv" label="Comentarios para el Técnico" fullWidth
                                    onChange={(e) => setComentarios(e.target.value)} />
                         <div >

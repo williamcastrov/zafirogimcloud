@@ -20,6 +20,15 @@ crearordenes.listOrdenesServActivas = async () => {
     return res;
 }
 
+crearordenes.listOrdenesServCreadas = async () => {    
+    const urlList = baseUrl+"/listar_ordenescreadas"
+    const res = await axios.get(urlList)
+    .then(response=>{ return response.data; })
+    .catch(error=>{ return error; })
+   
+    return res;
+}
+
 crearordenes.totalotactivas = async () => {    
     const urlList = baseUrl+"/totalotactivas"
     const res = await axios.get(urlList)
@@ -112,6 +121,15 @@ crearordenes.listOrdenesServActivasUsuario = async () => {
 
 crearordenes.listOrdenesServActivasRevision = async () => {    
     const urlList = baseUrl+"/listar_ordenesservactivasrevision"
+    const res = await axios.get(urlList)
+    .then(response=>{ return response.data; })
+    .catch(error=>{ return error; })
+   
+    return res;
+}
+
+crearordenes.ordenesasignadas = async () => {    
+    const urlList = baseUrl+"/ordenesasignadas"
     const res = await axios.get(urlList)
     .then(response=>{ return response.data; })
     .catch(error=>{ return error; })
@@ -266,6 +284,16 @@ crearordenes.updatiempoparo = async (data) => {
 crearordenes.cancelar = async (id_otr) => {
     //console.log("DATA : ", id_otr);
     const urlUpdate = baseUrl+"/cancelar/"+id_otr
+    const res = await axios.put(urlUpdate)
+    .then(response=>{ return response.data; })
+    .catch(error=>{ return error; })
+   
+    return res;
+}
+
+crearordenes.asignarot = async (id_otr) => {
+    //console.log("DATA : ", id_otr);
+    const urlUpdate = baseUrl+"/otasignada/"+id_otr
     const res = await axios.put(urlUpdate)
     .then(response=>{ return response.data; })
     .catch(error=>{ return error; })

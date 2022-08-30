@@ -178,7 +178,7 @@ import CostosContrataciones from "./pages/Informes/FlotaRenta/InformeContratacio
 
 function Main(props) {
   const { metadata, componente, tipousuario, user, idUsu } = props;
-  console.log("TIPO DE USUARIO EN MAIN : ", tipousuario)
+  //console.log("TIPO DE USUARIO EN MAIN : ", tipousuario)
 
   return (
     <>

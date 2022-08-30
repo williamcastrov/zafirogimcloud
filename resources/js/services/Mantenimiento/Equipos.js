@@ -47,6 +47,15 @@ equipos.listEquiposMontacargas = async () => {
     return res;
 }
 
+equipos.consultarEquiposMontacargas = async () => {
+    const urlList = baseUrl+"/consultar_equiposmontacargas"
+    const res = await axios.get(urlList)
+    .then(response=>{ return response.data; })
+    .catch(error=>{ return error; })
+   
+    return res;
+}
+
 equipos.leerultimoequipo = async () => {
     const urlList = baseUrl+"/leerultimoequipo"
     const res = await axios.get(urlList)

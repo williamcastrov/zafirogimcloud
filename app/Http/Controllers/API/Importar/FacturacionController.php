@@ -31,6 +31,7 @@ class FacturacionController extends Controller
             $insert['observacion_ctr']  = $request['observacion_ctr'];
             $insert['facturada_ctr']      = $request['facturada_ctr'];
             $insert['fechaalza_ctr']      = $request['fechaalza_ctr'];
+            $insert['cencosto_fac']      = $request['cencosto_fac'];
             $insert['fechainicio_ctr']    = $request['fechainicio_ctr'];
             $insert['fechafinal_ctr']     = $request['fechafinal_ctr'];
   
@@ -248,6 +249,7 @@ class FacturacionController extends Controller
             $data['observacion_ctr']    = $request['observacion_ctr'];
             $data['facturada_ctr']      = $request['facturada_ctr'];
             $data['fechaalza_ctr']      = $request['fechaalza_ctr'];
+            $data['cencosto_fac']      = $request['cencosto_fac'];
             $data['fechainicio_ctr']    = $request['fechainicio_ctr'];
             $data['fechafinal_ctr']     = $request['fechafinal_ctr'];
 

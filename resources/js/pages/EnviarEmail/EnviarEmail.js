@@ -35,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
     },
     formControl: {
         margin: theme.spacing(0),
-        minWidth: 155,
-        maxWidth: 155,
+        minWidth: 400,
+        maxWidth: 400,
     },
     formControl2: {
         margin: theme.spacing(0),
@@ -113,23 +113,24 @@ const useStyles = makeStyles((theme) => ({
 
 function EnviarEmail(props) {
     const styles = useStyles();
-    const {id_otr, nombre_emp, razonsocial_cli, telefono_cli, nombre_ciu, email_cli, descripcion_mar, modelo_dequ,
-           fechainicia_otr, descripcion_tser, descripcion_tmt, serie_dequ, codigo_equ, descripcion_con, primer_apellido_con,
-           primer_nombre_con, horometro_otr, iniciatransporte_otr, finaltransporte_otr, tiempotransporte_otr, tiempoorden_otr,
-           estado_otr
+    const { id_otr, nombre_emp, razonsocial_cli, telefono_cli, nombre_ciu, email_cli, descripcion_mar, modelo_dequ,
+        fechainicia_otr, descripcion_tser, descripcion_tmt, serie_dequ, codigo_equ, descripcion_con, primer_apellido_con,
+        primer_nombre_con, horometro_otr, iniciatransporte_otr, finaltransporte_otr, tiempotransporte_otr, tiempoorden_otr,
+        estado_otr, id_actividad
     } = props.ordenSeleccionado;
-    console.log("ORDEN SELECCIONADA : ", id_otr);
+    console.log("ORDEN SELECCIONADA : ", id_actividad);
 
+    const [emailEnviar, setEmailEnviar] = useState(false);
     const onSubmit = values => console.log(values);
     const [enviar, setEnviar] = useState(false);
-    const [nombre, setNombre] = useState(primer_nombre_con+' '+primer_apellido_con);
+    const [nombre, setNombre] = useState(primer_nombre_con + ' ' + primer_apellido_con);
     //const [email, setEmail] = useState("claudiaholguinarroyave@gmail.com");
-    const [comentario, setComentario] = useState("https://gimcloud.co/api/ordenesserv/generarPdf/"+id_otr);
+    const [comentario, setComentario] = useState("https://zafiro.gimcloud.co/api/ordenesserv/generarPdf/" + id_actividad);
     const [contacto, setContacto] = useState({
-        nombre: primer_nombre_con+' '+primer_apellido_con,
+        nombre: primer_nombre_con + ' ' + primer_apellido_con,
         email: email_cli,
         //email: 'williamcastrov@gmail.com',
-        comentario: "https://gimcloud.co/api/ordenesserv/generarPdf/"+id_otr
+        comentario: "https://zafiro.gimcloud.co/api/ordenesserv/generarPdf/" + id_actividad
     });
 
     const handleChange = e => {
@@ -151,12 +152,23 @@ function EnviarEmail(props) {
         if (enviar) {
             function fetchDataDatosEquipos() {
                 {
-                    setContacto([{
-                        nombre: nombre,
-                        email: email_cli,
-                        //email: 'williamcastrov@gmail.com',
-                        comentario: "https://gimcloud.co/api/ordenesserv/generarPdf/"+id_otr
-                    }])
+                    console.log("EMAIL : ", emailEnviar);
+                    if (emailEnviar) {
+                        setContacto([{
+                            nombre: nombre,
+                            email: emailEnviar,
+                            //email: 'williamcastrov@gmail.com',
+                            comentario: "https://zafiro.gimcloud.co/api/ordenesserv/generarPdf/" + id_actividad
+                        }])
+
+                    } else {
+                        setContacto([{
+                            nombre: nombre,
+                            email: email_cli,
+                            //email: 'williamcastrov@gmail.com',
+                            comentario: "https://zafiro.gimcloud.co/api/ordenesserv/generarPdf/" + id_actividad
+                        }])
+                    }
                 }
                 agregarTarea();
             }
@@ -166,11 +178,19 @@ function EnviarEmail(props) {
 
     const agregarTarea = (e) => {
         //e.preventDefault();
-        console.log("EMAIL : ", contacto)
-        const templateId = 'template_2ccp785';
-        const serviceID = 'mantenimientogimcloud';
-        sendFeedback(serviceID, templateId, { to_name: contacto.nombre, from_name: contacto.nombre, message_html: contacto.comentario, 
-                                              reply_to: contacto.email, email: contacto.email, id_otr: id_otr, razonsocial_cli: razonsocial_cli })
+        const templateId = 'template_smmfw59';
+        const serviceID = 'service_0yis59h';
+        if (emailEnviar) {
+            sendFeedback(serviceID, templateId, {
+                to_name: contacto.nombre, from_name: contacto.nombre, message_html: contacto.comentario,
+                reply_to: "jefemantenimiento@elzafiro.com.co", email: emailEnviar, id_otr: id_actividad, razonsocial_cli: razonsocial_cli
+            })
+        } else {
+            sendFeedback(serviceID, templateId, {
+                to_name: contacto.nombre, from_name: contacto.nombre, message_html: contacto.comentario,
+                reply_to: "jefemantenimiento@elzafiro.com.co", email: contacto.email, id_otr: id_actividad, razonsocial_cli: razonsocial_cli
+            })
+        }
         return;
     }
 
@@ -187,7 +207,7 @@ function EnviarEmail(props) {
     return (
         <div className="App">
             <Typography align="center" className={styles.typography} variant="button" display="block" >
-                - ORDEN DE SERVICIO # {props.ordenSeleccionado.id_otr}
+                - ORDEN DE SERVICIO # {props.ordenSeleccionado.id_actividad}
             </Typography>
             <ButtonGroup orientation="vertical" className={styles.button} color="primary" aria-label="outlined primary button group">
                 <Button>EMPRESA : {nombre_emp} </Button>
@@ -200,7 +220,7 @@ function EnviarEmail(props) {
                 <Button >CIUDAD : {nombre_ciu} </Button>
                 <Button >CORREO : {email_cli} </Button>
             </ButtonGroup>
-            
+
             <ButtonGroup orientation="vertical" className={styles.button} color="primary" aria-label="outlined primary button group">
                 <Button >MARCA : {descripcion_mar} </Button>
                 <Button >MODELO : {modelo_dequ} </Button>
@@ -208,6 +228,16 @@ function EnviarEmail(props) {
             </ButtonGroup>
             <br />
             <ButtonGroup orientation="vertical" className={styles.button} color="primary" aria-label="outlined primary button group">
+                <div>
+                    <Typography align="center" className={styles.typography} variant="button" display="block"> Ingrese Email Enviar OT </Typography>
+                    <Grid xl={12} lg={12} xs={12} md={12}>
+                        <FormControl className={styles.formControl}>
+                            <TextField type="text" className={styles.inputMaterial} label="Ingrese Emanil" name="nvoemail"
+                                onChange={(e) => setEmailEnviar(e.target.value)} />
+                        </FormControl>
+                    </Grid>
+                </div>
+                <br />
                 <Button variant="contained" onClick={creaMensaje} size="large" color="secondary" >
                     Enviar Email
                 </Button>

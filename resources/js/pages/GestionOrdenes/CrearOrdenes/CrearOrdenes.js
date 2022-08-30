@@ -32,6 +32,8 @@ import tiposmttoServices from "../../../services/Mantenimiento/Tiposmtto";
 import tipooperacionServices from "../../../services/GestionOrdenes/TipoOperacion";
 import contactosServices from "../../../services/Interlocutores/Contactos";
 import usuariosServices from "../../../services/Usuarios";
+import cumplimientoServices from "../../../services/GestionOrdenes/CumplimientoOserv";
+
 
 //Componentes Gestion de Ordenes
 import MenuCrearOrden from "../MenuCrearOrden";
@@ -149,6 +151,7 @@ function CrearOrdenes(props) {
   const [modalHerramientas, setModalHerramientas] = useState(false);
   const [formError, setFormError] = useState(false);
   const [modalPendiente, setModalPendiente] = useState(false);
+  const [listarCumplimiento, setListCumplimiento] = useState([]);
 
   const [listarUsuarios, setListUsuarios] = useState([]);
   const [listarEmpresas, setListarEmpresas] = useState([]);
@@ -274,6 +277,40 @@ function CrearOrdenes(props) {
     }
     fetchDataTipoOperacion();
   }, [])
+
+  useEffect(() => {
+   
+    async function fetchDataOrdenes() {
+      const res = await crearordenesServices.listOrdenesServCreadas();
+      //console.log("OT CREADAS : ", res)
+
+      if (res.data.length > 0) {
+        const rest = await cumplimientoServices.listCumplimiento();
+        setListCumplimiento(rest.data);
+       
+        const newDet = [];
+        res.data &&
+          res.data.map((orden, index) => {
+            console.log("OT : ", orden)
+            let valida = true;
+            rest.data &&
+              rest.data.map((item, index) => {
+                if (orden.id_otr == item.id_cosv) {
+                  valida = false;
+                }
+              });
+
+            if (valida) {
+              newDet.push(orden);
+            }
+          });
+        setListarOrdenes(newDet);
+        //console.log("Lee Ordenes", newDet);
+      }
+    }
+    fetchDataOrdenes();
+    setActualiza(false);
+  }, [actualiza])
 
   useEffect(() => {
     async function fetchDataOrdenes() {
@@ -1369,7 +1406,7 @@ function CrearOrdenes(props) {
                 <MenuItem value=""> <em>None</em> </MenuItem>
                 {
                   listarProveedores.map((itemselect) => {
-                    return (
+                    return (contactoCliente
                       <MenuItem value={itemselect.id_int}>{itemselect.razonsocial_int}</MenuItem>
                     )
                   })

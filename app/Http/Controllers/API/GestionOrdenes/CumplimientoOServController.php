@@ -51,6 +51,7 @@ class CumplimientoOServController extends Controller
           $insert['estadocomponentes']          = $request['estadocomponentes'];
           $insert['estadooperacionequipo_cosv'] = $request['estadooperacionequipo_cosv'];
           $insert['comentarios_cosv']           = $request['comentarios_cosv'];
+          $insert['proveedorexterno_cosv']     = $request['proveedorexterno_cosv'];
           $insert['placavehiculo_cosv']         = $request['placavehiculo_cosv'];
 
           CumplimientoOServ::insert($insert);
@@ -129,6 +130,152 @@ class CumplimientoOServController extends Controller
               and t0.estadooperacionequipo_cosv = t4.id_est and t0.operario_cosv = t7.id_emp and t0.tipo_cosv = t8.id_tmt
               and t5.cliente_otr        = t9.id_cli  and t9.ciudad_cli   = t10.id_ciu and t5.empresa_otr = t11.id_emp 
               and t6.marca_equ  	      = t12.id_mar and t5.contactocliente_otr = t13.id_con
+              ORDER BY t0.id_actividad DESC");
+  
+          $response['data'] = $data;
+          // $response['data'] = $data1;
+          $response['message'] = "load successful";
+          $response['success'] = true;
+      
+        } catch (\Exception $e) {
+          $response['message'] = $e->getMessage();
+          $response['success'] = false;
+        }
+          return $response;
+      }
+
+      public function ordenesasignadas(){  
+        try {
+            $data = DB::select("SELECT t0.*, t1.descripcion_tope, t2.descripcion_are, t3.descripcion_fmt, t4.nombre_est,
+                                       t5.*, t6.codigo_equ, concat(t7.primer_nombre_emp,' ',t7.primer_apellido_emp) as nombretecnico,
+                                       t8.descripcion_tmt, t9.razonsocial_cli, t9.telefono_cli, t9.email_cli, t10.nombre_ciu,
+                                       t13.primer_nombre_con, t13.primer_apellido_con, t13.telefono_con,
+                                       t13.email_con, datosadicionalequipos.modelo_dequ, datosadicionalequipos.serie_dequ,
+                                       datosadicionalequipos.referencia_dequ, datosadicionalequipos.nombrealterno_dequ,
+                                       t12.descripcion_mar, t11.nombre_emp
+            FROM  cumplimientooserv as t0 INNER JOIN tipooperacion as t1 INNER JOIN actividadrealizada as t2 
+                                          INNER JOIN fallasdemtto  as t3 INNER JOIN estados  as t4
+                                          INNER JOIN ordenservicio as t5 INNER JOIN equipos  as t6
+                                          INNER JOIN interlocutores_emp as t7  INNER JOIN tiposmantenimiento as t8
+                                          INNER JOIN interlocutores_cli as t9  INNER JOIN ciudades           as t10
+                                          INNER JOIN empresa            as t11 INNER JOIN marcas             as t12
+                                          INNER JOIN contactos          as t13
+            left join datosadicionalequipos on (datosadicionalequipos.id_dequ = t5.equipo_otr)
+            WHERE t0.tipooperacion_cosv = t1.id_tope and t0.servicio_cosv = t2.id_are and t0.id_cosv = t5.id_otr
+              and t0.tipofallamtto_cosv = t3.id_fmt  and t0.estado_cosv   = 23     and t5.equipo_otr = t6.id_equ 
+              and t0.estadooperacionequipo_cosv = t4.id_est and t0.operario_cosv = t7.id_emp and t0.tipo_cosv = t8.id_tmt
+              and t5.cliente_otr        = t9.id_cli  and t9.ciudad_cli   = t10.id_ciu and t5.empresa_otr = t11.id_emp 
+              and t6.marca_equ  	      = t12.id_mar and t5.contactocliente_otr = t13.id_con
+              ORDER BY t0.id_actividad DESC");
+  
+          $response['data'] = $data;
+          // $response['data'] = $data1;
+          $response['message'] = "load successful";
+          $response['success'] = true;
+      
+        } catch (\Exception $e) {
+          $response['message'] = $e->getMessage();
+          $response['success'] = false;
+        }
+          return $response;
+      }
+
+      public function ordenesterminadas(){  
+        try {
+            $data = DB::select("SELECT t0.*, t1.descripcion_tope, t2.descripcion_are, t3.descripcion_fmt, t4.nombre_est,
+                                       t5.*, t6.codigo_equ, concat(t7.primer_nombre_emp,' ',t7.primer_apellido_emp) as nombretecnico,
+                                       t8.descripcion_tmt, t9.razonsocial_cli, t9.telefono_cli, t9.email_cli, t10.nombre_ciu,
+                                       t13.primer_nombre_con, t13.primer_apellido_con, t13.telefono_con,
+                                       t13.email_con, datosadicionalequipos.modelo_dequ, datosadicionalequipos.serie_dequ,
+                                       datosadicionalequipos.referencia_dequ, datosadicionalequipos.nombrealterno_dequ,
+                                       t12.descripcion_mar, t11.nombre_emp
+            FROM  cumplimientooserv as t0 INNER JOIN tipooperacion as t1 INNER JOIN actividadrealizada as t2 
+                                          INNER JOIN fallasdemtto  as t3 INNER JOIN estados  as t4
+                                          INNER JOIN ordenservicio as t5 INNER JOIN equipos  as t6
+                                          INNER JOIN interlocutores_emp as t7  INNER JOIN tiposmantenimiento as t8
+                                          INNER JOIN interlocutores_cli as t9  INNER JOIN ciudades           as t10
+                                          INNER JOIN empresa            as t11 INNER JOIN marcas             as t12
+                                          INNER JOIN contactos          as t13
+            left join datosadicionalequipos on (datosadicionalequipos.id_dequ = t5.equipo_otr)
+            WHERE t0.tipooperacion_cosv = t1.id_tope and t0.servicio_cosv = t2.id_are and t0.id_cosv = t5.id_otr
+              and t0.tipofallamtto_cosv = t3.id_fmt  and t0.estado_cosv   = 27     and t5.equipo_otr = t6.id_equ 
+              and t0.estadooperacionequipo_cosv = t4.id_est and t0.operario_cosv = t7.id_emp and t0.tipo_cosv = t8.id_tmt
+              and t5.cliente_otr        = t9.id_cli  and t9.ciudad_cli   = t10.id_ciu and t5.empresa_otr = t11.id_emp 
+              and t6.marca_equ  	      = t12.id_mar and t5.contactocliente_otr = t13.id_con
+              ORDER BY t0.id_actividad DESC");
+  
+          $response['data'] = $data;
+          // $response['data'] = $data1;
+          $response['message'] = "load successful";
+          $response['success'] = true;
+      
+        } catch (\Exception $e) {
+          $response['message'] = $e->getMessage();
+          $response['success'] = false;
+        }
+          return $response;
+      }
+
+      public function ordenescorrectivo(){  
+        try {
+            $data = DB::select("SELECT t0.*, t1.descripcion_tope, t2.descripcion_are, t3.descripcion_fmt, t4.nombre_est,
+                                       t5.*, t6.codigo_equ, concat(t7.primer_nombre_emp,' ',t7.primer_apellido_emp) as nombretecnico,
+                                       t8.descripcion_tmt, t9.razonsocial_cli, t9.telefono_cli, t9.email_cli, t10.nombre_ciu,
+                                       t13.primer_nombre_con, t13.primer_apellido_con, t13.telefono_con,
+                                       t13.email_con, datosadicionalequipos.modelo_dequ, datosadicionalequipos.serie_dequ,
+                                       datosadicionalequipos.referencia_dequ, datosadicionalequipos.nombrealterno_dequ,
+                                       t12.descripcion_mar, t11.nombre_emp, t14.nombre_est as estadoot
+            FROM  cumplimientooserv as t0 INNER JOIN tipooperacion as t1 INNER JOIN actividadrealizada as t2 
+                                          INNER JOIN fallasdemtto  as t3 INNER JOIN estados  as t4
+                                          INNER JOIN ordenservicio as t5 INNER JOIN equipos  as t6
+                                          INNER JOIN interlocutores_emp as t7  INNER JOIN tiposmantenimiento as t8
+                                          INNER JOIN interlocutores_cli as t9  INNER JOIN ciudades           as t10
+                                          INNER JOIN empresa            as t11 INNER JOIN marcas             as t12
+                                          INNER JOIN contactos          as t13 INNER JOIN vista_estados      as t14
+            left join datosadicionalequipos on (datosadicionalequipos.id_dequ = t5.equipo_otr)
+            WHERE t0.tipooperacion_cosv = t1.id_tope and t0.servicio_cosv = t2.id_are and t0.id_cosv = t5.id_otr
+              and t0.tipofallamtto_cosv = t3.id_fmt  and t0.estado_cosv   != 24     and t5.equipo_otr = t6.id_equ 
+              and t0.estadooperacionequipo_cosv = t4.id_est and t0.operario_cosv = t7.id_emp and t0.tipo_cosv = t8.id_tmt
+              and t5.cliente_otr        = t9.id_cli  and t9.ciudad_cli   = t10.id_ciu and t5.empresa_otr = t11.id_emp 
+              and t6.marca_equ  	      = t12.id_mar and t5.contactocliente_otr = t13.id_con and t0.tipo_cosv = 3
+              and t0.estado_cosv        = t14.id_est
+              ORDER BY t0.id_actividad DESC");
+  
+          $response['data'] = $data;
+          // $response['data'] = $data1;
+          $response['message'] = "load successful";
+          $response['success'] = true;
+      
+        } catch (\Exception $e) {
+          $response['message'] = $e->getMessage();
+          $response['success'] = false;
+        }
+          return $response;
+      }
+
+      public function ordenespreventivo(){  
+        try {
+            $data = DB::select("SELECT t0.*, t1.descripcion_tope, t2.descripcion_are, t3.descripcion_fmt, t4.nombre_est,
+                                       t5.*, t6.codigo_equ, concat(t7.primer_nombre_emp,' ',t7.primer_apellido_emp) as nombretecnico,
+                                       t8.descripcion_tmt, t9.razonsocial_cli, t9.telefono_cli, t9.email_cli, t10.nombre_ciu,
+                                       t13.primer_nombre_con, t13.primer_apellido_con, t13.telefono_con,
+                                       t13.email_con, datosadicionalequipos.modelo_dequ, datosadicionalequipos.serie_dequ,
+                                       datosadicionalequipos.referencia_dequ, datosadicionalequipos.nombrealterno_dequ,
+                                       t12.descripcion_mar, t11.nombre_emp, t14.nombre_est as estadoot
+            FROM  cumplimientooserv as t0 INNER JOIN tipooperacion as t1 INNER JOIN actividadrealizada as t2 
+                                          INNER JOIN fallasdemtto  as t3 INNER JOIN estados  as t4
+                                          INNER JOIN ordenservicio as t5 INNER JOIN equipos  as t6
+                                          INNER JOIN interlocutores_emp as t7  INNER JOIN tiposmantenimiento as t8
+                                          INNER JOIN interlocutores_cli as t9  INNER JOIN ciudades           as t10
+                                          INNER JOIN empresa            as t11 INNER JOIN marcas             as t12
+                                          INNER JOIN contactos          as t13 INNER JOIN vista_estados      as t14
+            left join datosadicionalequipos on (datosadicionalequipos.id_dequ = t5.equipo_otr)
+            WHERE t0.tipooperacion_cosv = t1.id_tope and t0.servicio_cosv = t2.id_are and t0.id_cosv = t5.id_otr
+              and t0.tipofallamtto_cosv = t3.id_fmt  and t0.estado_cosv   != 24     and t5.equipo_otr = t6.id_equ 
+              and t0.estadooperacionequipo_cosv = t4.id_est and t0.operario_cosv = t7.id_emp and t0.tipo_cosv = t8.id_tmt
+              and t5.cliente_otr        = t9.id_cli  and t9.ciudad_cli   = t10.id_ciu and t5.empresa_otr = t11.id_emp 
+              and t6.marca_equ  	      = t12.id_mar and t5.contactocliente_otr = t13.id_con and t0.tipo_cosv = 2
+              and t0.estado_cosv        = t14.id_est
               ORDER BY t0.id_actividad DESC");
   
           $response['data'] = $data;
@@ -394,6 +541,7 @@ class CumplimientoOServController extends Controller
           $data['estadocomponentes']          = $request['estadocomponentes'];
           $data['estadooperacionequipo_cosv'] = $request['estadooperacionequipo_cosv'];
           $data['comentarios_cosv']           = $request['comentarios_cosv'];
+          $data['proveedorexterno_cosv']     = $request['proveedorexterno_cosv'];
           $data['placavehiculo_cosv']         = $request['placavehiculo_cosv'];
     
           $res = CumplimientoOServ::where("id",$id)->update($data);

@@ -90,7 +90,7 @@ class OrdenesController extends Controller
           FROM  imagenesordenes as t0
           WHERE t0.orden = $id");
 
- //echo json_encode($id);
+ //echo json_encode($data);
  //exit;
  
           $data1 = DB::select("SELECT t0.*, t1.descripcion_tope, t2.descripcion_are,  t3.descripcion_fmt, t4.descripcion_tfa,
@@ -177,17 +177,17 @@ ORDER BY id_otr DESC");
           }
          
           PDF::SetMargins(7, 10, 7);
-          PDF::SetTitle('OT Cliente - LOGISTRAL S.A.' );
+          PDF::SetTitle('OT Cliente - Montacargas el Zafiro' );
           PDF::AddPage();
           PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
           // create some HTML content
            
           $subtable = '<table border="1" cellspacing="6" cellpadding="4"><tr><td>a</td><td>b</td></tr><tr><td>c</td><td>d</td></tr></table>';
    
-          PDF::Image('/var/www/bc-gim/resources/js/server/server/src/images/logologistral.jpeg', 5, 5, 40, 20, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
+          PDF::Image('/var/www/zafiro.bc-gim/resources/js/server/server/src/images/logozafiro.jpg', 5, 5, 40, 20, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
           $html = '
           <br/>
-          <h4 align="center" > LOGISTRAL S.A. Nit 900.161.726-3 - ACTIVIDAD #  '.$data1[0]->id_actividad.'</h4>
+          <h4  align="right" > MONTACARGAS EL ZAFIRO Nit 811016729-2 - ACTIVIDAD #  '.$data1[0]->id_actividad.'</h4>
          
           <table border="0" cellspacing="3" cellpadding="1" style="font-size: 10px !important;" >
           <tr >
@@ -305,16 +305,21 @@ ORDER BY id_otr DESC");
          PDF::writeHTML($html, true, false, true, false, '');
          
          if(isset($data[0]->name)){
-         PDF::Image('/var/www/bc-gim/public/images/'.$data[0]->name, 10, 145, 45, 45, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
+         PDF::Image('/var/www/zafiro.bc-gim/public/images/'.$data[0]->name, 5, 130, 45, 45, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
          }
 
          if(isset($data[1]->name)){
-         PDF::Image('/var/www/bc-gim/public/images/'.$data[1]->name, 75, 145, 45, 45, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
+         PDF::Image('/var/www/zafiro.bc-gim/public/images/'.$data[1]->name, 58, 130, 45, 45, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
          }
 
          if(isset($data[2]->name)){
-         PDF::Image('/var/www/bc-gim/public/images/'.$data[2]->name, 140, 145, 45, 45, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
+         PDF::Image('/var/www/zafiro.bc-gim/public/images/'.$data[2]->name, 107, 130, 45, 45, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
          }
+
+         if(isset($data[3]->name)){
+          PDF::Image('/var/www/zafiro.bc-gim/public/images/'.$data[3]->name, 155, 130, 45, 45, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
+          }
+ 
 
          $html1 = '
          <br />
@@ -341,9 +346,9 @@ ORDER BY id_otr DESC");
          </Grid>
          <br />
          <Grid item xs={12} md={12}>
-           <div style="font-size: 8px !important; text-align: justify; text-indent: 0;"  display="block" >
+           <div style="font-size: 9px !important; text-align: justify; text-indent: 0;"  display="block" >
              Al firmar este documento el cliente expresa haber recibido a satisfacción el servicio y/o repuestos suministrados por
-             LOGISTICA ESTRUCTURAL S.A. y acusa de haber recibido una copia de la presente orden. Este documento sirve de soporte
+             MONTACARGAS EL ZAFIRO S.A.S. y acusa de haber recibido una copia de la presente orden. Este documento sirve de soporte
              para el cobro del servicio si es VENTA, en caso de servicio de RENTA, no aplica siempre y cuando corresponda a un caso
              especial sujeto a revisión.
            </div>
@@ -369,7 +374,7 @@ ORDER BY id_otr DESC");
           $ext = explode("/",$b64[0]);
  
           $data = base64_decode($b64[1]);
-          $url = "/var/www/bc-gim/public/images/firmaOTCliente.".$ext[1];
+          $url = "/var/www/zafiro.bc-gim/public/public/images/firmaOTCliente.".$ext[1];
           $ifp = fopen($url, "w");
           fwrite($ifp, $data);
           fclose($ifp);
@@ -433,6 +438,48 @@ ORDER BY id_otr DESC");
                                       ordenservicio.prioridad_otr 	   = t11.id_abc  and ordenservicio.tipo_otr      	     = t12.id_tmt and
                                       t10.marca_equ  	                 = t13.id_mar  and ordenservicio.tiposervicio_otr    = t15.id_tser and
                                       ordenservicio.tipooperacion_otr  = t16.id_tope and (ordenservicio.estado_otr IN (21,22,23,25,34 ))
+                              ORDER BY id_otr DESC");
+
+          $response['data'] = $data;
+          
+          // $response['data'] = $data1;
+          $response['message'] = "load successful";
+          $response['success'] = true;
+      
+        } catch (\Exception $e) {
+          $response['message'] = $e->getMessage();
+          $response['success'] = false;
+        }
+          return $response;
+      }
+
+      public function listar_ordenescreadas(){  
+        try {
+          //Muestra Unicamente los tipos de Interlocutores PROVEEDORES = 1
+          $data = DB::select("SELECT ordenservicio.*,     t1.nombre_emp,       t2.nombre_est,       t3.nombre_ciu, t4.razonsocial_int,
+                                     t5.razonsocial_cli,  t5.razonsocial_cli,  t5.telefono_cli,     t5.email_cli,  t6.primer_nombre_emp,
+                                     t6.primer_apellido_emp, concat(t6.primer_nombre_emp,' ',t6.primer_apellido_emp) as nombretecnico,
+                                     t8.descripcion_sgre, contactos.primer_nombre_con, contactos.primer_apellido_con, contactos.telefono_con,
+                                     contactos.email_con, t10.codigo_equ,      t10.antiguedad_equ,  t10.marca_equ,  t11.descripcion_abc,
+                                     t12.descripcion_tmt, t13.descripcion_mar, t15.descripcion_tser,t16.descripcion_tope,
+                                     datosadicionalequipos.modelo_dequ, datosadicionalequipos.serie_dequ, datosadicionalequipos.referencia_dequ,
+                                     datosadicionalequipos.nombrealterno_dequ
+                              FROM   ordenservicio  INNER JOIN empresa as t1 INNER JOIN estados     as t2 
+                                     INNER JOIN ciudades           as t3  INNER JOIN interlocutores as t4  INNER JOIN interlocutores_cli as t5
+                                     INNER JOIN interlocutores_emp as t6  INNER JOIN subgrupopartes as t8
+                                     INNER JOIN equipos        as t10 INNER JOIN clasificacionABC   as t11
+                                     INNER JOIN tiposmantenimiento as t12 INNER JOIN marcas         as t13 INNER JOIN tiposservicio      as t15
+                                     INNER JOIN tipooperacion  as t16
+                                     left join datosadicionalequipos on (datosadicionalequipos.id_dequ = ordenservicio.equipo_otr)
+                                     left join contactos on (contactos.identificacion_con = ordenservicio.nitcliente_otr)
+                              WHERE ((ordenservicio.tipooperacion_otr != 3)          and (ordenservicio.tipooperacion_otr != 4))       and  
+                                      ordenservicio.empresa_otr        = t1.id_emp   and ordenservicio.estado_otr          = t2.id_est and
+                                      ordenservicio.ciudad_otr         = t3.id_ciu   and ordenservicio.proveedor_otr       = t4.id_int and
+                                      ordenservicio.cliente_otr        = t5.id_cli   and ordenservicio.operario_otr   	   = t6.id_emp and
+                                      ordenservicio.subgrupoequipo_otr = t8.id_sgre  and ordenservicio.equipo_otr          = t10.id_equ and
+                                      ordenservicio.prioridad_otr 	   = t11.id_abc  and ordenservicio.tipo_otr      	     = t12.id_tmt and
+                                      t10.marca_equ  	                 = t13.id_mar  and ordenservicio.tiposervicio_otr    = t15.id_tser and
+                                      ordenservicio.tipooperacion_otr  = t16.id_tope and (ordenservicio.estado_otr IN (21, 23)) 
                               ORDER BY id_otr DESC");
 
           $response['data'] = $data;
@@ -668,6 +715,48 @@ ORDER BY id_otr DESC");
                                       ordenservicio.prioridad_otr 	   = t11.id_abc  and ordenservicio.tipo_otr      	     = t12.id_tmt and
                                       t10.marca_equ  	                 = t13.id_mar  and ordenservicio.tiposervicio_otr    = t15.id_tser and
                                       ordenservicio.tipooperacion_otr  = t16.id_tope and (ordenservicio.estado_otr IN (26))
+                              ORDER BY id_otr DESC");
+
+          $response['data'] = $data;
+          
+          // $response['data'] = $data1;
+          $response['message'] = "load successful";
+          $response['success'] = true;
+      
+        } catch (\Exception $e) {
+          $response['message'] = $e->getMessage();
+          $response['success'] = false;
+        }
+          return $response;
+      }
+
+      public function ordenesasignadas(){  
+        try {
+          //Muestra Unicamente los tipos de Interlocutores PROVEEDORES = 1
+          $data = DB::select("SELECT ordenservicio.*,     t1.nombre_emp,       t2.nombre_est,       t3.nombre_ciu, t4.razonsocial_int,
+                                     t5.razonsocial_cli,  t5.razonsocial_cli,  t5.telefono_cli,     t5.email_cli,  t6.primer_nombre_emp,
+                                     t6.primer_apellido_emp,  concat(t6.primer_nombre_emp,' ',t6.primer_apellido_emp) as nombretecnico,
+                                     t8.descripcion_sgre, contactos.primer_nombre_con, contactos.primer_apellido_con, contactos.telefono_con,
+                                     contactos.email_con, t10.codigo_equ,      t10.antiguedad_equ,  t10.marca_equ,  t11.descripcion_abc,
+                                     t12.descripcion_tmt, t13.descripcion_mar, t15.descripcion_tser,t16.descripcion_tope,
+                                     datosadicionalequipos.modelo_dequ, datosadicionalequipos.serie_dequ, datosadicionalequipos.referencia_dequ,
+                                     datosadicionalequipos.nombrealterno_dequ
+                              FROM   ordenservicio  INNER JOIN empresa as t1 INNER JOIN estados     as t2 
+                                     INNER JOIN ciudades           as t3  INNER JOIN interlocutores as t4  INNER JOIN interlocutores_cli as t5
+                                     INNER JOIN interlocutores_emp as t6  INNER JOIN subgrupopartes as t8
+                                     INNER JOIN equipos        as t10 INNER JOIN clasificacionABC   as t11
+                                     INNER JOIN tiposmantenimiento as t12 INNER JOIN marcas         as t13 INNER JOIN tiposservicio      as t15
+                                     INNER JOIN tipooperacion  as t16
+                                     left join datosadicionalequipos on (datosadicionalequipos.id_dequ = ordenservicio.equipo_otr)
+                                     left join contactos on (contactos.identificacion_con = ordenservicio.nitcliente_otr)
+                              WHERE ((ordenservicio.tipooperacion_otr != 3)          and (ordenservicio.tipooperacion_otr != 4))       and  
+                                      ordenservicio.empresa_otr        = t1.id_emp   and ordenservicio.estado_otr          = t2.id_est and
+                                      ordenservicio.ciudad_otr         = t3.id_ciu   and ordenservicio.proveedor_otr       = t4.id_int and
+                                      ordenservicio.cliente_otr        = t5.id_cli   and ordenservicio.operario_otr   	   = t6.id_emp and
+                                      ordenservicio.subgrupoequipo_otr = t8.id_sgre  and ordenservicio.equipo_otr          = t10.id_equ and
+                                      ordenservicio.prioridad_otr 	   = t11.id_abc  and ordenservicio.tipo_otr      	     = t12.id_tmt and
+                                      t10.marca_equ  	                 = t13.id_mar  and ordenservicio.tiposervicio_otr    = t15.id_tser and
+                                      ordenservicio.tipooperacion_otr  = t16.id_tope and (ordenservicio.estado_otr IN (23))
                               ORDER BY id_otr DESC");
 
           $response['data'] = $data;
@@ -1370,6 +1459,23 @@ ORDER BY id_otr DESC");
         }
         return $response;
       }
+
+      public function otasignada($id_otr){
+        try {
+          $data['estado_otr'] = 23;
+          //$res = Ordenes::where("id_otr",$id_otr)->update($id_otr);
+          //$res = DB::select('update estado_otr = 32 where id_otr = ?', [$id_otr]);
+          $res = DB::update('update ordenservicio set estado_otr = 23 where id_otr = ?', [$id_otr]);
+    
+          $response['res'] = $res;
+          $response['message'] = "Updated successful";
+          $response['success'] = true;
+        } catch (\Exception $e) {
+          $response['message'] = $e->getMessage();
+          $response['success'] = false;
+        }
+        return $response;
+      } 
 
       public function updateestadoasignado(Request $request, $id_otr){
         try {

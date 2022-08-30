@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 const BarSession = (props) => {
     const { idusuario } = props;
-    console.log("ID DE USUARIO BAR SESSION : ", idusuario);
+    //console.log("ID DE USUARIO BAR SESSION : ", idusuario);
     const classes = useStyles();
     const history = useHistory();
 
@@ -57,6 +57,10 @@ const BarSession = (props) => {
 
     const irapendientes = () => {
         history.push("/gestionordenes/gestionarpendientes");
+    }
+
+    const cumplimiento = () => {
+        window.open("https://remotezafiro.gimcloud.co/cumplimiento/cumplirordentecnico");
     }
 
     const logout = () => {
@@ -131,12 +135,16 @@ const BarSession = (props) => {
                 <div className={classes.sectionDesktop} >
                     <Button className='irainicio' onClick={IraInicio} variant="outlined" color="inherit" > Ir a Inicio </Button>
                     <Button className='iraordenes' onClick={IraOrdenes} variant="outlined" color="inherit" > Ir a Ordenes </Button>
-                    <Button className='entregaequipos' onClick={IraOrdenesChequeo} variant="outlined" color="inherit" >Entrega Recepción Equipos</Button>
-                    <Button className='alertas' onClick={habilitaralertas} variant="outlined" color="inherit" >Habilitar Alertas</Button>
-                    <Button className='indicadores' onClick={habilitarindicadores} variant="outlined" color="inherit" >Habilitar Indicadores</Button>
                     <Button className='pendientes' onClick={irapendientes} variant="outlined" color="inherit" > Ir a Pendientes </Button>
+                    <Button className='pendientes' onClick={cumplimiento} variant="outlined" color="inherit" > Cumplimiento </Button>
                 </div>
-
+                {
+                    /*
+                 <Button className='entregaequipos' onClick={IraOrdenesChequeo} variant="outlined" color="inherit" >Entrega Recepción Equipos</Button>
+                                    <Button className='alertas' onClick={habilitaralertas} variant="outlined" color="inherit" >Habilitar Alertas</Button>
+                                    <Button className='indicadores' onClick={habilitarindicadores} variant="outlined" color="inherit" >Habilitar Indicadores</Button>
+                    */
+                }
                 <div className='logo'>
                     <Button className='letralogo' variant="outlined">
                         Montacargas el Zafiro
