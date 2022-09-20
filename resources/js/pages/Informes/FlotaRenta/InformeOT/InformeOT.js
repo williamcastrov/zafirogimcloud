@@ -93,7 +93,7 @@ function InformeOT() {
                 <Button className={styles.button} color="primary" >
                     <ReactHTMLTableToExcel
                         table="seguros"
-                        filename="Informacion Flota de Equipos"
+                        filename="Informe OT"
                         sheet="Sheet"
                         buttonText="Exportar a Excel"
                     />
@@ -106,20 +106,21 @@ function InformeOT() {
                         <th>MT</th>
                         <th>ID ACTIVIDAD</th>
                         <th>CLIENTE ID</th>
+                        <th>CIUDAD</th>
                         <th>SERIE</th>
                         <th>HOROMETRO</th>
                         <th>#OT FECHA</th>
                         <th>TIPO SERVICIO</th>
                         <th>TIPO DE FALLA</th>
+                        <th>ACTIVIDAD REALIZADA</th>
                         <th>ESTADO DE LA ORDEN</th>
                         <th>#COMBO</th>
-                        <th>ACTIVIDAD REALIZADA</th>
-                        <th>TIEMPO DE ACTIVIDAD</th>
-                        <th>TIEMPO DE TRANSPORTE</th>
-                        <th>PENDIENTES U OBSERVACIONES</th>
-                        <th>TIPO DE RUEDA</th>
-                        <th>CANTIDAD</th>
-                        <th>LADO CAMBIADO</th>
+                        <th>OBSERVACION GENERAL</th>
+                        <th>PROBLEMA REPORTADO</th>
+                        <th>RESUMEN</th>
+                        <th>OBSERVACION</th>
+                        <th>DATOS UNO - PENDIENTES</th>
+                        <th>DATOS DOS - PENDIENTES</th>
                         <th>TECNICO UNO</th>
                         <th>TECNICO DOS</th>
                     </tr>
@@ -133,20 +134,21 @@ function InformeOT() {
                                     <td>{ordenes.codigo_equ}</td>
                                     <td>{ordenes.id_actividad}</td>
                                     <td>{ordenes.razonsocial_cli}</td>
-                                    <td>{ordenes.serie_dequ}</td>
-                                    <td>{ordenes.horometro_otr}</td>
+                                    <td>{ordenes.nombre_ciu}</td>                    
+                                    <td>{ordenes.referencia_dequ}</td>
+                                    <td>{ordenes.horometro_cosv}</td>
                                     <td>{ordenes.fechainicia_otr}</td>
                                     <td>{ordenes.descripcion_tmt}</td>
                                     <td>{ordenes.descripcion_fmt}</td>
+                                    <td>{ordenes.descripcion_cosv}</td>
                                     <td>{ordenes.nombre_est}</td>
                                     <td>{ordenes.combogrupo_cosv}</td>
-                                    <td>{ordenes.descripcion_cosv}</td>
-                                    <td>{ordenes.tiempoactividad_cosv}</td>
-                                    <td>{ordenes.tiempotransporte_otr}</td>
-                                    <td>{ordenes.blanco}</td>
-                                    <td>{ordenes.blanco}</td>
-                                    <td>{ordenes.blanco}</td>
-                                    <td>{ordenes.blanco}</td>
+                                    <td>{ordenes.observacion_cosv}</td>
+                                    <td>{ordenes.resumenorden_otr}</td>
+                                    <td>{ordenes.resumenactividad_cosv}</td>
+                                    <td>{ordenes.observacion_cosv}</td>
+                                    <td>{ordenes.observacionrespuesta_pot}</td>
+                                    <td>{ordenes.descripcion_pot}</td>
                                     <td>{ordenes.primer_nombre_emp}{" "} {ordenes.primer_apellido_emp}</td>
                                     <td>{ordenes.nombretecnicodos}</td>
                                 </tr>

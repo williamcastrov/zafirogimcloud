@@ -1406,7 +1406,7 @@ function CrearOrdenes(props) {
                 <MenuItem value=""> <em>None</em> </MenuItem>
                 {
                   listarProveedores.map((itemselect) => {
-                    return (contactoCliente
+                    return (
                       <MenuItem value={itemselect.id_int}>{itemselect.razonsocial_int}</MenuItem>
                     )
                   })

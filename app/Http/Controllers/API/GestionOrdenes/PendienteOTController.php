@@ -83,7 +83,8 @@ class PendienteOTController extends Controller
                                        as nombretecnicouno,  CONCAT(t7.primer_nombre_emp,' ',t7.primer_apellido_emp)
                                        as nombretecnicodos,  CONCAT(t8.primer_nombre_emp,' ',t8.primer_apellido_emp)
                                        as nombretecnicotres, t9.descripcion_tser, t10.descripcion_tmt, t11.descripcion_mar
-            FROM  pendienteoserv as t0 INNER JOIN ordenservicio      as t1 INNER JOIN estados            as t2 INNER JOIN equipos as t3
+            FROM  pendienteoserv as t0 INNER JOIN ordenservicio      as t1 INNER JOIN estados            as t2 
+                                       INNER JOIN equipos as t3
                                        /*INNER JOIN vista_pendientes   as t4*/ INNER JOIN interlocutores_cli as t5 
                                        INNER JOIN interlocutores_emp as t6 INNER JOIN vista_empleados1   as t7
                                        INNER JOIN vista_empleados2   as t8 INNER JOIN tiposservicio      as t9 

@@ -94,12 +94,13 @@ class OrdenesController extends Controller
  //exit;
  
           $data1 = DB::select("SELECT t0.*, t1.descripcion_tope, t2.descripcion_are,  t3.descripcion_fmt, t4.descripcion_tfa,
-                                           t5.nombre_est
+                                           t5.nombre_est, t6.descripcion_tmt
           FROM cumplimientooserv   as t0 INNER JOIN tipooperacion as t1 INNER JOIN actividadrealizada as t2
-          INNER JOIN fallasdemtto  as t3 INNER JOIN tiposdefallas as t4
-          INNER JOIN estados       as t5
-          WHERE t0.id_actividad = $id and t0.tipooperacion_cosv = t1.id_tope and t0.servicio_cosv = t2.id_are  and 
-                t0.tipofallamtto_cosv = t3.id_fmt and t3.tipodefalla_fmt = t4.id_tfa and t0.estadooperacionequipo_cosv = t5.id_est");
+          INNER JOIN fallasdemtto  as t3 INNER JOIN tiposdefallas as t4 INNER JOIN estados            as t5
+          INNER JOIN tiposmantenimiento as t6
+          WHERE t0.id_actividad = $id and t0.tipooperacion_cosv = t1.id_tope and t0.servicio_cosv = t2.id_are  
+            and t0.tipofallamtto_cosv = t3.id_fmt and t3.tipodefalla_fmt = t4.id_tfa 
+            and t0.estadooperacionequipo_cosv = t5.id_est and t0.tipo_cosv = t6.id_tmt");
  
  $orden = $data1[0]->id_cosv;
  //echo json_encode($orden);
@@ -230,7 +231,7 @@ ORDER BY id_otr DESC");
               ID INTERNO: '.$data2[0]->codigo_equ.'
             </th>
             <th width="200px"  align="left">
-            '.$data2[0]->descripcion_tmt.'
+            '.$data1[0]->descripcion_tmt.'
             </th>
           </tr>
           <tr>
@@ -626,9 +627,9 @@ ORDER BY id_otr DESC");
           //Muestra Unicamente los tipos de Interlocutores PROVEEDORES = 1
           $data = DB::select("SELECT count(*) as totalotterminadasmes
                               FROM   ordenservicio
-                              WHERE  fechafinal_otr >= DATE_FORMAT(now(), '%Y-%m-01') and fechafinal_otr <= LAST_DAY(NOW())
-                                and  ordenservicio.estado_otr IN (27)");
-
+                              WHERE  ordenservicio.estado_otr IN (27)");
+//WHERE  fechafinal_otr >= DATE_FORMAT(now(), '%Y-%m-01') and fechafinal_otr <= LAST_DAY(NOW())
+                              
 // fechafinal_otr >= DATE_FORMAT(now(), '%Y-%m-01') and fechafinal_otr <= LAST_DAY(NOW())
 //fechafinal_otr >= DATE_FORMAT('2021/04/01', '%Y-%m-01') and fechafinal_otr <= LAST_DAY('2021/04/30')
           $response['data'] = $data;
@@ -864,33 +865,37 @@ ORDER BY id_otr DESC");
         try {
           //Muestra Unicamente los tipos de Interlocutores PROVEEDORES = 1
           $data = DB::select("SELECT ordenservicio.*,    t1.nombre_emp,       t2.nombre_est,       t3.nombre_ciu, t4.razonsocial_int,
-                                     t5.razonsocial_cli,  t5.razonsocial_cli,  t5.telefono_cli,     t5.email_cli,  t6.primer_nombre_emp,
-                                     t6.primer_apellido_emp,  concat(t6.primer_nombre_emp,' ',t6.primer_apellido_emp) as nombretecnico,
-                                     t8.descripcion_sgre, contactos.primer_nombre_con, contactos.primer_apellido_con, contactos.telefono_con,
-                                     contactos.email_con, t10.codigo_equ,      t10.antiguedad_equ,  t10.marca_equ,  t11.descripcion_abc,
-                                     t12.descripcion_tmt, t13.descripcion_mar, t15.descripcion_tser,t16.descripcion_tope,
-                                     datosadicionalequipos.modelo_dequ, datosadicionalequipos.serie_dequ, datosadicionalequipos.referencia_dequ,
-                                     datosadicionalequipos.nombrealterno_dequ, t17.*, t18.descripcion_fmt, ' ' as blanco,
-                                     CONCAT(vista_empleados1.primer_nombre_emp,' ',vista_empleados1.primer_apellido_emp) as nombretecnicodos
-                              FROM   ordenservicio  INNER JOIN empresa as t1 INNER JOIN estados        as t2 
-                                     INNER JOIN ciudades           as t3  INNER JOIN interlocutores    as t4  INNER JOIN interlocutores_cli as t5
-                                     INNER JOIN interlocutores_emp as t6  INNER JOIN subgrupopartes    as t8
-                                     INNER JOIN equipos            as t10 INNER JOIN clasificacionABC  as t11
-                                     INNER JOIN tiposmantenimiento as t12 INNER JOIN marcas            as t13 INNER JOIN tiposservicio as t15
-                                     INNER JOIN tipooperacion      as t16 INNER JOIN cumplimientooserv as t17 INNER JOIN fallasdemtto  as t18
-                                     left join datosadicionalequipos on (datosadicionalequipos.id_dequ = ordenservicio.equipo_otr)
-                                     left join contactos on (contactos.identificacion_con = ordenservicio.nitcliente_otr and estado_con = 31 )
-                                     LEFT JOIN vista_empleados1 ON (t17.operariodos_cosv = vista_empleados1.id_emp)
-                              WHERE ((ordenservicio.tipooperacion_otr != 3)         and (ordenservicio.tipooperacion_otr != 4))         and  
-                                      ordenservicio.empresa_otr        = t1.id_emp  and ordenservicio.estado_otr          = t2.id_est   and
-                                      ordenservicio.ciudad_otr         = t3.id_ciu  and ordenservicio.proveedor_otr       = t4.id_int   and
-                                      ordenservicio.cliente_otr        = t5.id_cli  and t17.operario_cosv           	    = t6.id_emp   and
-                                      ordenservicio.subgrupoequipo_otr = t8.id_sgre and ordenservicio.equipo_otr          = t10.id_equ  and
-                                      ordenservicio.prioridad_otr 	   = t11.id_abc and ordenservicio.tipo_otr      	    = t12.id_tmt  and
-                                      t10.marca_equ  	                 = t13.id_mar and ordenservicio.tiposervicio_otr    = t15.id_tser and
-                                      ordenservicio.tipooperacion_otr  = t16.id_tope and ordenservicio.id_otr             = t17.id_cosv and
-                                      t17.tipofallamtto_cosv           = t18.id_fmt
-                              ORDER BY id_otr DESC");
+          t5.razonsocial_cli,  t5.razonsocial_cli,  t5.telefono_cli,     t5.email_cli,  t6.primer_nombre_emp,
+          t6.primer_apellido_emp,  concat(t6.primer_nombre_emp,' ',t6.primer_apellido_emp) as nombretecnico,
+          t8.descripcion_sgre, contactos.primer_nombre_con, contactos.primer_apellido_con, contactos.telefono_con,
+          contactos.email_con, t10.codigo_equ,      t10.antiguedad_equ,  t10.marca_equ,  t11.descripcion_abc,
+          t12.descripcion_tmt, t13.descripcion_mar, t15.descripcion_tser,t16.descripcion_tope,
+          datosadicionalequipos.modelo_dequ, datosadicionalequipos.serie_dequ, datosadicionalequipos.referencia_dequ,
+          datosadicionalequipos.nombrealterno_dequ, t17.*, t18.descripcion_fmt, ' ' as blanco,
+          CONCAT(vista_empleados1.primer_nombre_emp,' ',
+          vista_empleados1.primer_apellido_emp) as nombretecnicodos,
+          pendienteoserv.*, t19.*
+   FROM   ordenservicio  INNER JOIN empresa as t1 INNER JOIN estados        as t2 
+          INNER JOIN ciudades           as t3  INNER JOIN interlocutores    as t4  INNER JOIN interlocutores_cli as t5
+          INNER JOIN interlocutores_emp as t6  INNER JOIN subgrupopartes    as t8
+          INNER JOIN equipos            as t10 INNER JOIN clasificacionABC  as t11
+          INNER JOIN tiposmantenimiento as t12 INNER JOIN marcas            as t13 INNER JOIN tiposservicio as t15
+          INNER JOIN tipooperacion      as t16 INNER JOIN cumplimientooserv as t17 INNER JOIN fallasdemtto  as t18
+          INNER JOIN tiposdefallas      as t19
+          left join datosadicionalequipos on (datosadicionalequipos.id_dequ = ordenservicio.equipo_otr)
+          left join contactos on (contactos.identificacion_con = ordenservicio.nitcliente_otr and estado_con = 31 )
+          LEFT JOIN vista_empleados1 ON (t17.operariodos_cosv = vista_empleados1.id_emp)
+          LEFT JOIN pendienteoserv ON (t17.id_actividad = pendienteoserv.id_pot)
+   WHERE ((ordenservicio.tipooperacion_otr != 3)         and (ordenservicio.tipooperacion_otr != 4))         and  
+           ordenservicio.empresa_otr        = t1.id_emp  and ordenservicio.estado_otr          = t2.id_est   and
+           ordenservicio.ciudad_otr         = t3.id_ciu  and ordenservicio.proveedor_otr       = t4.id_int   and
+           ordenservicio.cliente_otr        = t5.id_cli  and t17.operario_cosv           	    = t6.id_emp   and
+           ordenservicio.subgrupoequipo_otr = t8.id_sgre and ordenservicio.equipo_otr          = t10.id_equ  and
+           ordenservicio.prioridad_otr 	   = t11.id_abc and t17.tipo_cosv      	    = t12.id_tmt  and
+           t10.marca_equ  	                 = t13.id_mar and ordenservicio.tiposervicio_otr    = t15.id_tser and
+           ordenservicio.tipooperacion_otr  = t16.id_tope and ordenservicio.id_otr             = t17.id_cosv and
+           t17.tipofallamtto_cosv           = t18.id_fmt AND t18.tipodefalla_fmt = t19.id_tfa 
+   ORDER BY id_otr DESC");
 
           $response['data'] = $data;
           
