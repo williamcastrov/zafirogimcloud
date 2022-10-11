@@ -544,7 +544,7 @@ AND t12.estado_ubi        = 31 AND t12.ciudad_ubi = t14.id_ciu");
                 t0.marca_equ          = t4.id_mar and t0.grupoequipo_equ   = t5.id_grp    and t0.subgrupoparte_equ = t9.id_sgre    and
                 t0.estadocontable_equ = t6.id_est and t0.estadocliente_equ = t7.id_estcli and t0.estadomtto_equ    = t8.id_estmtto and
                 t0.estadocalidad_equ = t10.id_estcal and t0.id_equ = $id_equ and t0.id_equ = t11.id_dequ and t0.id_equ = t12.equipo_ubi and
-                t12.ciudad_ubi = t13.id_ciu and t12.estado_ubi = 31");
+                t12.ciudad_ubi = t13.id_ciu and t12.estado_ubi = 31 AND t12.cliente_ubi IS NOT null");
 
           if ($data) {
               $response['data'] = $data;

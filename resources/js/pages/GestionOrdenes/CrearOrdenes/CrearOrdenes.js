@@ -291,7 +291,6 @@ function CrearOrdenes(props) {
         const newDet = [];
         res.data &&
           res.data.map((orden, index) => {
-            console.log("OT : ", orden)
             let valida = true;
             rest.data &&
               rest.data.map((item, index) => {
@@ -317,7 +316,6 @@ function CrearOrdenes(props) {
       const res = await crearordenesServices.listOrdenesServActivas();
       setListarOrdenes(res.data);
       setActualiza(false);
-      console.log("Lee Ordenes Automaticas", res.data);
     }
     fetchDataOrdenes();
   }, [actualiza])
@@ -362,7 +360,6 @@ function CrearOrdenes(props) {
     async function fetchDataClientes() {
       const res = await clientesServices.listClientes();
       setListarClientes(res.data)
-      console.log("INFORMACION CLIENTE ",res.data);
     }
     fetchDataClientes();
   }, [])
@@ -489,14 +486,14 @@ function CrearOrdenes(props) {
   const DatosEquipos = (equipo) => {
     async function fetchLeerDatoEquipo() {
       const res = await equiposServices.listUnEquipo(equipo);
-      //console.log("CODIGO CLIENTE : ", res.data[0].cliente_ubi)
+
       setListarUnEquipo(res.data);
       setCliente(res.data[0].cliente_ubi);
       setEquipo(res.data[0].codigo_equ);
       setContacto(res.data[0].id_con);
       setCiudad(res.data[0].ciudad_ubi);
       setSubGrupoEquipo(res.data[0].subgrupoparte_equ);
-      //console.log("DATOS DEL EQUIPO SELECCIONADO : ", res.data[0])
+
       async function fetchDataContactos() {
         const rest = await contactosServices.contactosInterlocutor(res.data[0].cliente_ubi);
         setListarContactosCliente(rest.data);
@@ -677,7 +674,7 @@ function CrearOrdenes(props) {
         const res = await contactosServices.contactosInterlocutor(cliente);
         
         if(res.data.length > 0){
-          console.log("DATOS CONTACTO GRABAR : ", res.data[0].id_con);
+      
           codigocontacto = res.data[0].id_con;
         }else{
           codigocontacto = 24;

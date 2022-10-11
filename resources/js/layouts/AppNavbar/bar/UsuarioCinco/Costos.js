@@ -1,8 +1,8 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
-import {ListSubheader, List, ListItem, ListItemIcon, ListItemText, Collapse } from "@material-ui/core";
-import {ExpandLess, ExpandMore} from "@material-ui/icons";
+import { ListSubheader, List, ListItem, ListItemIcon, ListItemText, Collapse } from "@material-ui/core";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import CenterFocusWeakIcon from '@material-ui/icons/CenterFocusWeak';
 import StoreIcon from '@material-ui/icons/Store';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
@@ -49,8 +49,8 @@ function Costos() {
   };
 
 
-  return (     
-      <div>
+  return (
+    <div>
       <ListItem button onClick={handleClick}>
         <ListItemIcon>
           <MonetizationOnIcon />
@@ -58,11 +58,11 @@ function Costos() {
         <ListItemText primary="Costos" />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
-   
+
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          
-          <ListItem button className={classes.nested} button onClick={handleClickPA} >
+
+          <ListItem button className={classes.nested} onClick={handleClickPA} >
             <ListItemIcon>
               <ViewHeadlineIcon />
             </ListItemIcon>
@@ -72,7 +72,7 @@ function Costos() {
 
           <Collapse in={openPA} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-            <ListItem component={Link} button to="/costos/tipocostovariable" className={classes.nested}>
+              <ListItem component={Link} button to="/costos/tipocostovariable" className={classes.nested}>
                 <ListItemIcon>
                   <StoreIcon />
                 </ListItemIcon>
@@ -84,41 +84,25 @@ function Costos() {
                 </ListItemIcon>
                 <ListItemText primary="Datos Base x Periodo" />
               </ListItem>
-
             </List>
           </Collapse>
           <Divider />
-          
-          <ListItem button className={classes.nested} button onClick={handleClickGA} >
-            <ListItemIcon>
-              <MonetizationOnIcon />
-            </ListItemIcon>
-            <ListItemText primary="Gestión Costos" />
-            {openGA ? <ExpandLess /> : <ExpandMore />}  
-          </ListItem>
-          <Collapse in={openGA} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem component={Link} button to="" className={classes.nested} >
-                <ListItemIcon>
-                  <StoreIcon />
-                </ListItemIcon>
-                <ListItemText primary="Pendiente" />
-              </ListItem>
-              
-            </List>
-          </Collapse>
 
-          <Divider />
-          
-          <ListItem button className={classes.nested} button onClick={handleClickIF} >
+          <ListItem button className={classes.nested} onClick={handleClickIF} >
             <ListItemIcon>
               <ViewHeadlineIcon />
             </ListItemIcon>
             <ListItemText primary="Informes Costos" />
-            {openIF ? <ExpandLess /> : <ExpandMore />}  
+            {openIF ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={openIF} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
+              <ListItem component={Link} button to="/costos/facturacion" className={classes.nested} >
+                <ListItemIcon>
+                  <ViewHeadlineIcon />
+                </ListItemIcon>
+                <ListItemText primary="Informe Facturacion" />
+              </ListItem>
               <ListItem component={Link} button to="/costos/costorealperiodo" className={classes.nested} >
                 <ListItemIcon>
                   <ViewHeadlineIcon />
@@ -131,12 +115,24 @@ function Costos() {
                 </ListItemIcon>
                 <ListItemText primary="Informe Costo Acumulado x Equipo" />
               </ListItem>
-              
+              <ListItem component={Link} button to="/costos/consumosrepuestos" className={classes.nested} >
+                <ListItemIcon>
+                  <ViewHeadlineIcon />
+                </ListItemIcon>
+                <ListItemText primary="Consumos Repuestos" />
+              </ListItem>
+              <ListItem component={Link} button to="/costos/contrataciones" className={classes.nested} >
+                <ListItemIcon>
+                  <ViewHeadlineIcon />
+                </ListItemIcon>
+                <ListItemText primary="Costos Contrataciones" />
+              </ListItem>
+
             </List>
           </Collapse>
         </List>
       </Collapse>
-      </div>
+    </div>
   );
 }
 

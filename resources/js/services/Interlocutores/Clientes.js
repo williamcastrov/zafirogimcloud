@@ -21,6 +21,15 @@ clientes.listClientes = async () => {
     return res;
 }
 
+clientes.listar_clientesmultiselect = async () => {
+    const urlList = baseUrl+"/listar_clientesmultiselect"
+    const res = await axios.get(urlList)
+    .then(response=>{ return response.data; })
+    .catch(error=>{ return error; })
+   
+    return res;
+}
+
 clientes.listUnCliente = async (id_cli) => {
     const urlList = baseUrl+"/get/"+id_cli
     const res = await axios.get(urlList)

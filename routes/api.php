@@ -79,6 +79,8 @@ Route::post('/estados/create', 'App\Http\Controllers\API\Parameters\EstadosContr
 Route::get('/estados/get/{id}', 'App\Http\Controllers\API\Parameters\EstadosController@get');
 Route::delete('/estados/delete/{id}', 'App\Http\Controllers\API\Parameters\EstadosController@delete');
 Route::put('/estados/update/{id}', 'App\Http\Controllers\API\Parameters\EstadosController@update');
+Route::get('/estados/listar_estadosllamadas', 'App\Http\Controllers\API\Parameters\EstadosController@listar_estadosllamadas');
+Route::get('/estados/listar_estadosregistrollamadas', 'App\Http\Controllers\API\Parameters\EstadosController@listar_estadosregistrollamadas');
 
 Route::get('/monedas/listar_monedas', 'App\Http\Controllers\API\Parameters\MonedasController@listar_monedas');
 Route::post('/monedas/create', 'App\Http\Controllers\API\Parameters\MonedasController@create');
@@ -113,6 +115,7 @@ Route::delete('/proveedores/delete/{id}', 'App\Http\Controllers\API\Interlocutor
 Route::put('/proveedores/update/{id}', 'App\Http\Controllers\API\Interlocutores\ProveedoresController@update');
 
 Route::get('/clientes/listar_clientes', 'App\Http\Controllers\API\Interlocutores\ClientesController@listar_clientes');
+Route::get('/clientes/listar_clientesmultiselect', 'App\Http\Controllers\API\Interlocutores\ClientesController@listar_clientesmultiselect');
 Route::post('/clientes/create', 'App\Http\Controllers\API\Interlocutores\ClientesController@create');
 Route::get('/clientes/get/{id}', 'App\Http\Controllers\API\Interlocutores\ClientesController@get');
 Route::delete('/clientes/delete/{id}', 'App\Http\Controllers\API\Interlocutores\ClientesController@delete');
@@ -650,3 +653,14 @@ Route::post('/notificacionpendientes/create', 'App\Http\Controllers\API\Mantenim
 Route::delete('/notificacionpendientes/delete/{id}', 'App\Http\Controllers\API\Mantenimiento\NotificacionPendientesController@delete');
 Route::put('/notificacionpendientes/update/{id}', 'App\Http\Controllers\API\Mantenimiento\NotificacionPendientesController@update');
 Route::put('/notificacionpendientes/actualizanotificacion/{id}', 'App\Http\Controllers\API\Mantenimiento\NotificacionPendientesController@actualizanotificacion');
+
+//API de Ventas Servicios
+
+Route::get('/registrollamadas/listar_registrollamadas', 'App\Http\Controllers\API\Ventas\RegistroLlamadasController@listar_registrollamadas');
+Route::get('/registrollamadas/listar_registrollamadascliente/{id}', 'App\Http\Controllers\API\Ventas\RegistroLlamadasController@listar_registrollamadascliente');
+Route::post('/registrollamadas/create', 'App\Http\Controllers\API\Ventas\RegistroLlamadasController@create');
+Route::get('/registrollamadas/get/{id}', 'App\Http\Controllers\API\Ventas\RegistroLlamadasController@get');
+Route::delete('/registrollamadas/delete/{id}', 'App\Http\Controllers\API\Ventas\RegistroLlamadasController@delete');
+Route::put('/registrollamadas/update/{id}', 'App\Http\Controllers\API\Ventas\RegistroLlamadasController@update');
+Route::get('/registrollamadas/listar_iniciovisitacomercial', 'App\Http\Controllers\API\Ventas\RegistroLlamadasController@listar_iniciovisitacomercial');
+Route::get('/registrollamadas/generarPdf/{id}', 'App\Http\Controllers\API\Ventas\RegistroLlamadasController@generarPdf');

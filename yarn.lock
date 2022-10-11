@@ -8736,6 +8736,11 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-multi-select-component@^4.3.3:
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/react-multi-select-component/-/react-multi-select-component-4.3.3.tgz#142c0c9b51a3dbe99d117e90eaa14f48041174b6"
+  integrity sha512-V8cDJC3M7F27PWv1baV8FpJReHa/SbpJGL80CmXwnlMkDK2KMlQSRDmDzBnmCjcbROIgoztdW+gYBpqo9BIF4g==
+
 react-number-format@^4.4.4:
   version "4.5.5"
   resolved "https://registry.npmjs.org/react-number-format/-/react-number-format-4.5.5.tgz"

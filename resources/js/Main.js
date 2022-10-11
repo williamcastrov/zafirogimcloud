@@ -176,6 +176,9 @@ import CostosRealEquipoAcumulado from "./pages/Costos/Informes/CostosRealesEquip
 import ConsumosRepuestos from "./pages/Informes/FlotaRenta/InformeConsumosRepuestos";
 import CostosContrataciones from "./pages/Informes/FlotaRenta/InformeContrataciones";
 
+//Ventas de Servicios
+import RegistroLlamadas from "./pages/Ventas/RegistroLlamadas";
+
 function Main(props) {
   const { metadata, componente, tipousuario, user, idUsu } = props;
   //console.log("TIPO DE USUARIO EN MAIN : ", tipousuario)
@@ -183,187 +186,191 @@ function Main(props) {
   return (
     <>
       {
-      (idUsu === 47 || idUsu === 48) ?
-        <Error404 />
-      :
-      (
-      !user
-        ? <Auth />
-        :
-        <Router >
-          <ThemeProvider theme={theme}>
-            <AppNavbar metadata={metadata} />
-            <Switch>
-              {componente === "1" ?
-                <Route path="/gim" component={Management} />
-                :
-                (
-                  componente === "2" ?
-                    <Route path="/gim" component={Rentabilidad} />
-                    :
+        (idUsu === 47 || idUsu === 48) ?
+          <Error404 />
+          :
+          (
+            !user
+              ? <Auth />
+              :
+              <Router >
+                <ThemeProvider theme={theme}>
+                  <AppNavbar metadata={metadata} />
+                  <Switch>
+                    {componente === "1" ?
+                      <Route path="/gim" component={Management} />
+                      :
+                      (
+                        componente === "2" ?
+                          <Route path="/gim" component={Rentabilidad} />
+                          :
+                          <Route path="/login" component={Login} />
+                      )
+                    }
+
+                    <Route path="/auth/registrarusuario" component={RegistrarUsuario} />
+                    <Route path="/auth/recuperarcontraseña" component={RecuperarContraseña} />
                     <Route path="/login" component={Login} />
-                )
-              }
+                    <Route path="/auth/usuarios" component={Usuarios} />
+                    <Route path="/auth/activarusuario" component={ActivarUsuario} />
+                    <Route path="/components/loading" component={Loading} />
 
-              <Route path="/auth/registrarusuario" component={RegistrarUsuario} />
-              <Route path="/auth/recuperarcontraseña" component={RecuperarContraseña} />
-              <Route path="/login" component={Login} />
-              <Route path="/auth/usuarios" component={Usuarios} />
-              <Route path="/auth/activarusuario" component={ActivarUsuario} />
-              <Route path="/components/loading" component={Loading} />
+                    <Route path="/parametros/paises" component={Paises} />
+                    <Route path="/parametros/regiones" component={Regiones} />
+                    <Route path="/parametros/empresa" component={Empresa} />
+                    <Route path="/parametros/departamentos" component={Departamentos} />
+                    <Route path="/parametros/ciudades" component={Ciudades} />
+                    <Route path="/parametros/estados" component={Estados} />
+                    <Route path="/parametros/unidades" component={Unidades} />
+                    <Route path="/parametros/monedas" component={Monedas} />
 
-              <Route path="/parametros/paises" component={Paises} />
-              <Route path="/parametros/regiones" component={Regiones} />
-              <Route path="/parametros/empresa" component={Empresa} />
-              <Route path="/parametros/departamentos" component={Departamentos} />
-              <Route path="/parametros/ciudades" component={Ciudades} />
-              <Route path="/parametros/estados" component={Estados} />
-              <Route path="/parametros/unidades" component={Unidades} />
-              <Route path="/parametros/monedas" component={Monedas} />
+                    <Route path="/interlocutores/tipointerlocutores" component={TipoInterlocutores} />
+                    <Route path="/interlocutores/especialidades" component={Especialidades} />
+                    <Route path="/interlocutores/proveedores" component={Proveedores} />
+                    <Route path="/interlocutores/clientes" component={Clientes} />
+                    <Route path="/interlocutores/empleados" component={Empleados} />
+                    <Route path="/interlocutores/contactos" component={Contactos} />
 
-              <Route path="/interlocutores/tipointerlocutores" component={TipoInterlocutores} />
-              <Route path="/interlocutores/especialidades" component={Especialidades} />
-              <Route path="/interlocutores/proveedores" component={Proveedores} />
-              <Route path="/interlocutores/clientes" component={Clientes} />
-              <Route path="/interlocutores/empleados" component={Empleados} />
-              <Route path="/interlocutores/contactos" component={Contactos} />
+                    <Route path="/almacenes/tiposalmacenes" component={TiposAlmacenes} />
+                    <Route path="/almacenes/lineasproductos" component={LineasProductos} />
+                    <Route path="/almacenes/crearalmacenes" component={CrearAlmacenes} />
+                    <Route path="/almacenes/inventarios" component={Inventarios} />
 
-              <Route path="/almacenes/tiposalmacenes" component={TiposAlmacenes} />
-              <Route path="/almacenes/lineasproductos" component={LineasProductos} />
-              <Route path="/almacenes/crearalmacenes" component={CrearAlmacenes} />
-              <Route path="/almacenes/inventarios" component={Inventarios} />
+                    <Route path="/mantenimiento/marcas" component={Marcas} />
+                    <Route path="/mantenimiento/tiposllantas" component={TiposLlantas} />
+                    <Route path="/mantenimiento/tiposequipos" component={TiposEquipos} />
+                    <Route path="/mantenimiento/estadosclientes" component={EstadosClientes} />
+                    <Route path="/mantenimiento/estadosmtto" component={EstadosMtto} />
+                    <Route path="/mantenimiento/estadoscalidad" component={EstadosCalidad} />
+                    <Route path="/mantenimiento/tiposfallas" component={TiposFallas} />
+                    <Route path="/mantenimiento/fallasmtto" component={FallasMtto} />
+                    <Route path="/mantenimiento/cambioelementos" component={CambioElementos} />
+                    <Route path="/mantenimiento/incrementocanon" component={IncrementoCanon} />
+                    <Route path="/mantenimiento/remisiones" component={Remisiones} />
+                    <Route path="/mantenimiento/contrataciones" component={ContratacionesMtto} />
+                    <Route path="/mantenimiento/repuestos" component={RepuestosMtto} />
+                    <Route path="/mantenimiento/gruposequipos" component={Gruposequipos} />
+                    <Route path="/mantenimiento/subgrupospartes" component={SubGrupospartes} />
+                    <Route path="/mantenimiento/clasificacionABC" component={ClasificacionABC} />
+                    <Route path="/mantenimiento/referencias" component={Referencias} />
+                    <Route path="/mantenimiento/frecuencias" component={Frecuencias} />
+                    <Route path="/mantenimiento/componentes" component={ComponentesxEquipo} />
 
-              <Route path="/mantenimiento/marcas" component={Marcas} />
-              <Route path="/mantenimiento/tiposllantas" component={TiposLlantas} />
-              <Route path="/mantenimiento/tiposequipos" component={TiposEquipos} />
-              <Route path="/mantenimiento/estadosclientes" component={EstadosClientes} />
-              <Route path="/mantenimiento/estadosmtto" component={EstadosMtto} />
-              <Route path="/mantenimiento/estadoscalidad" component={EstadosCalidad} />
-              <Route path="/mantenimiento/tiposfallas" component={TiposFallas} />
-              <Route path="/mantenimiento/fallasmtto" component={FallasMtto} />
-              <Route path="/mantenimiento/cambioelementos" component={CambioElementos} />
-              <Route path="/mantenimiento/incrementocanon" component={IncrementoCanon} />
-              <Route path="/mantenimiento/remisiones" component={Remisiones} />
-              <Route path="/mantenimiento/contrataciones" component={ContratacionesMtto} />
-              <Route path="/mantenimiento/repuestos" component={RepuestosMtto} />
-              <Route path="/mantenimiento/gruposequipos" component={Gruposequipos} />
-              <Route path="/mantenimiento/subgrupospartes" component={SubGrupospartes} />
-              <Route path="/mantenimiento/clasificacionABC" component={ClasificacionABC} />
-              <Route path="/mantenimiento/referencias" component={Referencias} />
-              <Route path="/mantenimiento/frecuencias" component={Frecuencias} />
-              <Route path="/mantenimiento/componentes" component={ComponentesxEquipo} />
-              
-              <Route path="/mantenimiento/equipos">
-                <Equipos  metadata={metadata} idUsu={idUsu} />
-              </Route>
+                    <Route path="/mantenimiento/equipos">
+                      <Equipos metadata={metadata} idUsu={idUsu} />
+                    </Route>
 
-              <Route path="/mantenimiento/accesorios">
-                <Accesorios  metadata={metadata} idUsu={idUsu} />
-              </Route>
+                    <Route path="/mantenimiento/accesorios">
+                      <Accesorios metadata={metadata} idUsu={idUsu} />
+                    </Route>
 
-              <Route path="/mantenimiento/bajasequiposhistoricos">
-                <BajasEquiposHistoricos metadata={metadata} idUsu={idUsu} />
-              </Route>
-              <Route path="/mantenimiento/extrasequipos" component={ExtrasEquipos} />
-              
-              <Route path="/mantenimiento/tipogarantia" component={TipoGarantia} />
-              <Route path="/mantenimiento/garantias" component={Garantias} />
-              <Route path="/mantenimiento/contratos" component={Contratos} />
-              <Route path="/mantenimiento/fichatecnica" component={FichaTecnica} />
-              <Route path="/mantenimiento/ubicaciones" component={Ubicaciones} />
-              <Route path="/mantenimiento/seguros" component={Seguros} />
-              <Route path="/mantenimiento/datoshorometro" component={DatosHorometro} />
-              <Route path="/mantenimiento/usuariosequipos" component={UsuariosEquipos} />
+                    <Route path="/mantenimiento/bajasequiposhistoricos">
+                      <BajasEquiposHistoricos metadata={metadata} idUsu={idUsu} />
+                    </Route>
+                    <Route path="/mantenimiento/extrasequipos" component={ExtrasEquipos} />
 
-              <Route path="/gestionordenes/ordenes" component={LeeUsuarioOrdenes} />
-              <Route path="/gestionordenes/crearordenes" component={CrearOrdenes} />
-              <Route path="/gestionordenes/actividadrealizada" component={ActividadRealizada} />
-              <Route path="/gestionordenes/registroactividadoperario" component={RegistroActividadOperario} />
-              <Route path="/gestionordenes/actividadespendiente" component={ActividadesPendiente} />
-              <Route path="/gestionordenes/gestionarpendientes">
-                <GestionarPendientes  metadata={metadata} idUsu={idUsu} />
-              </Route>
+                    <Route path="/mantenimiento/tipogarantia" component={TipoGarantia} />
+                    <Route path="/mantenimiento/garantias" component={Garantias} />
+                    <Route path="/mantenimiento/contratos" component={Contratos} />
+                    <Route path="/mantenimiento/fichatecnica" component={FichaTecnica} />
+                    <Route path="/mantenimiento/ubicaciones" component={Ubicaciones} />
+                    <Route path="/mantenimiento/seguros" component={Seguros} />
+                    <Route path="/mantenimiento/datoshorometro" component={DatosHorometro} />
+                    <Route path="/mantenimiento/usuariosequipos" component={UsuariosEquipos} />
 
-              <Route path="/mantenimiento/tiposmtto" component={Tiposmtto} />
-              <Route path="/mantenimiento/tiposestados" component={TiposEstados} />
-              <Route path="/mantenimiento/tipooperacion" component={TipoOperacion} />
-              <Route path="/mantenimiento/tiposservicio" component={TiposServicio} />
-              <Route path="/mantenimiento/topoactividad" component={TiposActividad} />
+                    <Route path="/gestionordenes/ordenes" component={LeeUsuarioOrdenes} />
+                    <Route path="/gestionordenes/crearordenes" component={CrearOrdenes} />
+                    <Route path="/gestionordenes/actividadrealizada" component={ActividadRealizada} />
+                    <Route path="/gestionordenes/registroactividadoperario" component={RegistroActividadOperario} />
+                    <Route path="/gestionordenes/actividadespendiente" component={ActividadesPendiente} />
+                    <Route path="/gestionordenes/gestionarpendientes">
+                      <GestionarPendientes metadata={metadata} idUsu={idUsu} />
+                    </Route>
 
-              <Route path="/listachequeo/panellistachequeo" component={PanelListaChequeo} />
-              <Route path="/listachequeo/entregaequipos" component={EntregaEquipos} />
-              <Route path="/listachequeo/recepcionequipos" component={RecepcionEquipos} />
-              <Route path="/listachequeo/recepcionalmacen" component={RecepcionAlmacen} />
+                    <Route path="/mantenimiento/tiposmtto" component={Tiposmtto} />
+                    <Route path="/mantenimiento/tiposestados" component={TiposEstados} />
+                    <Route path="/mantenimiento/tipooperacion" component={TipoOperacion} />
+                    <Route path="/mantenimiento/tiposservicio" component={TiposServicio} />
+                    <Route path="/mantenimiento/topoactividad" component={TiposActividad} />
 
-              <Route path="/activos/areas" component={Areas} />
-              <Route path="/activos/cencostos" component={Cencostos} />
-              <Route path="/activos/plandecuentas" component={PlandeCuentas} />
-              <Route path="/activos/activos">
-                <Activos  metadata={metadata} idUsu={idUsu} />
-              </Route>
-              <Route path="/activos/depreciacion" component={Depreciacion} />
-              <Route path="/activos/exportardepreciacion" component={ExportarDepreciacion} />
-              <Route path="/activos/exportaractivos" component={ExportarActivos} />
+                    <Route path="/listachequeo/panellistachequeo" component={PanelListaChequeo} />
+                    <Route path="/listachequeo/entregaequipos" component={EntregaEquipos} />
+                    <Route path="/listachequeo/recepcionequipos" component={RecepcionEquipos} />
+                    <Route path="/listachequeo/recepcionalmacen" component={RecepcionAlmacen} />
 
-              <Route path="/pdf/imprimirotcliente">
-                <ImprimirOTCliente  metadata={metadata} idUsu={idUsu} />
-              </Route>
-              <Route path="/pdf/imprimirotchequeo" component={ImprimirOTChequeo} />
-              <Route path="/pdf/PrincipalPDF" component={PrincipalPDF} />
-              <Route path="/pdf/Pdf" component={Pdf} />
+                    <Route path="/activos/areas" component={Areas} />
+                    <Route path="/activos/cencostos" component={Cencostos} />
+                    <Route path="/activos/plandecuentas" component={PlandeCuentas} />
+                    <Route path="/activos/activos">
+                      <Activos metadata={metadata} idUsu={idUsu} />
+                    </Route>
+                    <Route path="/activos/depreciacion" component={Depreciacion} />
+                    <Route path="/activos/exportardepreciacion" component={ExportarDepreciacion} />
+                    <Route path="/activos/exportaractivos" component={ExportarActivos} />
 
-              <Route path="/pdf/imprimirremision" component={ImprimirRemision} />
-              <Route path="/pdf/imprimircambioelemento" component={ImprimirCambioElemento} />
-              <Route path="/pdf/imprimirincrementocanon" component={ImprimirIncrementoCanon} />
+                    <Route path="/pdf/imprimirotcliente">
+                      <ImprimirOTCliente metadata={metadata} idUsu={idUsu} />
+                    </Route>
+                    <Route path="/pdf/imprimirotchequeo" component={ImprimirOTChequeo} />
+                    <Route path="/pdf/PrincipalPDF" component={PrincipalPDF} />
+                    <Route path="/pdf/Pdf" component={Pdf} />
 
-              <Route path="/importar/inventariosalmacen" component={InventariosAlmacen} />
-              <Route path="/importar/contrataciones" component={Contrataciones} />
-              <Route path="/importar/repuestos" component={Repuestos} />
+                    <Route path="/pdf/imprimirremision" component={ImprimirRemision} />
+                    <Route path="/pdf/imprimircambioelemento" component={ImprimirCambioElemento} />
+                    <Route path="/pdf/imprimirincrementocanon" component={ImprimirIncrementoCanon} />
 
-              <Route path="/rentabilidad/conceptosrentabilidad" component={ConceptosRentabilidad} />
-              <Route path="/rentabilidad/conceptosrentabilidadperiodo" component={ConceptosRentabilidadPeriodo} />
+                    <Route path="/importar/inventariosalmacen" component={InventariosAlmacen} />
+                    <Route path="/importar/contrataciones" component={Contrataciones} />
+                    <Route path="/importar/repuestos" component={Repuestos} />
 
-              <Route path="/costos/costosvariables" component={CostosVariables} />
-              <Route path="/costos/tipocostovariable" component={TipoCostoVariable} />
-              <Route path="/costos/costorealperiodo" component={CostosRealesEquipos} />
-              <Route path="/costos/costorealequipoacumulado" component={CostosRealEquipoAcumulado} />
-              <Route path="/costos/consumosrepuestos" component={ConsumosRepuestos} />
-              <Route path="/costos/contrataciones" component={CostosContrataciones} />
-              <Route path="/costos/facturacion" component={FacturacionMT} />
-              
-              <Route path="/flotarenta/activosrenta" component={ActivosRenta} />
-              <Route path="/flotarenta/informeseguros" component={InformeSeguros} />
-              <Route path="/flotarenta/informeequipos" component={InformeEquipos} />
-              <Route path="/flotarenta/informeot" component={InformeOT} />
-              <Route path="/flotarenta/informependientes" component={InformePendientes} />
-              <Route path="/flotarenta/informehojavidaequipos" component={InformeHojaVidaEquipos} />
-              <Route path="/flotarenta/informeubicacionesequipos" component={InformeUbicacionesEquipos} />
-              <Route path="/flotarenta/informeubicacionesequipostotales" component={InformeUbicacionesEquiposTotales} />
-              <Route path="/flotarenta/calificacionot" component={InformeCalificacionOT} />
-              <Route path="/flotarenta/controlalzas" component={ControlAlzas} />
-              <Route path="/flotarenta/controlfacturacion" component={InformeFacturacion} />
+                    <Route path="/rentabilidad/conceptosrentabilidad" component={ConceptosRentabilidad} />
+                    <Route path="/rentabilidad/conceptosrentabilidadperiodo" component={ConceptosRentabilidadPeriodo} />
 
-              <Route path="/flotarenta/confiabilidadMT" component={ConfiabilidadMT} />
-              <Route path="/flotarenta/listarMT" component={ListarMT } />
+                    <Route path="/costos/costosvariables" component={CostosVariables} />
+                    <Route path="/costos/tipocostovariable" component={TipoCostoVariable} />
+                    <Route path="/costos/costorealperiodo" component={CostosRealesEquipos} />
+                    <Route path="/costos/costorealequipoacumulado" component={CostosRealEquipoAcumulado} />
+                    <Route path="/costos/consumosrepuestos" component={ConsumosRepuestos} />
+                    <Route path="/costos/contrataciones" component={CostosContrataciones} />
+                    <Route path="/costos/facturacion" component={FacturacionMT} />
 
-              <Route path="/rentabilidad/cardsheader" component={CardsHeader} />
-              <Route path="/rentabilidad/cards" component={Cards} />
-              <Route path="/rentabilidad/graphics" component={Graphics} />
-              <Route path="/rentabilidad/groupedbar" component={GroupedBar} />
+                    <Route path="/flotarenta/activosrenta" component={ActivosRenta} />
+                    <Route path="/flotarenta/informeseguros" component={InformeSeguros} />
+                    <Route path="/flotarenta/informeequipos" component={InformeEquipos} />
+                    <Route path="/flotarenta/informeot" component={InformeOT} />
+                    <Route path="/flotarenta/informependientes" component={InformePendientes} />
+                    <Route path="/flotarenta/informehojavidaequipos" component={InformeHojaVidaEquipos} />
+                    <Route path="/flotarenta/informeubicacionesequipos" component={InformeUbicacionesEquipos} />
+                    <Route path="/flotarenta/informeubicacionesequipostotales" component={InformeUbicacionesEquiposTotales} />
+                    <Route path="/flotarenta/calificacionot" component={InformeCalificacionOT} />
+                    <Route path="/flotarenta/controlalzas" component={ControlAlzas} />
+                    <Route path="/flotarenta/controlfacturacion" component={InformeFacturacion} />
 
-              <Route path="/rentabilidad/facturacion" component={Facturacion} />
-              <Route path="/importar/datosfacturacion" component={DatosFacturacion} />
-              <Route path="/importar/subirfacturacion" component={SubirFacturacion} />
-              <Route path="/images/images" component={Images} />
-              <Route path="/pdfs/pdfcontratos" component={PdfContratos} />
+                    <Route path="/flotarenta/confiabilidadMT" component={ConfiabilidadMT} />
+                    <Route path="/flotarenta/listarMT" component={ListarMT} />
 
-              <Route path="/email/enviaremail" component={EnviarEmail} />
-              <Route path="/email/enviaremailotcliente" component={EnviarEmailOTCliente} />
+                    <Route path="/rentabilidad/cardsheader" component={CardsHeader} />
+                    <Route path="/rentabilidad/cards" component={Cards} />
+                    <Route path="/rentabilidad/graphics" component={Graphics} />
+                    <Route path="/rentabilidad/groupedbar" component={GroupedBar} />
 
-            </Switch>
-          </ThemeProvider>
-        </Router>
-      )
+                    <Route path="/rentabilidad/facturacion" component={Facturacion} />
+                    <Route path="/importar/datosfacturacion" component={DatosFacturacion} />
+                    <Route path="/importar/subirfacturacion" component={SubirFacturacion} />
+                    <Route path="/images/images" component={Images} />
+                    <Route path="/pdfs/pdfcontratos" component={PdfContratos} />
+
+                    <Route path="/email/enviaremail" component={EnviarEmail} />
+                    <Route path="/email/enviaremailotcliente" component={EnviarEmailOTCliente} />
+
+                    <Route path="/ventasservicios/registrollamadas">
+                      <RegistroLlamadas idUsu={idUsu} />
+                    </Route>
+
+                  </Switch>
+                </ThemeProvider>
+              </Router>
+          )
       }
       <ToastContainer
         position="top-center"

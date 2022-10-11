@@ -184,5 +184,8 @@ Route::get('/email/enviaremail', 'App\Http\Controllers\GimController@index');
 // Error 404
 Route::get('/error/error404', 'App\Http\Controllers\GimController@index');
 
+// Ventas de Servicios
+Route::get('/ventasservicios/registrollamadas', 'App\Http\Controllers\GimController@index');
+Route::get('/flotarenta/registrollamadas', 'App\Http\Controllers\GimController@index');
 
 

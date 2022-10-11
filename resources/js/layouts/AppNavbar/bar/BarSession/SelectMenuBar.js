@@ -32,7 +32,7 @@ export default function SelectMenuBar(props) {
         return <BarSessionUno />
       case 12:
         return <BarSessionDos />
-      case 18:
+      case 10:
           return <BarSessionCinco />
       case 19:
           return <BarSessionSeis />

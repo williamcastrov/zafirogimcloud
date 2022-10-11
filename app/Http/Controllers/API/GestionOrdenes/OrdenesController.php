@@ -384,22 +384,7 @@ ORDER BY id_otr DESC");
         if(isset($url)){
           PDF::Image($url, 40, 245, 25, 25, 'PNG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
         }
-/*
-        if(isset($data3[0])){
-           $b64t = explode(";base64,",$data3[0]->firmatecnico_fir);
-           $extt = explode("/",$b64t [0]);
 
-           $datax = base64_decode($b64t[1]);
-           $urlx = "/var/www/bc-gim/public/images/firmaOTTecnico.".$ext[1];
-           $ifpx = fopen($urlx, "w");
-           fwrite($ifpx, $datax);
-           fclose($ifpx);
-        }
-
-        if(isset($urlx)){
-          PDF::Image($urlx, 150, 245, 25, 25, 'PNG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
-        }
-*/
         PDF::writeHTML($html1, true, false, true, false, '');
         PDF::Output('OTCliente '.$id.'.pdf' );
         //PDF::Output('OtCliente.pdf', $data[0]->orden );

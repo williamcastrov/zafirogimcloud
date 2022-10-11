@@ -43,9 +43,9 @@ function UsuarioCinco() {
             }
             className={classes.root}
         >
+            <Interlocutores />
             <Mantenimiento />
             <Ordenes />
-            <EntregaRecepcion />
             <Costos />
             <Informes />
         </List>

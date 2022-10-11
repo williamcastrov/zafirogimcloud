@@ -67,62 +67,7 @@ function Mantenimiento() {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
 
-          <ListItem button className={classes.nested} button onClick={handleClickGA} >
-            <ListItemIcon>
-              <ViewHeadlineIcon />
-            </ListItemIcon>
-            <ListItemText primary="Parametros Mantenimiento" />
-            {openGA ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={openGA} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem component={Link} button to="/mantenimiento/tipogarantia" className={classes.nested}>
-                <ListItemIcon>
-                  <SettingsApplicationsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Tipos de Garantias" />
-              </ListItem>
-              <ListItem component={Link} button to="/mantenimiento/tiposllantas" className={classes.nested}>
-                <ListItemIcon>
-                  <DonutSmallIcon />
-                </ListItemIcon>
-                <ListItemText primary="Tipos de Ruedas" />
-              </ListItem>
-              <ListItem component={Link} button to="/mantenimiento/tiposequipos" className={classes.nested}>
-                <ListItemIcon>
-                  <SettingsApplicationsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Tipos de Equipos" />
-              </ListItem>
-              <ListItem component={Link} button to="/mantenimiento/marcas" className={classes.nested}>
-                <ListItemIcon>
-                  <CommuteIcon />
-                </ListItemIcon>
-                <ListItemText primary="Marcas de Equipos" />
-              </ListItem>
-              <ListItem component={Link} button to="/mantenimiento/clasificacionABC" className={classes.nested}>
-                <ListItemIcon>
-                  <StarBorderIcon />
-                </ListItemIcon>
-                <ListItemText primary="Clasificación ABC" />
-              </ListItem>
-              <ListItem component={Link} button to="/mantenimiento/tiposfallas" className={classes.nested}>
-                <ListItemIcon>
-                  <StarBorderIcon />
-                </ListItemIcon>
-                <ListItemText primary="Tipos de Fallas" />
-              </ListItem>
-              <ListItem component={Link} button to="/mantenimiento/fallasmtto" className={classes.nested}>
-                <ListItemIcon>
-                  <StarBorderIcon />
-                </ListItemIcon>
-                <ListItemText primary="Fallas Mantenimiento" />
-              </ListItem>
-            </List>
-          </Collapse>
-          <Divider />
-
-          <ListItem button className={classes.nested} button onClick={handleClickGM} >
+          <ListItem button className={classes.nested} onClick={handleClickGM} >
             <ListItemIcon>
               < PermDataSettingIcon />
             </ListItemIcon>
@@ -178,7 +123,7 @@ function Mantenimiento() {
           </Collapse>
 
           <Divider />
-          <ListItem button className={classes.nested} button onClick={handleClickIM} >
+          <ListItem button className={classes.nested} onClick={handleClickIM} >
             <ListItemIcon>
               < PrintIcon />
             </ListItemIcon>

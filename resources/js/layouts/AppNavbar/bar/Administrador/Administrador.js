@@ -12,6 +12,7 @@ import SubirArchivos from "./SubirArchivos";
 import EntregaRecepcion from "./EntregaRecepcion";
 import Costos from "./Costos";
 import Informes from "./Informes";
+import Ventas from "./Ventas";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,6 +51,7 @@ function Administrador() {
             <Mantenimiento />
             <Ordenes />
             <EntregaRecepcion />
+            <Ventas />
             <Costos />
             <SubirArchivos />
             <Informes />

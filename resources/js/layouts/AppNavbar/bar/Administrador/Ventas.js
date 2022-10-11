@@ -1,0 +1,99 @@
+import React from "react";
+import {Link} from 'react-router-dom';
+import { makeStyles } from "@material-ui/core/styles";
+import {ListSubheader, List, ListItem, ListItemIcon, ListItemText, Collapse } from "@material-ui/core";
+import {ExpandLess, ExpandMore} from "@material-ui/icons";
+import CenterFocusWeakIcon from '@material-ui/icons/CenterFocusWeak';
+import StoreIcon from '@material-ui/icons/Store';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import VerticalAlignCenterIcon from '@material-ui/icons/VerticalAlignCenter';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline';
+import Divider from '@material-ui/core/Divider';
+import CallMissedIcon from '@material-ui/icons/CallMissed';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
+}));
+
+function Ventas() {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [openPA, setOpenPA] = React.useState(false);
+  const [openGA, setOpenGA] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const handleClickPA = () => {
+    setOpenPA(!openPA);
+  };
+
+  const handleClickGA = () => {
+    setOpenGA(!openGA);
+  };
+
+  return (     
+      <div>
+      <ListItem button onClick={handleClick}>
+        <ListItemIcon>
+          <MonetizationOnIcon />
+        </ListItemIcon>
+        <ListItemText primary="Ventas" />
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+   
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          
+          <ListItem button className={classes.nested} onClick={handleClickPA} >
+            <ListItemIcon>
+              <ViewHeadlineIcon />
+            </ListItemIcon>
+            <ListItemText primary="Parametros Servicios" />
+            {openPA ? <ExpandLess /> : <ExpandMore />}  
+          </ListItem>
+
+          <Divider />
+          
+          <ListItem button className={classes.nested} onClick={handleClickGA} >
+            <ListItemIcon>
+              <MonetizationOnIcon />
+            </ListItemIcon>
+            <ListItemText primary="Gestión Servicios" />
+            {openGA ? <ExpandLess /> : <ExpandMore />}  
+          </ListItem>
+          <Collapse in={openGA} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem component={Link} button to="/ventasservicios/registrollamadas" className={classes.nested} >
+                <ListItemIcon>
+                  <ContactPhoneIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Gestión ventas" />
+              </ListItem>
+              <ListItem component={Link} button to="" className={classes.nested}>
+                <ListItemIcon>
+                  <GetAppIcon />
+                </ListItemIcon>
+                <ListItemText primary="xxxxxx" />
+              </ListItem>
+            </List>
+          </Collapse>
+        </List>
+      </Collapse>
+      </div>
+  );
+}
+
+export default Ventas;
