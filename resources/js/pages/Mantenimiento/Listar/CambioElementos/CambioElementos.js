@@ -114,7 +114,7 @@ function CambioElementos() {
 
   const seleccionarOrden = (orden, caso) => {
     console.log("VALOR SELECCIONAD : ", orden)
-    window.open("https://gimcloud.co/api/cambioelementos/generarPdf/" + orden.id_cel, "PDF")
+    window.open("https://gimcloud.com/api/cambioelementos/generarPdf/" + orden.id_cel, "PDF")
   }
 
   const abrirCerrarModalEditar = () => {

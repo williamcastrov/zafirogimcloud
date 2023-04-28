@@ -38,6 +38,11 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 400,
         maxWidth: 400,
     },
+    formControl3: {
+        margin: theme.spacing(0),
+        minWidth: 600,
+        maxWidth: 600,
+    },
     formControl2: {
         margin: theme.spacing(0),
         minWidth: 220,
@@ -125,12 +130,12 @@ function EnviarEmail(props) {
     const [enviar, setEnviar] = useState(false);
     const [nombre, setNombre] = useState(primer_nombre_con + ' ' + primer_apellido_con);
     //const [email, setEmail] = useState("claudiaholguinarroyave@gmail.com");
-    const [comentario, setComentario] = useState("https://zafiro.gimcloud.co/api/ordenesserv/generarPdf/" + id_actividad);
+    const [comentario, setComentario] = useState("https://zafiro.gimcloud.com/api/ordenesserv/generarPdf/" + id_actividad);
     const [contacto, setContacto] = useState({
         nombre: primer_nombre_con + ' ' + primer_apellido_con,
         email: email_cli,
         //email: 'williamcastrov@gmail.com',
-        comentario: "https://zafiro.gimcloud.co/api/ordenesserv/generarPdf/" + id_actividad
+        comentario: "https://zafiro.gimcloud.com/api/ordenesserv/generarPdf/" + id_actividad
     });
 
     const handleChange = e => {
@@ -158,7 +163,7 @@ function EnviarEmail(props) {
                             nombre: nombre,
                             email: emailEnviar,
                             //email: 'williamcastrov@gmail.com',
-                            comentario: "https://zafiro.gimcloud.co/api/ordenesserv/generarPdf/" + id_actividad
+                            comentario: "https://zafiro.gimcloud.com/api/ordenesserv/generarPdf/" + id_actividad
                         }])
 
                     } else {
@@ -166,7 +171,7 @@ function EnviarEmail(props) {
                             nombre: nombre,
                             email: email_cli,
                             //email: 'williamcastrov@gmail.com',
-                            comentario: "https://zafiro.gimcloud.co/api/ordenesserv/generarPdf/" + id_actividad
+                            comentario: "https://zafiro.gimcloud.com/api/ordenesserv/generarPdf/" + id_actividad
                         }])
                     }
                 }
@@ -231,7 +236,7 @@ function EnviarEmail(props) {
                 <div>
                     <Typography align="center" className={styles.typography} variant="button" display="block"> Ingrese Email Enviar OT </Typography>
                     <Grid xl={12} lg={12} xs={12} md={12}>
-                        <FormControl className={styles.formControl}>
+                        <FormControl className={styles.formControl3}>
                             <TextField type="text" className={styles.inputMaterial} label="Ingrese Emanil" name="nvoemail"
                                 onChange={(e) => setEmailEnviar(e.target.value)} />
                         </FormControl>

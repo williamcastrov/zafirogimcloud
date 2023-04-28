@@ -9,6 +9,7 @@ use App\Models\Almacenes\Almacenes;
 use App\Models\Almacenes\TipoAlmacen;
 use App\Models\Interlocutores\Interlocutores;
 use App\Models\Parameters\Estados;
+use App\Models\Almacenes\MovimientosAlmacen;
 
 class AlmacenesController extends Controller
 {
@@ -37,6 +38,38 @@ class AlmacenesController extends Controller
            
           return $response;
     }
+
+    public function createMvto(Request $request){
+
+      try {
+          $insert['tipooperacion_mov']  = $request['tipooperacion_mov'];
+          $insert['almacen_mov']        = $request['almacen_mov'];
+          $insert['tipodesembolso_mov'] = $request['tipodesembolso_mov'];
+          $insert['ordendecompra_mov']  = $request['ordendecompra_mov'];
+          $insert['proveedor_mov']      = $request['proveedor_mov'];
+          $insert['descripcion_mov']    = $request['descripcion_mov'];
+          $insert['referencia_mov']     = $request['referencia_mov'];
+          $insert['maquina_mov']        = $request['maquina_mov'];
+          $insert['ciudad_mov']         = $request['ciudad_mov'];
+          $insert['aprobo_mov']         = $request['aprobo_mov'];
+          $insert['cantidad_mov']       = $request['cantidad_mov'];
+          $insert['costounitario_mov']  = $request['costounitario_mov'];
+          $insert['valormovimiento_mov']= $request['valormovimiento_mov'];
+          $insert['fecha_mov']          = $request['fecha_mov'];
+          $insert['estado_mov']         = $request['estado_mov'];
+          
+          MovimientosAlmacen::insert($insert);
+  
+          $response['message'] = "Movimiento Grabado de forma correcta";
+          $response['success'] = true;
+  
+        } catch (\Exception $e) {
+          $response['message'] = $e->getMessage();
+          $response['success'] = false;
+        }
+         
+        return $response;
+  }
   
     public function listar_almacenes(){
   

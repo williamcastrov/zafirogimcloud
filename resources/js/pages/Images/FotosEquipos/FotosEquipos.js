@@ -75,7 +75,7 @@ function FotosEquipos(props) {
         formdata.append('fechafoto', fechaFoto)
         console.log("FORM DATA : ", formdata)
 
-        fetch('https://imageneszafiro.gimcloud.co/api/fotosequipos/post', {
+        fetch('https://imageneszafiro.gimcloud.com/api/fotosequipos/post', {
             method: 'POST',
             body: formdata
         })

@@ -69,25 +69,6 @@ function Costos() {
             <ListItemText primary="Parametros Costos" />
             {openPA ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-
-          <Collapse in={openPA} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem component={Link} button to="/costos/tipocostovariable" className={classes.nested}>
-                <ListItemIcon>
-                  <StoreIcon />
-                </ListItemIcon>
-                <ListItemText primary="Datos Base Costos" />
-              </ListItem>
-              <ListItem component={Link} button to="/costos/costosvariables" className={classes.nested}>
-                <ListItemIcon>
-                  <StoreIcon />
-                </ListItemIcon>
-                <ListItemText primary="Datos Base x Periodo" />
-              </ListItem>
-            </List>
-          </Collapse>
-          <Divider />
-
           <ListItem button className={classes.nested} onClick={handleClickIF} >
             <ListItemIcon>
               <ViewHeadlineIcon />
@@ -103,18 +84,6 @@ function Costos() {
                 </ListItemIcon>
                 <ListItemText primary="Informe Facturacion" />
               </ListItem>
-              <ListItem component={Link} button to="/costos/costorealperiodo" className={classes.nested} >
-                <ListItemIcon>
-                  <ViewHeadlineIcon />
-                </ListItemIcon>
-                <ListItemText primary="Informe Costo Real" />
-              </ListItem>
-              <ListItem component={Link} button to="/costos/costorealequipoacumulado" className={classes.nested} >
-                <ListItemIcon>
-                  <ViewHeadlineIcon />
-                </ListItemIcon>
-                <ListItemText primary="Informe Costo Acumulado x Equipo" />
-              </ListItem>
               <ListItem component={Link} button to="/costos/consumosrepuestos" className={classes.nested} >
                 <ListItemIcon>
                   <ViewHeadlineIcon />
@@ -126,6 +95,24 @@ function Costos() {
                   <ViewHeadlineIcon />
                 </ListItemIcon>
                 <ListItemText primary="Costos Contrataciones" />
+              </ListItem>
+              <ListItem component={Link} button to="/flotarenta/ReporteCostosOT" className={classes.nested} >
+                <ListItemIcon>
+                  <ViewHeadlineIcon />
+                </ListItemIcon>
+                <ListItemText primary="Informe Costos OT" />
+              </ListItem>
+              <ListItem component={Link} button to="/flotarenta/CostosOTProveedor" className={classes.nested} >
+                <ListItemIcon>
+                  <ViewHeadlineIcon />
+                </ListItemIcon>
+                <ListItemText primary="Costos OT Proveedor" />
+              </ListItem>
+              <ListItem component={Link} button to="/flotarenta/CostosOTManoObra" className={classes.nested} >
+                <ListItemIcon>
+                  <ViewHeadlineIcon />
+                </ListItemIcon>
+                <ListItemText primary="Costos OT Mano de Obra" />
               </ListItem>
 
             </List>

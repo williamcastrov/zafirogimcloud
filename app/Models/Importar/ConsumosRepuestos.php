@@ -14,24 +14,12 @@ class ConsumosRepuestos extends Model
     protected $primaryKey = "id_cre";
 
     protected $fillable = [
-        'anno_cre',
-        'mes_cre',
-        'periodo_cre',
-        'tr_cre', 
-        'concepto_cre',
-        'documento_cre',
-        'fecha_cre',
         'idequipo_cre',
-        'codigo_cre',
-        'documentodest_cre',
-        'bodega_cre',
-        'referencia_cre', 
-        'descripcion_cre',
-        'centrocosto_cre',
+        'concepto_cre',
+        'proveedor_cre',
         'cantidad_cre', 
         'costounitario_cre', 
-        'costototal_cre', 
-        'valorbruto_cre',
+        'costototal_cre' 
     ];
 
     public $timestamps = false;

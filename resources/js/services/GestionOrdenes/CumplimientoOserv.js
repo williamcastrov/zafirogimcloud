@@ -21,6 +21,15 @@ cumplimientooserv.listCumplimiento = async () => {
     return res;
 }
 
+cumplimientooserv.listarcostosot = async () => {
+    const urlList = baseUrl+"/listarcostosot"
+    const res = await axios.get(urlList)
+    .then(response=>{ return response.data; })
+    .catch(error=>{ return error; })
+   
+    return res;
+}
+
 cumplimientooserv.leerdatoshojadevida = async (equipo) => {
     const urlList = baseUrl+"/leerdatoshojadevida/"+equipo
     const res = await axios.get(urlList)

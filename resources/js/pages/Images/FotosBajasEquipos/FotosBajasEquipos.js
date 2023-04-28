@@ -75,7 +75,7 @@ function FotosBajasEquipos(props) {
         formdata.append('fechafoto', fechaFoto)
         console.log("FORM DATA : ", formdata)
 
-        fetch('https://simagenes.gimcloud.co/api/fotosbajashistoricos/post', {
+        fetch('https://simagenes.gimcloud.com/api/fotosbajashistoricos/post', {
             method: 'POST',
             body: formdata
         })

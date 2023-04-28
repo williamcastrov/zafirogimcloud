@@ -158,7 +158,7 @@ function ConsultarFotosBajasEquipos(props) {
   ]
 
   const mostrarFoto = (nombrefoto) => {
-    window.open("https://simagenes.gimcloud.co/" + nombrefoto, "Foto Maquina")
+    window.open("https://simagenes.gimcloud.com/" + nombrefoto, "Foto Maquina")
   }
 
   const fotoEquipoEliminar = (

@@ -60,7 +60,7 @@ const BarSession = (props) => {
     }
 
     const cumplimiento = () => {
-        window.open("https://remotezafiro.gimcloud.co/cumplimiento/cumplirordentecnico");
+        window.open("https://remotezafiro.gimcloud.com/cumplimiento/cumplirordentecnico");
     }
 
     const logout = () => {

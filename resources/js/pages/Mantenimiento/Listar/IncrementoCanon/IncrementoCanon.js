@@ -156,7 +156,7 @@ function IncrementoCanon() {
     setNombreCliente(orden.razonsocial_cli);
     console.log("VALOR SELECCIONAD : ", orden)
     setIncrementoSeleccionado(orden);
-    window.open("https://gimcloud.co/api/mantenimiento/generarPdfAlza/" + orden.id_inc, "PDF")
+    window.open("https://gimcloud.com/api/mantenimiento/generarPdfAlza/" + orden.id_inc, "PDF")
 
     //(caso === "PdfOrden") ? abrirCerrarModalGenerarPdf() : abrirCerrarModalCancelar()
   }

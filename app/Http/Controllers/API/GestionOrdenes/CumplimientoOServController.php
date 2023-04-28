@@ -253,6 +253,32 @@ class CumplimientoOServController extends Controller
           return $response;
       }
 
+      public function listarcostosot(){  
+        try {
+            $data = DB::select("SELECT t0.*, t3.codigo_equ, t1.* , t2.*, t4.razonsocial_cli,
+                                      t5.nombre_ciu
+            from consumosrepuestos t0 INNER JOIN cumplimientooserv t1 INNER JOIN ordenservicio t2
+                                      INNER JOIN equipos t3 INNER JOIN interlocutores_cli t4
+                                      INNER JOIN ciudades t5
+            WHERE t0.ot_cre = t1.id_actividad
+              AND t1.id_cosv = t2.id_otr
+              AND t3.id_equ = t2.equipo_otr
+              AND t2.cliente_otr = t4.id_cli
+              AND t2.ciudad_otr = t5.id_ciu
+            ");
+  
+          $response['data'] = $data;
+          // $response['data'] = $data1;
+          $response['message'] = "load successful";
+          $response['success'] = true;
+      
+        } catch (\Exception $e) {
+          $response['message'] = $e->getMessage();
+          $response['success'] = false;
+        }
+          return $response;
+      }
+
       public function ordenespreventivo(){  
         try {
             $data = DB::select("SELECT t0.*, t1.descripcion_tope, t2.descripcion_are, t3.descripcion_fmt, t4.nombre_est,

@@ -6,6 +6,7 @@ import { green, blue, blueGrey, red } from '@material-ui/core/colors';
 import { makeStyles } from "@material-ui/core/styles";
 import SaveIcon from '@material-ui/icons/Save';
 import swal from 'sweetalert';
+import Moment from 'moment';
 
 //Estilos 
 import "./Ubicaciones.css";
@@ -39,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0),
     minWidth: 270,
     maxWidth: 270,
+  },
+  formControlDos: {
+    margin: theme.spacing(0),
+    minWidth: 172,
+    maxWidth: 172,
   },
   button: {
     color: theme.palette.getContrastText(blueGrey[500]),
@@ -78,13 +84,16 @@ function Ubicaciones(props) {
   const [listarEquipos, setListarEquipos] = useState([]);
   const [listarClientes, setListarClientes] = useState([]);
   const [actualiza, setActualiza] = useState(false);
+  const fechaactual = Moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
   const [ubicacionesSeleccionado, setUbicacionesSeleccionado] = useState({
     'id_ubi': "",
     'equipo_ubi': equipoID,
     'cliente_ubi': "",
     'direccion_ubi': "",
     'ciudad_ubi': "",
-    'estado_ubi': ""
+    'fecha_ubi': "",
+    'estado_ubi': "",
+    'observacion_ubi': ""
   })
 
   useEffect(() => {
@@ -139,18 +148,18 @@ function Ubicaciones(props) {
   }
 
   const abrirCerrarModalInsertar = () => {
-    if(!listarUbicaciones){
+    if (!listarUbicaciones) {
       setModalInsertar(!modalInsertar);
-    }else
-    if(listarUbicaciones[0].estado_ubi === 31){
-      swal( "Ubicación", "La Ubicación actual del equipo debe estar Inactiva!", "warning", { button: "Aceptar" });
-      //setModalInsertar(false);
-    } else{
-      setModalInsertar(!modalInsertar);
-    }
+    } else
+      if (listarUbicaciones[0].estado_ubi === 31) {
+        swal("Ubicación", "La Ubicación actual del equipo debe estar Inactiva!", "warning", { button: "Aceptar" });
+        //setModalInsertar(false);
+      } else {
+        setModalInsertar(!modalInsertar);
+      }
 
     //console.log("DATOS UBICACION : ", listarUbicaciones[0].estado_ubi )
-    
+
   }
 
   const abrirCerrarModalEditar = () => {
@@ -168,32 +177,38 @@ function Ubicaciones(props) {
     let formOk = true;
 
     if (!ubicacionesSeleccionado.equipo_ubi) {
-      alert("1")
+      alert("Falta información equipo")
       errors.equipo_ubi = true;
       formOk = false;
     }
 
     if (!ubicacionesSeleccionado.cliente_ubi) {
-      alert("2")
+      alert("Falta información cliente")
       errors.cliente_ubi = true;
       formOk = false;
     }
 
     if (!ubicacionesSeleccionado.direccion_ubi) {
-      alert("3")
+      alert("Falta información dirección")
       errors.direccion_ubi = true;
       formOk = false;
     }
 
     if (!ubicacionesSeleccionado.ciudad_ubi) {
-      alert("4")
+      alert("Falta información ciudad")
       errors.ciudad_ubi = true;
       formOk = false;
     }
 
     if (!ubicacionesSeleccionado.estado_ubi) {
-      alert("5")
+      alert("Falta información estado")
       errors.estado_ubi = true;
+      formOk = false;
+    }
+
+    if (!ubicacionesSeleccionado.fecha_ubi) {
+      alert("Falta información fecha")
+      errors.fecha_ubi = true;
       formOk = false;
     }
 
@@ -204,7 +219,7 @@ function Ubicaciones(props) {
       const res = await ubicacionesServices.save(ubicacionesSeleccionado);
 
       if (res.success) {
-        swal( "Ubicación", "Creada de forma Correcta!", "success", { button: "Aceptar" });
+        swal("Ubicación", "Creada de forma Correcta!", "success", { button: "Aceptar" });
         console.log(res.message)
         abrirCerrarModalInsertar();
         delete ubicacionesSeleccionado.cliente_ubi;
@@ -212,14 +227,14 @@ function Ubicaciones(props) {
         delete ubicacionesSeleccionado.ciudad_ubi;
         delete ubicacionesSeleccionado.estado_ubi;
       } else {
-        swal( "Ubicación", "Error Creando la Ubicación del Equipo!", "error", { button: "Aceptar" });
+        swal("Ubicación", "Error Creando la Ubicación del Equipo!", "error", { button: "Aceptar" });
         console.log(ubicacionesSeleccionado);
         console.log(res.message);
         abrirCerrarModalInsertar();
       }
     }
     else {
-      swal( "Ubicación", "Debe Ingresar Todos los Datos, Error Creando la Ubicación del  Equipo!", "warning", { button: "Aceptar" });
+      swal("Ubicación", "Debe Ingresar Todos los Datos, Error Creando la Ubicación del  Equipo!", "warning", { button: "Aceptar" });
       console.log(ubicacionesSeleccionado);
       console.log(res.message);
       abrirCerrarModalInsertar();
@@ -228,11 +243,9 @@ function Ubicaciones(props) {
   }
 
   const actualizarUbicacion = async () => {
-
     setFormError({});
     let errors = {};
     let formOk = true;
-
 
     if (!ubicacionesSeleccionado.equipo_ubi) {
       errors.equipo_ubi = true;
@@ -266,7 +279,7 @@ function Ubicaciones(props) {
       const res = await ubicacionesServices.update(ubicacionesSeleccionado);
 
       if (res.success) {
-        swal( "Ubicación", "Tipo de Ubicación del Equipo actualizado de forma Correcta!", "success", { button: "Aceptar" });
+        swal("Ubicación", "Tipo de Ubicación del Equipo actualizado de forma Correcta!", "success", { button: "Aceptar" });
         console.log(res.message)
         abrirCerrarModalEditar();
         delete ubicacionesSeleccionado.cliente_ubi;
@@ -274,13 +287,13 @@ function Ubicaciones(props) {
         delete ubicacionesSeleccionado.ciudad_ubi;
         delete ubicacionesSeleccionado.estado_ubi;
       } else {
-        swal( "Ubicación", "Error Actualizando el Tipo de Ubicación del  Equipo!", "error", { button: "Aceptar" });
+        swal("Ubicación", "Error Actualizando el Tipo de Ubicación del  Equipo!", "error", { button: "Aceptar" });
         console.log(res.message);
         abrirCerrarModalEditar();
       }
     }
     else {
-      swal( "Ubicación", "Debe Ingresar Todos los Datos, Error Actualizando el Tipo de Ubicación del Equipo!", "warning", { button: "Aceptar" });
+      swal("Ubicación", "Debe Ingresar Todos los Datos, Error Actualizando el Tipo de Ubicación del Equipo!", "warning", { button: "Aceptar" });
       console.log(res.message);
       abrirCerrarModalEditar();
     }
@@ -291,12 +304,12 @@ function Ubicaciones(props) {
     const res = await ubicacionesServices.delete(ubicacionesSeleccionado.id_ubi);
 
     if (res.success) {
-      swal( "Ubicación", "El Tipo de Ubicación del Equipo Borrada de forma Correcta!", "success", { button: "Aceptar" });
+      swal("Ubicación", "El Tipo de Ubicación del Equipo Borrada de forma Correcta!", "success", { button: "Aceptar" });
       console.log(res.message)
       abrirCerrarModalEliminar();
     }
     else {
-      swal( "Ubicación", "Error Borrando el Tipo de Ubicación del Equipo!", "error", { button: "Aceptar" });
+      swal("Ubicación", "Error Borrando el Tipo de Ubicación del Equipo!", "error", { button: "Aceptar" });
       console.log(res.message);
       abrirCerrarModalEliminar();
     }
@@ -317,6 +330,11 @@ function Ubicaciones(props) {
     {
       title: 'Cliente',
       field: 'razonsocial_cli',
+      cellStyle: { minWidth: 250 }
+    },
+    {
+      title: 'Fecha',
+      field: 'fecha_ubi',
       cellStyle: { minWidth: 250 }
     },
     {
@@ -366,8 +384,8 @@ function Ubicaciones(props) {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <FormControl className={styles.formControl}>
+        <Grid item xs={12} md={4}>
+          <FormControl className={styles.formControlDos}>
             <InputLabel id="ciudad_ubi">Ciudad</InputLabel>
             <Select
               labelId="selectciudad_ubi"
@@ -386,8 +404,13 @@ function Ubicaciones(props) {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <FormControl className={styles.formControl}>
+        <Grid item xs={12} md={4}>
+          <TextField type="date" InputLabelProps={{ shrink: true }} name="fecha_ubi"
+            defaultValue={Moment(fechaactual).format('YYYY-MM-DD')} label="Fecha movimiento"
+            fullWidth onChange={handleChange} />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <FormControl className={styles.formControlDos}>
             <InputLabel id="estado_ubi">Estado</InputLabel>
             <Select
               labelId="selectestado_ubi"
@@ -409,6 +432,9 @@ function Ubicaciones(props) {
         <Grid item xs={12} md={12}>
           <TextField className={styles.inputMaterial} label="Dirección" name="direccion_ubi" onChange={handleChange} />
         </Grid>
+        <Grid item xs={12} md={12}>
+          <TextField className={styles.inputMaterial} label="Observaciones" name="observacion_ubi" onChange={handleChange} />
+        </Grid>
       </Grid>
       <br /><br />
       <div align="right">
@@ -421,7 +447,7 @@ function Ubicaciones(props) {
   const ubicacionEditar = (
     <div className={styles.modal}>
       <Typography align="center" className={styles.typography} variant="button" display="block" >
-      Actualizar Ubicación del Equipo
+        Actualizar Ubicación del Equipo
       </Typography>
       <Grid container spacing={2} >
         <Grid item xs={12} md={6}>

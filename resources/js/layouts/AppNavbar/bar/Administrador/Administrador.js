@@ -48,6 +48,7 @@ function Administrador() {
             <Usuarios />
             <Interlocutores />
             <Activos />
+            <Almacenes/>
             <Mantenimiento />
             <Ordenes />
             <EntregaRecepcion />

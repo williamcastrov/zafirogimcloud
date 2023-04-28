@@ -125,7 +125,7 @@ function Images(props) {
 
         setMostrar(true);
         setActualiza(false);
-        fetch('https://simagenes.gimcloud.co/api/imagenes/post', {
+        fetch('https://simagenes.gimcloud.com/api/imagenes/post', {
             method: 'POST',
             body: formdata
         })

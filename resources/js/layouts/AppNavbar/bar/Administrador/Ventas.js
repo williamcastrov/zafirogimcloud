@@ -82,11 +82,11 @@ function Ventas() {
                 </ListItemIcon>
                 <ListItemText primary="Gestión ventas" />
               </ListItem>
-              <ListItem component={Link} button to="" className={classes.nested}>
+              <ListItem component={Link} button to="/ventas/seguimientocomercial" className={classes.nested}>
                 <ListItemIcon>
                   <GetAppIcon />
                 </ListItemIcon>
-                <ListItemText primary="xxxxxx" />
+                <ListItemText primary="Informe seguimiento comercial" />
               </ListItem>
             </List>
           </Collapse>

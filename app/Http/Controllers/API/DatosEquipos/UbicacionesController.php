@@ -19,11 +19,13 @@ class UbicacionesController extends Controller
     public function create(Request $request){
 
         try {
-            $insert['equipo_ubi']     = $request['equipo_ubi'];
-            $insert['cliente_ubi']    = $request['cliente_ubi'];
-            $insert['direccion_ubi']  = $request['direccion_ubi'];
-            $insert['ciudad_ubi']     = $request['ciudad_ubi'];
-            $insert['estado_ubi']     = $request['estado_ubi'];
+            $insert['equipo_ubi']      = $request['equipo_ubi'];
+            $insert['cliente_ubi']     = $request['cliente_ubi'];
+            $insert['direccion_ubi']   = $request['direccion_ubi'];
+            $insert['ciudad_ubi']      = $request['ciudad_ubi'];
+            $insert['fecha_ubi']       = $request['fecha_ubi'];
+            $insert['estado_ubi']      = $request['estado_ubi'];
+            $insert['observacion_ubi'] = $request['observacion_ubi'];
 
             Ubicaciones::insert($insert);
     
@@ -42,7 +44,6 @@ class UbicacionesController extends Controller
   
         try {
             //$data = Especialidades::with("empresa")->get();
-             
             $data = DB::select("SELECT t0.*,       t1.nombre_est,  t2.descripcion_equ, t2.codigo_equ,
                                t3.razonsocial_cli, t4.nombre_ciu, t5.serie_dequ, t5.referencia_dequ,
                                t5.modelo_dequ
@@ -50,7 +51,9 @@ class UbicacionesController extends Controller
                                    INNER JOIN interlocutores_cli as t3 INNER JOIN ciudades as t4
                                    INNER JOIN datosadicionalequipos as t5
             WHERE t0.estado_ubi = t1.id_est and t0.equipo_ubi = t2.id_equ and t0.cliente_ubi = t3.id_cli 
-              and t0.ciudad_ubi  = t4.id_ciu and t5.id_dequ = t0.equipo_ubi and t0.estado_ubi = 31");
+              and t0.ciudad_ubi  = t4.id_ciu and t5.id_dequ = t0.equipo_ubi and t0.estado_ubi = 31
+            ORDER BY t2.codigo_equ ASC
+              ");
            
             $response['data'] = $data;
             $response['message'] = "load successful";
@@ -95,11 +98,13 @@ class UbicacionesController extends Controller
     public function update(Request $request, $id_ubi){
   
           try {
-            $data['equipo_ubi']     = $request['equipo_ubi'];
-            $data['cliente_ubi']    = $request['cliente_ubi'];
-            $data['direccion_ubi']  = $request['direccion_ubi'];
-            $data['ciudad_ubi']     = $request['ciudad_ubi'];
-            $data['estado_ubi']     = $request['estado_ubi'];
+            $data['equipo_ubi']      = $request['equipo_ubi'];
+            $data['cliente_ubi']     = $request['cliente_ubi'];
+            $data['direccion_ubi']   = $request['direccion_ubi'];
+            $data['ciudad_ubi']      = $request['ciudad_ubi'];
+            $data['fecha_ubi']       = $request['fecha_ubi'];
+            $data['estado_ubi']      = $request['estado_ubi'];
+            $data['observacion_ubi'] = $request['observacion_ubi'];
 
             //Console::info('mymessage');
   

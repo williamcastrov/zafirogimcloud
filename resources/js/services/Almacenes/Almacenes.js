@@ -11,6 +11,14 @@ almacenes.save = async (data) => {
     return res;
 }
 
+almacenes.createMvto = async (data) => {
+    const urlSave = baseUrl + "/createMvto"
+    const res = await axios.post(urlSave, data)
+        .then(response => { return response.data })
+        .catch(error => { return error; })
+    return res;
+}
+
 almacenes.listAlmacenes = async () => {
     const urlList = baseUrl+"/listar_almacenes"
     const res = await axios.get(urlList)

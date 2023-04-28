@@ -1092,8 +1092,8 @@ function CrearOrdenes(props) {
         <Grid item xs={12} md={4}> <TextField name="equipo_otr" label="Equipo"
           fullWidth onChange={handleChange} disabled="true" defaultValue={equipo} />
         </Grid>
-        <Grid item xs={12} md={4}> <TextField type="number" name="diasoperacion_otr" label="Cuantos días duro la Actividad"
-          fullWidth onChange={handleChange} disabled="true" defaultValue={diasoperacion} />
+        <Grid item xs={12} md={4}> <TextField type="number" name="diasoperacion_otr" label="Número OT física"
+          fullWidth onChange={handleChange}  defaultValue={diasoperacion} />
         </Grid>
         <Grid item xs={12} md={4}>
           <FormControl className={styles.formControl}>
@@ -1362,7 +1362,7 @@ function CrearOrdenes(props) {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} md={4}> <TextField type="number" name="diasoperacion_otr" label="Cuantos días duro la Actividad"
+          <Grid item xs={12} md={4}> <TextField type="number" name="diasoperacion_otr" label="Número OT física"
             disabled="true" defaultValue={diasoperacion}
             fullWidth onChange={handleChange} value={ordenSeleccionado && ordenSeleccionado.diasoperacion_otr} />
           </Grid>

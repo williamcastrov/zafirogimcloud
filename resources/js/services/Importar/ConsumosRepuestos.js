@@ -3,9 +3,8 @@ const baseUrl = `${url}/api/consumos`;
 import axios from "axios";
 const consumosrepuestos = {};
 
-consumosrepuestos.importarconsumosrepuestos = async (data) => {
-    console.log("DATA : ", data)
-    const urlSave = baseUrl + "/importarconsumosrepuestos"
+consumosrepuestos.save = async (data) => {
+    const urlSave = baseUrl + "/create"
     const res = await axios.post(urlSave, data)
         .then(response => { return response.data })
         .catch(error => { return error; })
@@ -30,25 +29,6 @@ consumosrepuestos.listar_consumosrepuestosperiodo = async (periodo) => {
     return res;
 }
 
-consumosrepuestos.paretoconsolidadoconsumosrep = async (periodo) => {
-    console.log("DATA : ", periodo)
-    const urlList = baseUrl+"/paretoconsolidadoconsumosrep/"+periodo
-    const res = await axios.get(urlList)
-    .then(response=>{ return response.data; })
-    .catch(error=>{ return error; })
-   
-    return res;
-}
-
-consumosrepuestos.consolidadoconsumosrepmes = async (periodo) => {
-    const urlList = baseUrl+"/consolidadoconsumosrepmes/"+periodo
-    const res = await axios.get(urlList)
-    .then(response=>{ return response.data; })
-    .catch(error=>{ return error; })
-   
-    return res;
-}
-
 consumosrepuestos.listarconsumosmesequipo = async (codigo) => {
     console.log("DATA : ", codigo)
     const urlList = baseUrl+"/listar_consumosmesequipo/"+codigo
@@ -56,6 +36,24 @@ consumosrepuestos.listarconsumosmesequipo = async (codigo) => {
     .then(response=>{ return response.data; })
     .catch(error=>{ return error; })
    
+    return res;
+}
+
+consumosrepuestos.update = async (data) => {
+    const urlUpdate = baseUrl+"/update/"+data.id_cre
+    const res = await axios.put(urlUpdate, data)
+    .then(response=>{ return response.data; })
+    .catch(error=>{ return error; })
+   
+    return res;
+}
+
+consumosrepuestos.delete = async (id_cre) => {
+    const urlDelete = baseUrl+"/delete/"+id_cre
+    const res = await axios.delete(urlDelete)
+    .then(response=> { return response.data })
+    .catch(error =>{ return error })
+
     return res;
 }
 

@@ -26,6 +26,7 @@ function Almacenes() {
   const [open, setOpen] = React.useState(false);
   const [openPA, setOpenPA] = React.useState(false);
   const [openGA, setOpenGA] = React.useState(false);
+  const [openLI, setOpenLI] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
@@ -39,6 +40,10 @@ function Almacenes() {
     setOpenGA(!openGA);
   };
 
+  const handleClickLI = () => {
+    setOpenLI(!openLI);
+  };
+
   return (
     <div>
       <ListItem button onClick={handleClick}>
@@ -50,7 +55,7 @@ function Almacenes() {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested} button onClick={handleClickPA} >
+          <ListItem button className={classes.nested} onClick={handleClickPA} >
             <ListItemIcon>
               <ViewHeadlineIcon />
             </ListItemIcon>
@@ -65,13 +70,13 @@ function Almacenes() {
                 </ListItemIcon>
                 <ListItemText primary="Tipos de Almacenes" />
               </ListItem>
-              <ListItem component={Link} button to="/almacenes/lineasproductos" className={classes.nested}>
+              <ListItem component={Link} to="/almacenes/lineasproductos" className={classes.nested}>
                 <ListItemIcon>
                   <CategoryIcon />
                 </ListItemIcon>
                 <ListItemText primary="Lineas de Productos" />
               </ListItem>
-              <ListItem component={Link} button to="/almacenes/crearalmacenes" className={classes.nested}>
+              <ListItem component={Link} to="/almacenes/crearalmacenes" className={classes.nested}>
                 <ListItemIcon>
                   <ReorderIcon />
                 </ListItemIcon>
@@ -80,26 +85,44 @@ function Almacenes() {
             </List>
           </Collapse>
           <Divider />
-          <ListItem button className={classes.nested} button onClick={handleClickGA} >
+          <ListItem button className={classes.nested} onClick={handleClickGA} >
             <ListItemIcon>
               <ViewHeadlineIcon />
             </ListItemIcon>
-            <ListItemText primary="Gestión de Almaceness" />
+            <ListItemText primary="Gestión de Almacenes" />
             {openGA ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={openGA} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem component={Link} button to="/almacenes/inventarios" className={classes.nested}>
+              <ListItem component={Link} to="/almacenes/inventarios" className={classes.nested}>
                 <ListItemIcon>
                   <BusinessIcon />
                 </ListItemIcon>
                 <ListItemText primary="Inventarios" />
               </ListItem>
-              <ListItem button className={classes.nested}>
+              <ListItem component={Link} button to="/almacenes/movimientos" className={classes.nested}>
                 <ListItemIcon>
                   <CategoryIcon />
                 </ListItemIcon>
-                <ListItemText primary="Sin Asignar" />
+                <ListItemText primary="Movimientos" />
+              </ListItem>
+            </List>
+          </Collapse>
+          <Divider />
+          <ListItem button className={classes.nested} onClick={handleClickLI} >
+            <ListItemIcon>
+              <ViewHeadlineIcon />
+            </ListItemIcon>
+            <ListItemText primary="Informes" />
+            {openLI ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={openLI} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem component={Link} to="/almacenes/listarmovimientos" className={classes.nested}>
+                <ListItemIcon>
+                  <BusinessIcon />
+                </ListItemIcon>
+                <ListItemText primary="Listar movimientos" />
               </ListItem>
             </List>
           </Collapse>

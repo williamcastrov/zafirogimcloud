@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import MaterialTable from "material-table";
-import { Modal, TextField, Button, ButtonGroup, Select, MenuItem, FormControl, InputLabel, Typography, Grid } from "@material-ui/core";
+import { Modal, TextField, Button, ButtonGroup, Select, MenuItem, FormControl, 
+         TextareaAutosize,InputLabel, Typography, Grid } from "@material-ui/core";
 import { green, blue, blueGrey, red, grey } from '@material-ui/core/colors';
 import { makeStyles } from "@material-ui/core/styles";
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
@@ -34,10 +35,11 @@ const useStyles = makeStyles((theme) => ({
   },
   modal2: {
     position: 'absolute',
-    width: 500,
+    width: 1000,
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
+    overflow:'scroll',
     padding: theme.spacing(2, 4, 3),
     top: '50%',
     left: '50%',
@@ -51,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     margin: theme.spacing(0),
-    minWidth: 415,
+    minWidth: 450,
   },
   typography: {
     fontSize: 16,
@@ -125,11 +127,22 @@ function RegistroLlamadas() {
     id_rll: 0,
     cliente_rll: "",
     motivollamada_rll: "",
+    asistentes: "",
     contacto_rll: "",
     equipo_rll: 0,
     fecha_rll: fechaactual,
-    observaciones_rll: "",
     estado_rll: "",
+    nombrecliente: "",
+    temauno: "",
+    comentariostemauno: "",
+    temados: "",
+    comentariostemados: "",
+    tematres: "",
+    comentariostematres: "",
+    temacuatro: "",
+    comentariostemacuatro: "",
+    temacinco: "",
+    comentariostemacinco: ""
   })
 
   const [cliente, setCliente] = useState({
@@ -145,7 +158,7 @@ function RegistroLlamadas() {
     async function fetchDataLlamadas() {
       const res = await registrollamadasServices.listar_iniciovisitacomercial();
       setListRegistroLlamadas(res.data)
-      //console.log(res.data);
+      console.log(res.data);
       setIniciaVisita(false);
     }
     fetchDataLlamadas();
@@ -215,7 +228,7 @@ function RegistroLlamadas() {
 
   const seleccionarOrden = async (orden, caso) => {
     console.log("NUMERO : ", orden)
-    window.open("https://zafiro.gimcloud.co/api/registrollamadas/generarPdf/" + orden.id_rll, "PDF")
+    window.open("https://zafiro.gimcloud.com/api/registrollamadas/generarPdf/" + orden.id_rll, "PDF")
   }
 
   const abrirCerrarModalInsertar = () => {
@@ -345,13 +358,11 @@ function RegistroLlamadas() {
     let formOk = true;
 
     if (!registroLlamadasSeleccionado.motivollamada_rll) {
-      alert("2")
       errors.motivollamada_rll = true;
       formOk = false;
     }
 
     if (!registroLlamadasSeleccionado.contacto_rll) {
-      alert("2")
       errors.contacto_rll = true;
       formOk = false;
     }
@@ -364,11 +375,23 @@ function RegistroLlamadas() {
         id_rll: 0,
         cliente_rll: cliente[0].id_cli,
         motivollamada_rll: registroLlamadasSeleccionado.motivollamada_rll,
+        asistentes:registroLlamadasSeleccionado.asistentes,
         contacto_rll: registroLlamadasSeleccionado.contacto_rll,
         equipo_rll: registroLlamadasSeleccionado.equipo_rll,
         fecha_rll: registroLlamadasSeleccionado.fecha_rll,
         observaciones_rll: registroLlamadasSeleccionado.observaciones_rll,
-        estado_rll: registroLlamadasSeleccionado.estado_rll
+        estado_rll: registroLlamadasSeleccionado.estado_rll,
+        nombrecliente: registroLlamadasSeleccionado.nombrecliente,
+        temauno: registroLlamadasSeleccionado.temauno,
+        comentariostemauno: registroLlamadasSeleccionado.comentariostemauno,
+        temados: registroLlamadasSeleccionado.temados,
+        comentariostemados: registroLlamadasSeleccionado.comentariostemados,
+        tematres: registroLlamadasSeleccionado.tematres,
+        comentariostematres: registroLlamadasSeleccionado.comentariostematres,
+        temacuatro: registroLlamadasSeleccionado.temacuatro,
+        comentariostemacuatro: registroLlamadasSeleccionado.comentariostemacuatro,
+        temacinco: registroLlamadasSeleccionado.temacinco,
+        comentariostemacinco: registroLlamadasSeleccionado.comentariostemacinco
       }]);
       setGrabar(true);
     }
@@ -392,12 +415,24 @@ function RegistroLlamadas() {
     setRegistroLlamadasSeleccionado([{
       id_rll: 0,
       cliente_rll: cliente[0].id_cli,
+      asistentes: 0,
       motivollamada_rll: 0,
       contacto_rll: 0,
       equipo_rll: 0,
       fecha_rll: fechaactual,
       observaciones_rll: 0,
-      estado_rll: 31
+      estado_rll: 31,
+      nombrecliente: registroLlamadasSeleccionado.nombrecliente,
+      temauno: registroLlamadasSeleccionado.temauno,
+      comentariostemauno: registroLlamadasSeleccionado.comentariostemauno,
+      temados: registroLlamadasSeleccionado.temados,
+      comentariostemados: registroLlamadasSeleccionado.comentariostemados,
+      tematres: registroLlamadasSeleccionado.tematres,
+      comentariostematres: registroLlamadasSeleccionado.comentariostematres,
+      temacuatro: registroLlamadasSeleccionado.temacuatro,
+      comentariostemacuatro: registroLlamadasSeleccionado.comentariostemacuatro,
+      temacinco: registroLlamadasSeleccionado.temacinco,
+      comentariostemacinco: registroLlamadasSeleccionado.comentariostemacinco
     }]);
     setGrabar(true);
 
@@ -445,23 +480,20 @@ function RegistroLlamadas() {
     let formOk = true;
 
     if (!registroLlamadasSeleccionado.cliente_rll) {
-      alert("1")
       errors.cliente_rll = true;
       formOk = false;
     }
-
+/*
     if (!registroLlamadasSeleccionado.motivollamada_rll) {
-      alert("2")
       errors.motivollamada_rll = true;
       formOk = false;
     }
 
     if (!registroLlamadasSeleccionado.contacto_rll) {
-      alert("3")
       errors.contacto_rll = true;
       formOk = false;
     }
-
+*/
     setFormError(errors);
 
     if (formOk) {
@@ -541,118 +573,93 @@ function RegistroLlamadas() {
   ]
 
   const llamadaInsertar = (
-    <div className={styles.modal}>
+    <div className={styles.modal2}>
       <Typography align="center" className={styles.typography} variant="button" display="block">Grabar datos visita</Typography>
-      <FormControl className={styles.formControl}>
-        <InputLabel id="idselectEmpresa"> Cliente </InputLabel>
-        <Select
-          labelId="selectCliente"
-          name="cliente_rll"
-          id="idselectcliente_rll"
-          onChange={handleChange}
-          defaultValue={cliente[0] && cliente[0].id_cli}
-        >
-          <MenuItem value="">  <em>None</em> </MenuItem>
-          {
-            listarClientes.map((itemselect) => {
-              return (
-                <MenuItem value={itemselect.id_cli}>{itemselect.razonsocial_cli}</MenuItem>
-              )
-            })
-          }
-        </Select>
-      </FormControl>
-      <FormControl className={styles.formControl}>
-        <InputLabel id="idselectEmpresa"> Motivo Llamada </InputLabel>
-        <Select
-          labelId="selectmotivollamada_rll"
-          name="motivollamada_rll"
-          id="idselectmotivollamada_rll"
-          onChange={handleChange}
-        >
-          <MenuItem value="">  <em>None</em> </MenuItem>
-          {
-            motivosLlamadas && motivosLlamadas.map((itemselect) => {
-              return (
-                <MenuItem value={itemselect.id_est}>{itemselect.nombre_est}</MenuItem>
-              )
-            })
-          }
-        </Select>
-      </FormControl>
-      <br />
-      <FormControl className={styles.formControl}>
-        <InputLabel id="idselectEstado"> Estado Llamada </InputLabel>
-        <Select
-          labelId="selectestado_rll"
-          name="estado_rll"
-          id="idselectestado_rll"
-          onChange={handleChange}
-        >
-          <MenuItem value="">  <em>None</em> </MenuItem>
-          {
-            estadosLlamadas && estadosLlamadas.map((itemselect) => {
-              return (
-                <MenuItem value={itemselect.id_est}>{itemselect.nombre_est}</MenuItem>
-              )
-            })
-          }
-        </Select>
-      </FormControl>
-      <br />
-      <TextField type="date" InputLabelProps={{ shrink: true }} name="fecha_rll"
-        defaultValue={Moment(fechaactual).format('YYYY-MM-DD')} label="Fecha Llamada"
-        fullWidth onChange={handleChange} />
-      <FormControl className={styles.formControl}>
-        <InputLabel id="contacto_rll">Contacto</InputLabel>
-        <Select
-          labelId="selectcontacto_rll"
-          name="contacto_rll"
-          id="idselectcontacto_rll"
-          fullWidth
-          onChange={handleChange}
-          onClick={(e) => contactosInterlocutor(e.target.value)}
-          //disabled="true"
-          defaultValue={contacto}
-        >
-          <MenuItem value=""> <em>None</em> </MenuItem>
-          {
-            listContactos && listContactos.map((itemselect) => {
-              return (
-                <MenuItem value={itemselect.id_con}>{itemselect.primer_nombre_con}{" "}
-                  {itemselect.primer_apellido_con}</MenuItem>
-              )
-            })
-          }
-        </Select>
-      </FormControl>
-      <FormControl className={styles.formControl}>
-        <InputLabel id="contacto_rll">Equipos</InputLabel>
-        <Select
-          labelId="selectequipo_rll"
-          name="equipo_rll"
-          id="idselectequipo_rll"
-          fullWidth
-          onChange={handleChange}
-        //disabled="true"
-        //defaultValue={0}
-        >
-          <MenuItem value=""> <em>None</em> </MenuItem>
-          {
-            listarEquipos && listarEquipos.map((itemselect) => {
-              return (
-                <MenuItem value={itemselect.id_equ}>{itemselect.referencia_dequ}{" "}
-                  {itemselect.modelo_dequ}{" "}{itemselect.direccion_dequ}
-                </MenuItem>
-              )
-            })
-          }
-        </Select>
-      </FormControl>
-      <TextField className={styles.inputMaterial} label="Observaciones" name="observaciones_rll" onChange={handleChange} />
-      <br /><br />
+      <Grid container spacing={2} >
+        <Grid item xs={6} md={6} xl={6} lg={6}>
+          <FormControl className={styles.formControl}>
+            <InputLabel id="idselectEmpresa"> Cliente </InputLabel>
+            <Select
+              labelId="selectCliente"
+              name="cliente_rll"
+              id="idselectcliente_rll"
+              onChange={handleChange}
+              defaultValue={cliente[0] && cliente[0].id_cli}
+            >
+              <MenuItem value="">  <em>None</em> </MenuItem>
+              {
+                listarClientes.map((itemselect) => {
+                  return (
+                    <MenuItem value={itemselect.id_cli}>{itemselect.razonsocial_cli}</MenuItem>
+                  )
+                })
+              }
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={6} md={6} xl={6} lg={6}>
+          <TextField className={styles.inputMaterial} label="Datos clientes" name="nombrecliente" onChange={handleChange} />
+        </Grid>
+      </Grid>
+      <TextField className={styles.inputMaterial} label="Datos Contacto" name="contacto_rll" onChange={handleChange} />
+      <Grid item xs={6} md={6} xl={6} lg={6}>
+          <TextField className={styles.inputMaterial} label="Asistentes" name="asistentes" onChange={handleChange} />
+      </Grid>
+      <Grid container spacing={2} >
+        <Grid item xs={6} md={6} xl={6} lg={6}>
+          <TextField className={styles.inputMaterial} label="Motivo visita o servicio" name="motivollamada_rll" onChange={handleChange} />
+        </Grid>
+        <Grid item xs={6} md={6} xl={6} lg={6}>
+          <FormControl className={styles.formControl}>
+            <InputLabel id="idselectEstado"> Estado Llamada </InputLabel>
+            <Select
+              labelId="selectestado_rll"
+              name="estado_rll"
+              id="idselectestado_rll"
+              onChange={handleChange}
+            >
+              <MenuItem value="">  <em>None</em> </MenuItem>
+              {
+                estadosLlamadas && estadosLlamadas.map((itemselect) => {
+                  return (
+                    <MenuItem value={itemselect.id_est}>{itemselect.nombre_est}</MenuItem>
+                  )
+                })
+              }
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} >
+        <Grid item xs={6} md={6} xl={6} lg={6}>
+          <TextField type="date" InputLabelProps={{ shrink: true }} name="fecha_rll"
+            defaultValue={Moment(fechaactual).format('YYYY-MM-DD')} label="Fecha Llamada"
+            fullWidth onChange={handleChange} />
+        </Grid>
+        <Grid item xs={6} md={6} xl={6} lg={6}>
+          <TextField className={styles.inputMaterial} label="Equipos" name="equipo_rll" onChange={handleChange} />
+        </Grid>
+      </Grid>
+      <Typography align="center" className={styles.typography} variant="button" display="block">
+        TEMAS TRATADOS Y DESARROLLO DE LA REUNION
+      </Typography>
+      <TextField className={styles.inputMaterial} label="Tema Uno" name="temauno" onChange={handleChange} />
+      <textarea className="descripcionproducto" label="Comentarios tema uno" name="comentariostemauno" onChange={handleChange} />
+
+      <TextField className={styles.inputMaterial} label="Tema Dos" name="temados" onChange={handleChange} />
+      <textarea className="descripcionproducto" label="Comentarios tema dos" name="comentariostemados" onChange={handleChange} />
+
+      <TextField className={styles.inputMaterial} label="Tema Tres" name="tematres" onChange={handleChange} />
+      <textarea className="descripcionproducto" label="Comentarios tema tres" name="comentariostematres" onChange={handleChange} />
+
+      <TextField className={styles.inputMaterial} label="Tema Cuatro" name="temacuatro" onChange={handleChange} />
+      <textarea className="descripcionproducto" label="Comentarios tema cuatro" name="comentariostemacuatro" onChange={handleChange} />
+{/*
+      <TextField className={styles.inputMaterial} label="Tema Cinco" name="temacinco" onChange={handleChange} />
+      <textarea className="descripcionproducto" label="Comentarios tema cinco" name="comentariostemacinco" onChange={handleChange} />
+            */}
       <div align="right">
-        <Button className={styles.button} color="primary" onClick={() => grabarRegistroLlamada()} >Insertar</Button>
+        <Button className={styles.button} color="primary" onClick={() => grabarRegistroLlamada()} >Guardar</Button>
         <Button className={styles.button2} onClick={() => abrirCerrarModalInsertar()} >Cancelar</Button>
       </div>
     </div>
@@ -694,123 +701,126 @@ function RegistroLlamadas() {
   )
 
   //value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.empresa_estcli}
+  //value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.cliente_rll}
   const llamadaeditar = (
-    <div className={styles.modal}>
+    <div className={styles.modal2}>
       <Typography align="center" className={styles.typography} variant="button" display="block">Actualizar Registro de Llamada</Typography>
-      <FormControl className={styles.formControl}>
-        <InputLabel id="idselectEmpresa"> Cliente </InputLabel>
-        <Select
-          labelId="selectCliente"
-          name="cliente_rll"
-          id="idselectcliente_rll"
-          onChange={handleChange}
-          value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.cliente_rll}
-          defaultValue={cliente[0] && cliente[0].id_cli}
-        >
-          <MenuItem value="">  <em>None</em> </MenuItem>
-          {
-            listarClientes.map((itemselect) => {
-              return (
-                <MenuItem value={itemselect.id_cli}>{itemselect.razonsocial_cli}</MenuItem>
-              )
-            })
-          }
-        </Select>
-      </FormControl>
-      <FormControl className={styles.formControl}>
-        <InputLabel id="idselectEmpresa"> Motivo Llamada </InputLabel>
-        <Select
-          labelId="selectmotivollamada_rll"
-          name="motivollamada_rll"
-          id="idselectmotivollamada_rll"
-          onChange={handleChange}
-          value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.motivollamada_rll}
-        >
-          <MenuItem value="">  <em>None</em> </MenuItem>
-          {
-            motivosLlamadas && motivosLlamadas.map((itemselect) => {
-              return (
-                <MenuItem value={itemselect.id_est}>{itemselect.nombre_est}</MenuItem>
-              )
-            })
-          }
-        </Select>
-      </FormControl>
-      <br />
-      <FormControl className={styles.formControl}>
-        <InputLabel id="idselectEstado"> Estado Llamada </InputLabel>
-        <Select
-          labelId="selectestado_rll"
-          name="estado_rll"
-          id="idselectestado_rll"
-          onChange={handleChange}
-          value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.estado_rll}
-        >
-          <MenuItem value="">  <em>None</em> </MenuItem>
-          {
-            estadosLlamadas && estadosLlamadas.map((itemselect) => {
-              return (
-                <MenuItem value={itemselect.id_est}>{itemselect.nombre_est}</MenuItem>
-              )
-            })
-          }
-        </Select>
-      </FormControl>
-      <br />
-      <TextField type="date" InputLabelProps={{ shrink: true }} name="fecha_rll"
-        defaultValue={Moment(registroLlamadasSeleccionado.fecha_rll).format('YYYY-MM-DD')} label="Fecha Llamada"
-        fullWidth onChange={handleChange} value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.fecha_rll} />
-      <FormControl className={styles.formControl}>
-        <InputLabel id="contacto_rll">Contacto</InputLabel>
-        <Select
-          labelId="selectcontacto_rll"
-          name="contacto_rll"
-          id="idselectcontacto_rll"
-          fullWidth
-          onChange={handleChange}
-          value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.contacto_rll}
-        //disabled="true"
-        >
-          <MenuItem value=""> <em>None</em> </MenuItem>
-          {
-            listContactos && listContactos.map((itemselect) => {
-              return (
-                <MenuItem value={itemselect.id_con}>{itemselect.primer_nombre_con}{" "}
-                  {itemselect.primer_apellido_con}</MenuItem>
-              )
-            })
-          }
-        </Select>
-      </FormControl>
-      <FormControl className={styles.formControl}>
-        <InputLabel id="contacto_rll">Equipos</InputLabel>
-        <Select
-          labelId="selectequipo_rll"
-          name="equipo_rll"
-          id="idselectequipo_rll"
-          fullWidth
-          onChange={handleChange}
+      <Grid container spacing={2} >
+        <Grid item xs={6} md={6} xl={6} lg={6}>
+          <FormControl className={styles.formControl}>
+            <InputLabel id="idselectEmpresa"> Cliente </InputLabel>
+            <Select
+              labelId="selectCliente"
+              name="cliente_rll"
+              id="idselectcliente_rll"
+              onChange={handleChange}
+              value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.cliente_rll}
+            >
+              <MenuItem value="">  <em>None</em> </MenuItem>
+              {
+                listarClientes.map((itemselect) => {
+                  return (
+                    <MenuItem value={itemselect.id_cli}>{itemselect.razonsocial_cli}</MenuItem>
+                  )
+                })
+              }
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={6} md={6} xl={6} lg={6}>
+          <TextField className={styles.inputMaterial} label="Datos clientes" name="nombrecliente" onChange={handleChange} 
+           value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.nombrecliente}
+          />
+        </Grid>
+      </Grid>
+      <TextField className={styles.inputMaterial} label="Datos Contacto" name="contacto_rll" onChange={handleChange} 
+        value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.contacto_rll}
+      />
+      <TextField className={styles.inputMaterial} label="Asistentes" name="asistentes" onChange={handleChange} 
+        value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.asistentes}
+      />
+      <Grid container spacing={2} >
+        <Grid item xs={6} md={6} xl={6} lg={6}>
+          <TextField className={styles.inputMaterial} label="Motivo visita o servicio" name="motivollamada_rll" 
+          onChange={handleChange}  value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.motivollamada_rll}
+        />
+        </Grid>
+        <Grid item xs={6} md={6} xl={6} lg={6}>
+          <FormControl className={styles.formControl}>
+            <InputLabel id="idselectEstado"> Estado Llamada </InputLabel>
+            <Select
+              labelId="selectestado_rll"
+              name="estado_rll"
+              id="idselectestado_rll"
+              onChange={handleChange}
+              value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.estado_rll}
+            >
+              <MenuItem value="">  <em>None</em> </MenuItem>
+              {
+                estadosLlamadas && estadosLlamadas.map((itemselect) => {
+                  return (
+                    <MenuItem value={itemselect.id_est}>{itemselect.nombre_est}</MenuItem>
+                  )
+                })
+              }
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={2} >
+        <Grid item xs={6} md={6} xl={6} lg={6}>
+          <TextField type="date" InputLabelProps={{ shrink: true }} name="fecha_rll"
+            value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.fecha_rll}
+            fullWidth onChange={handleChange} />
+
+        </Grid>
+        <Grid item xs={6} md={6} xl={6} lg={6}>
+          <TextField className={styles.inputMaterial} label="Equipos" name="equipo_rll" onChange={handleChange} 
           value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.equipo_rll}
-        //disabled="true"
-        //defaultValue={0}
-        >
-          <MenuItem value=""> <em>None</em> </MenuItem>
-          {
-            listarEquipos && listarEquipos.map((itemselect) => {
-              return (
-                <MenuItem value={itemselect.id_equ}>{itemselect.referencia_dequ}{" "}
-                  {itemselect.modelo_dequ}{" "}{itemselect.direccion_dequ}
-                </MenuItem>
-              )
-            })
-          }
-        </Select>
-      </FormControl>
-      <TextField className={styles.inputMaterial} label="Observaciones" name="observaciones_rll" onChange={handleChange}
-        value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.observaciones_rll} />
-      <br /><br />
+          />
+        </Grid>
+      </Grid>
+     
+      <Typography align="center" className={styles.typography} variant="button" display="block">
+        TEMAS TRATADOS Y DESARROLLO DE LA REUNION
+      </Typography>
+      <TextField className={styles.inputMaterial} label="Tema Uno" name="temauno" onChange={handleChange} 
+      value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.temauno}
+      />
+      <textarea className="descripcionproducto"  label="Comentarios tema uno" name="comentariostemauno" onChange={handleChange}
+      value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.comentariostemauno}
+      />
+
+      <TextField className={styles.inputMaterial} label="Tema Dos" name="temados" onChange={handleChange} 
+      value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.temados}
+      />
+      <textarea className="descripcionproducto" label="Comentarios tema dos" name="comentariostemados" onChange={handleChange} 
+       value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.comentariostemados}
+      />
+
+      <TextField className={styles.inputMaterial} label="Tema Tres" name="tematres" onChange={handleChange} 
+      value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.tematres}
+      />
+      <textarea className="descripcionproducto" label="Comentarios tema tres" name="comentariostematres" onChange={handleChange} 
+       value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.comentariostematres}
+      />
+
+      <TextField className={styles.inputMaterial} label="Tema Cuatro" name="temacuatro" onChange={handleChange} 
+      value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.temacuatro}
+      />
+      <textarea className="descripcionproducto" label="Comentarios tema cuatro" name="comentariostemacuatro" onChange={handleChange}
+       value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.comentariostemacuatro}
+      />
+{/*
+      <TextField className={styles.inputMaterial} label="Tema Cinco" name="temacinco" onChange={handleChange} 
+      value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.temacinco}/>
+      <textarea className="descripcionproducto" label="Comentarios tema cinco" name="comentariostemacinco" onChange={handleChange} 
+       value={registroLlamadasSeleccionado && registroLlamadasSeleccionado.comentariostemacinco}
+      />
+            */}
       <div align="right">
-        <Button className={styles.button} color="primary" onClick={() => actualizarRegistroLlamada()} >Editar</Button>
+        <Button className={styles.button} color="primary" onClick={() => actualizarRegistroLlamada()} >Guardar</Button>
         <Button className={styles.button2} onClick={() => abrirCerrarModalEditar()}>Cancelar</Button>
       </div>
     </div>
@@ -831,7 +841,7 @@ function RegistroLlamadas() {
 
   const codigoCliente = (
     <div className="App" >
-      <div className={styles.modal2}>
+      <div className={styles.modal}>
         <Typography align="center" className={styles.typography} variant="button" display="block" >
           Seleccionar Codigo Cliente
         </Typography>
@@ -880,7 +890,7 @@ function RegistroLlamadas() {
     <div className="App">
       <br />
       <Grid container spacing={2} >
-      <Grid item xs={12} md={2}></Grid>
+        <Grid item xs={12} md={2}></Grid>
         <Grid item xs={12} md={2}>
           <Button className={styles.button3}
             variant="contained" startIcon={<ForwardIcon />} color="primary" onClick={() => GestionarEquipos()}

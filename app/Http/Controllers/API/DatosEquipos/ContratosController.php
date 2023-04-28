@@ -257,7 +257,7 @@ class ContratosController extends Controller
                                  INNER JOIN datosadicionalequipos as t6
             WHERE t0.ciudad_ctr  = t1.id_ciu and t0.estado_ctr          = t2.id_est and t0.id_ctr = t3.id_equ and
                   t0.cliente_ctr = t4.id_cli and t0.asesorcomercial_ctr = t5.id_emp and t0.id_ctr = t6.id_dequ and
-                    and t0.id_ctr = $id_ctr");
+                  t0.id_ctr = $id_ctr");
           
           if ($data) {
               $response['data'] = $data;

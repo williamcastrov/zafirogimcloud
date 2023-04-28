@@ -86,7 +86,7 @@ function ListarMT() {
             setLoading(true);
             const res = await equiposServices.listEquipos();
             setListarEquipos(res.data);
-            //console.log("EQUIPOS DEL SISTEMA : ", res.data);
+            console.log("EQUIPOS DEL SISTEMA : ", res.data);
             setLoading(false);
         }
         fetchDataEquipos();
@@ -126,6 +126,7 @@ function ListarMT() {
                         <th>MARCACIÓN</th>
                         <th>MODELO</th>
                         <th>SERIE</th>
+                        <th>TIPO</th>
                         <th>AÑO DE FABRICACIÓN</th>
                         <th>ESTADO CALIDAD</th>
                         <th>DATO AUXILIAR CALIDAD</th>
@@ -158,6 +159,7 @@ function ListarMT() {
                                     <th>{seguros.manejamarcacion_equ}</th>
                                     <th>{seguros.modelo_dequ}</th>
                                     <th>{seguros.serie_dequ}</th>
+                                    <th>{seguros.descripcion_sgre}</th>
                                     <th>{seguros.annofabricacion_dequ}</th>
                                     <td>{seguros.blanco}</td>
                                     <td>{seguros.nombre_estcal}</td>

@@ -204,6 +204,11 @@ function OTCorrectivas(props) {
       cellStyle: { minWidth: 50 }
     },
     {
+      field: 'diasoperacion_otr',
+      title: '# OT Fisica',
+      cellStyle: { minWidth: 50 }
+    },
+    {
       field: 'id_actividad',
       title: 'id Actividad',
       cellStyle: { minWidth: 50 }

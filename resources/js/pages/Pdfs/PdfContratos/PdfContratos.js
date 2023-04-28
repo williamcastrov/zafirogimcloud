@@ -75,7 +75,7 @@ function PdfContratos(props) {
         formdata.append('fechacontrato', fechaContratos)
         console.log("FORM DATA : ", formdata)
 
-        fetch('https://simagenes.gimcloud.co/api/pdfscontratos/post', {
+        fetch('https://simagenes.gimcloud.com/api/pdfscontratos/post', {
             method: 'POST',
             body: formdata
         })

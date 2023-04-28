@@ -57,6 +57,8 @@ Route::get('/almacenes/tiposalmacenes', 'App\Http\Controllers\GimController@inde
 Route::get('/almacenes/crearalmacenes', 'App\Http\Controllers\GimController@index');
 Route::get('/almacenes/lineasproductos', 'App\Http\Controllers\GimController@index');
 Route::get('/almacenes/inventarios', 'App\Http\Controllers\GimController@index');
+Route::get('/almacenes/movimientos', 'App\Http\Controllers\GimController@index');
+Route::get('/almacenes/listarmovimientos', 'App\Http\Controllers\GimController@index');
 
 // Rutas del Modulo de Mantenimiento
 Route::get('/mantenimiento/marcas', 'App\Http\Controllers\GimController@index');
@@ -150,6 +152,9 @@ Route::get('/flotarenta/activosrenta', 'App\Http\Controllers\GimController@index
 Route::get('/flotarenta/informeseguros', 'App\Http\Controllers\GimController@index');
 Route::get('/flotarenta/informeequipos', 'App\Http\Controllers\GimController@index');
 Route::get('/flotarenta/informeot', 'App\Http\Controllers\GimController@index');
+Route::get('/flotarenta/ReporteCostosOT', 'App\Http\Controllers\GimController@index');
+Route::get('/flotarenta/CostosOTProveedor', 'App\Http\Controllers\GimController@index');
+Route::get('/flotarenta/CostosOTManoObra', 'App\Http\Controllers\GimController@index');
 Route::get('/flotarenta/informependientes', 'App\Http\Controllers\GimController@index');
 Route::get('/flotarenta/controlalzas', 'App\Http\Controllers\GimController@index');
 Route::get('/flotarenta/controlfacturacion', 'App\Http\Controllers\GimController@index');
@@ -169,6 +174,7 @@ Route::get('/costos/tipocostovariable', 'App\Http\Controllers\GimController@inde
 Route::get('/costos/costorealperiodo', 'App\Http\Controllers\GimController@index');
 Route::get('/costos/costorealequipoacumulado', 'App\Http\Controllers\GimController@index');
 Route::get('/costos/consumosrepuestos', 'App\Http\Controllers\GimController@index');
+Route::get('/costos/costosot', 'App\Http\Controllers\GimController@index');
 Route::get('/costos/contrataciones', 'App\Http\Controllers\GimController@index');
 Route::get('/costos/facturacion', 'App\Http\Controllers\GimController@index');
 
@@ -187,5 +193,6 @@ Route::get('/error/error404', 'App\Http\Controllers\GimController@index');
 // Ventas de Servicios
 Route::get('/ventasservicios/registrollamadas', 'App\Http\Controllers\GimController@index');
 Route::get('/flotarenta/registrollamadas', 'App\Http\Controllers\GimController@index');
+Route::get('/ventas/seguimientocomercial', 'App\Http\Controllers\GimController@index');
 
 

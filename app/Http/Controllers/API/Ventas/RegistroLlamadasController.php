@@ -14,13 +14,24 @@ class RegistroLlamadasController extends Controller
 
     public function create(Request $request){
         try {
-            $insert['cliente_rll']         = $request['cliente_rll'];
-            $insert['motivollamada_rll']   = $request['motivollamada_rll'];
-            $insert['contacto_rll']        = $request['contacto_rll'];
-            $insert['fecha_rll']           = $request['fecha_rll'];
-            $insert['equipo_rll']          = $request['equipo_rll'];
-            $insert['observaciones_rll']   = $request['observaciones_rll'];
-            $insert['estado_rll']   = $request['estado_rll'];
+            $insert['cliente_rll']           = $request['cliente_rll'];
+            $insert['nombrecliente']         = $request['nombrecliente'];
+            $insert['motivollamada_rll']     = $request['motivollamada_rll'];
+            $insert['contacto_rll']          = $request['contacto_rll'];
+            $insert['asistentes']          = $request['asistentes'];
+            $insert['fecha_rll']             = $request['fecha_rll'];
+            $insert['equipo_rll']            = $request['equipo_rll'];
+            $insert['estado_rll']            = $request['estado_rll'];
+            $insert['temauno']               = $request['temauno'];
+            $insert['comentariostemauno']    = $request['comentariostemauno'];
+            $insert['temados']               = $request['temados'];
+            $insert['comentariostemados']    = $request['comentariostemados'];
+            $insert['tematres']              = $request['tematres'];
+            $insert['comentariostematres']   = $request['comentariostematres'];
+            $insert['temacuatro']            = $request['temacuatro'];
+            $insert['comentariostemacuatro'] = $request['comentariostemacuatro'];
+            $insert['temacinco']             = $request['temacinco'];
+            $insert['comentariostemacinco']  = $request['comentariostemacinco'];
 
             RegistroLlamadas::insert($insert);
     
@@ -61,62 +72,85 @@ class RegistroLlamadasController extends Controller
             $html = '
             <br/>
             <table border="0" cellspacing="3" cellpadding="1" style="font-size: 11px !important;" >
+            <p  style = "text-align: center !important; font-size: 12px !important; " >
+              MONTACARGAS EL ZAFIRO S.A.S. REUNIÓN DE SEGUIMIENTO A CLIENTES.
+            </p>
             <tr >
               <th align="left"  >
                 Itagui : '.$data[0]->fecha_rll.'
               </th>
             </tr>
             <tr>
+            <th align="left" >
+              Ciudad  : 
+            </th>
+            </tr>
+            <tr>
               <th align="left" >
                 Cliente: '.$data[0]->razonsocial_cli.'
               </th>
             </tr>
-           
             <tr>
               <th align="left" >
-                Atn : 
+                Asistentes : '.$data[0]->asistentes.' 
               </th>
             </tr>
             <tr>
-              <th align="left" >
-                Ciudad  : 
-              </th>
-            </tr>
-           
-    
-          <p  style = "text-align: justify !important; font-size: 11px !important; " >
-       
-            Seguimiento a los servicios y equipos entregados en renta al cliente.
-     
+            <th align="left" >
+              Ausentes : 
+            </th>
+          </tr>
+          <p  style = "text-align: center !important; font-size: 12px !important; " >
+          TEMAS TRATADOS Y DESARROLLO DE LA REUNION 
           </p>
-            </table>';
+          </table>';
             PDF::writeHTML($html, true, false, true, false, '');
     
             $html1 = '
             <table border="0" cellspacing="1" cellpadding="1" style="font-family: Arial, Helvetica, sans-serif !important; font-size: 10px !important;">
-             <br />
             <tr style="text-align: center !important; background-color: #F5F5F5"  >
-              <td>ID INTERNO</td>
-              <td>Referencia:</td>
-              <td>Descripción:</td>
-            </tr>';
-            
-    
-            $html1 .='
-            </table>
-            ';
-    
-            PDF::writeHTML($html1, true, false, true, false, '');
-    
-            $html1 = '
+            <th align="left" >
+              Tema Uno : '.$data[0]->temauno.' - '.$data[0]->comentariostemauno.'
+            </th>
+            </tr>
+            <br/>
+            <br/>
             <table border="0" cellspacing="1" cellpadding="1" style="font-family: Arial, Helvetica, sans-serif !important; font-size: 10px !important;">
-             <br />
+            <br />
+            <br />
+            <br/>
             <tr style="text-align: center !important; background-color: #F5F5F5"  >
-              <td>Marca: </td>
-              <td>Modelo: </td>
-              <td>Serie: </td>
-            </tr>';
-            
+              <th align="left" >
+                Tema Dos : '.$data[0]->temados.' - '.$data[0]->comentariostemados.'
+              </th>
+            </tr>
+            <br />
+            <br/>
+            <br />
+            <br/>
+            <tr style="text-align: center !important; background-color: #F5F5F5"  >
+              <th align="left" >
+                Tema Tres : '.$data[0]->tematres.' - '.$data[0]->comentariostematres.'
+              </th>
+            </tr>
+            <br />
+            <br />
+            <br/>
+            <tr style="text-align: center !important; background-color: #F5F5F5"  >
+              <th align="left" >
+                Tema Cuatro : '.$data[0]->temacuatro.' - '.$data[0]->comentariostemacuatro.'
+              </th>
+            </tr>
+            <br />
+            <br/>
+            <br />
+            <tr style="text-align: center !important; background-color: #F5F5F5"  >
+              <th align="left" >
+                Tema Cinco : '.$data[0]->temacinco.' - '.$data[0]->comentariostemacinco.'
+              </th>
+            </tr>
+            ';
+
             $html1 .= 
             '<tr>
               <td style = "text-align: center !important; font-size: 10px !important" > </td>
@@ -127,21 +161,8 @@ class RegistroLlamadasController extends Controller
             $html1 .='
             </table>
             ';
-    
-            PDF::writeHTML($html1, true, false, true, false, '');
-    
-          
+  
           PDF::writeHTML($html1, true, false, true, false, '');
-    
-          $html1 = '
-           <br />
-            <p  style = "text-align: justify !important; font-size: 11px !important; " >
-            AQUI MOSTRAREMOS LOS COMENTARIOS DE LA VISITA.
-            </p>
-           <br />
-         ';
-          PDF::writeHTML($html1, true, false, true, false, '');
-    
           $html1 = '
           <br />
            <p  style = "text-align: left !important; font-size: 11px !important; " >
@@ -156,10 +177,7 @@ class RegistroLlamadasController extends Controller
           <br />
         ';
          PDF::writeHTML($html1, true, false, true, false, '');
-    
-    
-    
-          PDF::Output('Carta de Alza'.$id.'.pdf');
+         PDF::Output('Visita comercial y Técnica'.$id.'.pdf');
     
           } catch (\Exception $e) {
             $response['message'] = $e->getMessage();
@@ -189,9 +207,8 @@ class RegistroLlamadasController extends Controller
           }
   
         public function listar_registrollamadas(){
-  
           try {
-
+            /*
             $data = DB::select("SELECT t0.*, t1.*, t2.nombre_ciu, t4.direccion_dequ, t4.referencia_dequ, 
                                 t4.modelo_dequ, t5.nombre_est,
                                 concat(t3.primer_nombre_con,' ',t3.primer_apellido_con) as nombrecontacto
@@ -200,7 +217,10 @@ class RegistroLlamadasController extends Controller
                                         INNER JOIN estados as t5
             WHERE t0.cliente_rll = t1.id_cli and t1.ciudad_cli = t2.id_ciu and t3.id_con = t0.contacto_rll
               and t0.equipo_rll = t4.id_dequ and t0.motivollamada_rll = t5.id_est");
-  
+              */
+              $data = DB::select("SELECT t0.*
+                      FROM seguimientoclientes t0");
+
             $response['data'] = $data;
             $response['message'] = "load successful";
             $response['success'] = true;
@@ -268,14 +288,24 @@ class RegistroLlamadasController extends Controller
   
         public function update(Request $request, $id_rll){
           try {
-            $data['cliente_rll']       = $request['cliente_rll'];
-            $data['motivollamada_rll'] = $request['motivollamada_rll'];
-            $data['contacto_rll']      = $request['contacto_rll'];
-            $data['fecha_rll']         = $request['fecha_rll'];
-            $data['equipo_rll']        = $request['equipo_rll'];
-            $data['observaciones_rll'] = $request['observaciones_rll'];
-            $data['estado_rll']   = $request['estado_rll'];
-            //Console::info('mymessage');
+            $data['cliente_rll']           = $request['cliente_rll'];
+            $data['nombrecliente']         = $request['nombrecliente'];
+            $data['motivollamada_rll']     = $request['motivollamada_rll'];
+            $data['contacto_rll']          = $request['contacto_rll'];
+            $data['asistentes']            = $request['asistentes'];
+            $data['fecha_rll']             = $request['fecha_rll'];
+            $data['equipo_rll']            = $request['equipo_rll'];
+            $data['estado_rll']            = $request['estado_rll'];
+            $data['temauno']               = $request['temauno'];
+            $data['comentariostemauno']    = $request['comentariostemauno'];
+            $data['temados']               = $request['temados'];
+            $data['comentariostemados']    = $request['comentariostemados'];
+            $data['tematres']              = $request['tematres'];
+            $data['comentariostematres']   = $request['comentariostematres'];
+            $data['temacuatro']            = $request['temacuatro'];
+            $data['comentariostemacuatro'] = $request['comentariostemacuatro'];
+            $data['temacinco']             = $request['temacinco'];
+            $data['comentariostemacinco']  = $request['comentariostemacinco'];
   
             $res = RegistroLlamadas::where("id_rll",$id_rll)->update($data);
   
@@ -296,14 +326,11 @@ class RegistroLlamadasController extends Controller
             $response['res'] = $res;
   
             $response['message'] = "Deleted successful";
-            $response['success'] = true; 
-            
+            $response['success'] = true;  
           } catch (\Exception $e) {
             $response['message'] = $e->getMessage();
             $response['success'] = false;
           }
-    
           return $response;
         }
-
 }

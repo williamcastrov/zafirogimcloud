@@ -409,7 +409,7 @@ function Inventarios() {
       field: 'referencia_inv'
     },
     {
-      title: 'Tipo Producto',
+      title: 'Tipo',
       field: 'descripcion_tprd',
       cellStyle : { minWidth: 100}
     },

@@ -83,6 +83,15 @@ estados.listEstadosEquiposOperacion = async () => {
     return res;
 }
 
+estados.listar_estadoscompras = async () => {
+    const urlList = baseUrl+"/listar_estadoscompras"
+    const res = await axios.get(urlList)
+    .then(response=>{ return response.data; })
+    .catch(error=>{ return error; })
+   
+    return res;
+}
+
 estados.listEstadosLlamadas = async () => {
     const urlList = baseUrl+"/listar_estadosllamadas"
     const res = await axios.get(urlList)

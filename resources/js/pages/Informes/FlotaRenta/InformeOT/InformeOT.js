@@ -82,7 +82,7 @@ function InformeOT() {
         async function fetchDataOT() {
             const res = await ordenesServices.listOrdenesServCumplimiento();
             setListarOT(res.data);
-            //console.log("EQUIPOS DEL SISTEMA : ", res.data);
+            console.log("EQUIPOS DEL SISTEMA : ", res.data);
         }
         fetchDataOT();
     }, [])
@@ -104,6 +104,7 @@ function InformeOT() {
                     <tr>	
                         <th># OT</th>
                         <th>MT</th>
+                        <th>#OT FISICA</th>
                         <th>ID ACTIVIDAD</th>
                         <th>CLIENTE ID</th>
                         <th>CIUDAD</th>
@@ -132,6 +133,7 @@ function InformeOT() {
                                 <tr>
                                     <td>{ordenes.id_otr}</td>
                                     <td>{ordenes.codigo_equ}</td>
+                                    <td>{ordenes.diasoperacion_otr}</td>
                                     <td>{ordenes.id_actividad}</td>
                                     <td>{ordenes.razonsocial_cli}</td>
                                     <td>{ordenes.nombre_ciu}</td>                    

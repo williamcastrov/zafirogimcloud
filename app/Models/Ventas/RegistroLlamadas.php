@@ -14,12 +14,23 @@ class RegistroLlamadas extends Model
 
     protected $fillable = [
         'cliente_rll',
+        'nombrecliente',
         'motivollamada_rll',
         'contacto_rll',
         'equipo_rll',
         'fecha_rll',
-        'observaciones_rll',
-        'estado_rll'
+        'estado_rll',
+        'temauno',
+        'comentariostemauno',
+        'temados',
+        'comentariostemados',
+        'tematres',
+        'comentariostematres',
+        'temacuatro',
+        'comentariostemacuatro',
+        'temacinco',
+        'comentariostemacinco',
+        'asistentes'
       ];
 
     public $timestamps = false;

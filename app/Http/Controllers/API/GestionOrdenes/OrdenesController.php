@@ -121,7 +121,7 @@ INNER JOIN equipos        as t10 INNER JOIN clasificacionABC   as t11
 INNER JOIN tiposmantenimiento as t12 INNER JOIN marcas         as t13 INNER JOIN tiposservicio      as t15
 INNER JOIN tipooperacion  as t16
 left join datosadicionalequipos on (datosadicionalequipos.id_dequ = ordenservicio.equipo_otr)
-left join contactos on (contactos.nitinterlocutor_con = ordenservicio.nitcliente_otr)
+left join contactos on (contactos.idinterlocutor_con = ordenservicio.contactocliente_otr)
 WHERE ordenservicio.id_otr             = $orden    and 
 ordenservicio.empresa_otr        = t1.id_emp  and ordenservicio.estado_otr       = t2.id_est   and
 t5.ciudad_cli                    = t3.id_ciu  and ordenservicio.proveedor_otr    = t4.id_int   and
@@ -238,7 +238,7 @@ ORDER BY id_otr DESC");
             <th align="left"  width="271px"  >
               MODELO: '  .$data2[0]->modelo_dequ.'</th>
             <th align="left"  width="200px" >
-              SERIE:  '.$data2[0]->serie_dequ.' 
+              #OT FISICA:  '.$data2[0]->diasoperacion_otr.'
             </th>
           </tr>
           <tr>
@@ -287,11 +287,11 @@ ORDER BY id_otr DESC");
             <td>TIEMPO TRANSPORTE</td>
             <td>TIEMPO ACTIVIDAD</td>
           </tr>';
-
+//<td style = "text-align: center !important; font-size: 10px !important" >'.$data1[0]->iniciatransporte_cosv.'</td>
+//<td style = "text-align: center !important; font-size: 10px !important" >'.$data1[0]->fechainicia_cosv.'</td>
+            
           $html .= 
           '<tr>
-            <td style = "text-align: center !important; font-size: 10px !important" >'.$data1[0]->iniciatransporte_cosv.'</td>
-            <td style = "text-align: center !important; font-size: 10px !important" >'.$data1[0]->fechainicia_cosv.'</td>
             <td style = "text-align: center !important; font-size: 10px !important" >'.$data1[0]->tiempotransporte_cosv.'</td>
             <td style = "text-align: center !important; font-size: 10px !important" >'.$data1[0]->tiempoactividad_cosv.'</td>
           </tr>';
@@ -364,12 +364,12 @@ ORDER BY id_otr DESC");
            FIRMA CLIENTE : 
          </th>
          <th align="left">
-          FIRMA TECNICO : 
+          
          </th>
        </tr>
        </table>
        ';
-       
+       //FIRMA TECNICO : 
        if(isset($data3[0])){
           $b64 = explode(";base64,",$data3[0]->imagen_fir);
           $ext = explode("/",$b64[0]);
@@ -846,7 +846,7 @@ ORDER BY id_otr DESC");
           return $response;
       }
 
-      public function listar_ordenesservcumplimiento(){  
+      public function listar_ordenesservcumplimiento(){
         try {
           //Muestra Unicamente los tipos de Interlocutores PROVEEDORES = 1
           $data = DB::select("SELECT ordenservicio.*,    t1.nombre_emp,       t2.nombre_est,       t3.nombre_ciu, t4.razonsocial_int,

@@ -81,6 +81,7 @@ Route::delete('/estados/delete/{id}', 'App\Http\Controllers\API\Parameters\Estad
 Route::put('/estados/update/{id}', 'App\Http\Controllers\API\Parameters\EstadosController@update');
 Route::get('/estados/listar_estadosllamadas', 'App\Http\Controllers\API\Parameters\EstadosController@listar_estadosllamadas');
 Route::get('/estados/listar_estadosregistrollamadas', 'App\Http\Controllers\API\Parameters\EstadosController@listar_estadosregistrollamadas');
+Route::get('/estados/listar_estadoscompras', 'App\Http\Controllers\API\Parameters\EstadosController@listar_estadoscompras');
 
 Route::get('/monedas/listar_monedas', 'App\Http\Controllers\API\Parameters\MonedasController@listar_monedas');
 Route::post('/monedas/create', 'App\Http\Controllers\API\Parameters\MonedasController@create');
@@ -153,6 +154,7 @@ Route::get('/dashboard/listar_dashboard', 'App\Http\Controllers\API\DashboardCon
 // Rutas Gestión Almacenes
 Route::get('/tiposalmacenes/listar_tiposalmacenes', 'App\Http\Controllers\API\Almacenes\TipoAlmacenController@listar_tiposalmacenes');
 Route::post('/tiposalmacenes/create', 'App\Http\Controllers\API\Almacenes\TipoAlmacenController@create');
+
 Route::get('/tiposalmacenes/get/{id}', 'App\Http\Controllers\API\Almacenes\TipoAlmacenController@get');
 Route::delete('/tiposalmacenes/delete/{id}', 'App\Http\Controllers\API\Almacenes\TipoAlmacenController@delete');
 Route::put('/tiposalmacenes/update/{id}', 'App\Http\Controllers\API\Almacenes\TipoAlmacenController@update');
@@ -165,6 +167,7 @@ Route::put('/tiposproductos/update/{id}', 'App\Http\Controllers\API\Almacenes\Ti
 
 Route::get('/almacenes/listar_almacenes', 'App\Http\Controllers\API\Almacenes\AlmacenesController@listar_almacenes');
 Route::post('/almacenes/create', 'App\Http\Controllers\API\Almacenes\AlmacenesController@create');
+Route::post('/almacenes/createMvto', 'App\Http\Controllers\API\Almacenes\AlmacenesController@createMvto');
 Route::get('/almacenes/get/{id}', 'App\Http\Controllers\API\Almacenes\AlmacenesController@get');
 Route::delete('/almacenes/delete/{id}', 'App\Http\Controllers\API\Almacenes\AlmacenesController@delete');
 Route::put('/almacenes/update/{id}', 'App\Http\Controllers\API\Almacenes\AlmacenesController@update');
@@ -189,14 +192,14 @@ Route::get('/contrataciones/consolidadocontrames/{id}', 'App\Http\Controllers\AP
 Route::get('/contrataciones/get/{id}', 'App\Http\Controllers\API\Importar\ContratacionesController@get');
 Route::get('/contrataciones/listar_contratacionesperiodo/{id}', 'App\Http\Controllers\API\Importar\ContratacionesController@listar_contratacionesperiodo');
 
-Route::post('/consumos/importarconsumosrepuestos', 'App\Http\Controllers\API\Importar\ConsumosRepuestosController@importarconsumosrepuestos');
+Route::post('/consumos/create', 'App\Http\Controllers\API\Importar\ConsumosRepuestosController@create');
 Route::get('/consumos/listar_consumosrepuestos', 'App\Http\Controllers\API\Importar\ConsumosRepuestosController@listar_consumosrepuestos');
 Route::get('/consumos/listar_consolidaconsrep', 'App\Http\Controllers\API\Importar\ConsumosRepuestosController@listar_consolidaconsrep');
-Route::get('/consumos/paretoconsolidadoconsumosrep/{id}', 'App\Http\Controllers\API\Importar\ConsumosRepuestosController@paretoconsolidadoconsumosrep');
-Route::get('/consumos/consolidadoconsumosrepmes/{id}', 'App\Http\Controllers\API\Importar\ConsumosRepuestosController@consolidadoconsumosrepmes');
 Route::get('/consumos/listar_consumosmesequipo/{id}', 'App\Http\Controllers\API\Importar\ConsumosRepuestosController@listar_consumosmesequipo');
 Route::get('/consumos/get/{id}', 'App\Http\Controllers\API\Importar\ConsumosRepuestosController@get');
 Route::get('/consumos/listar_consumosrepuestosperiodo/{id}', 'App\Http\Controllers\API\Importar\ConsumosRepuestosController@listar_consumosrepuestosperiodo');
+Route::get('/consumos/update/{id}', 'App\Http\Controllers\API\Importar\ConsumosRepuestosController@update');
+Route::get('/consumos/delete/{id}', 'App\Http\Controllers\API\Importar\ConsumosRepuestosController@delete');
 
 Route::post('/facturacion/importarfacturacion', 'App\Http\Controllers\API\Importar\FacturacionController@importarfacturacion');
 Route::get('/facturacion/listar_facturacion', 'App\Http\Controllers\API\Importar\FacturacionController@listar_facturacion');
@@ -518,6 +521,7 @@ Route::delete('/cumplimiento/delete/{id}', 'App\Http\Controllers\API\GestionOrde
 Route::put('/cumplimiento/update/{id}', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@update');
 Route::put('/cumplimiento/cerraractividad/{id}', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@cerraractividad');
 Route::get('/cumplimiento/calificacionot/{id}', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@calificacionot');
+Route::get('/cumplimiento/listarcostosot', 'App\Http\Controllers\API\GestionOrdenes\CumplimientoOServController@listarcostosot');
 
 Route::get('/pendienteot/listar_pendienteOT/{id}', 'App\Http\Controllers\API\GestionOrdenes\PendienteOTController@listar_pendienteOT');
 Route::get('/pendienteot/listar_pendientes', 'App\Http\Controllers\API\GestionOrdenes\PendienteOTController@listar_pendientes');
@@ -646,7 +650,7 @@ Route::delete('/fotosbajashistoricos/delete/{id}', 'App\Http\Controllers\API\Man
 Route::put('/fotosbajashistoricos/update/{id}', 'App\Http\Controllers\API\Mantenimiento\FotosBajasHistoricosController@update');
 
 Route::get('/notificacionpendientes/listar_notificacionpendientes', 'App\Http\Controllers\API\Mantenimiento\NotificacionPendientesController@listar_notificacionpendientes');
-Route::get('/notificacionpendientes/listar_solicitonotificacionpendientes', 'App\Http\Controllers\API\Mantenimiento\NotificacionPendientesController@listar_solicitonotificacionpendientes');
+Route::get('/notificacionpendientes/listar_solicitonotificacionpendientes', 'App\Http\Controllers\API\Mantenimienuto\NotificacionPendientesController@listar_solicitonotificacionpendientes');
 Route::get('/notificacionpendientes/listar_ingresonotificacionpendientes', 'App\Http\Controllers\API\Mantenimiento\NotificacionPendientesController@listar_ingresonotificacionpendientes');
 Route::get('/notificacionpendientes/listar_notificacionpendiente/{id}', 'App\Http\Controllers\API\Mantenimiento\NotificacionPendientesController@listar_notificacionpendiente');
 Route::post('/notificacionpendientes/create', 'App\Http\Controllers\API\Mantenimiento\NotificacionPendientesController@create');

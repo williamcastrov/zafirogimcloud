@@ -86,6 +86,8 @@ import ComponentesxEquipo from './pages/DatosEquipos/ComponentesxEquipo';
 import TiposAlmacenes from './pages/Almacenes/TiposAlmacenes';
 import LineasProductos from './pages/Almacenes/LineasProductos';
 import Inventarios from './pages/Almacenes/Inventarios';
+import Movimientos from './pages/Almacenes/Movimientos';
+import ListarMovimientos from './pages/Almacenes/Informes/Movimientos';
 import CrearAlmacenes from './pages/Almacenes/CrearAlmacenes';
 
 // Componentes Modulo Lista de Chequeo de Equipos
@@ -126,6 +128,7 @@ import ImprimirIncrementoCanon from './pages/Mantenimiento/Listar/IncrementoCano
 import InventariosAlmacen from './pages/Importar/Inventarios/InventariosAlmacen';
 import Contrataciones from './pages/Importar/Contrataciones';
 import Repuestos from './pages/Importar/ConsumosRepuestos';
+import InformeCostosOT from './pages/Informes/FlotaRenta/InformeCostosOT';
 import ConceptosRentabilidad from './pages/Informes/Parameters/ConceptosRentabilidad';
 import ConceptosRentabilidadPeriodo from './pages/Informes/Parameters/ConceptosRentabilidadPeriodo';
 import InformePendientes from './pages/Informes/FlotaRenta/InformePendientes';
@@ -137,6 +140,9 @@ import ActivosRenta from "./pages/Informes/FlotaRenta/ActivosRenta/ActivosRenta"
 import InformeSeguros from "./pages/Informes/FlotaRenta/InformeSeguros";
 import InformeEquipos from "./pages/Informes/FlotaRenta/InformeEquipos";
 import InformeOT from "./pages/Informes/FlotaRenta/InformeOT";
+import ReporteCostosOT from "./pages/Informes/FlotaRenta/ReporteCostosOT";
+import CostosOTProveedor from "./pages/Informes/FlotaRenta/CostosOTProveedor";
+import CostosOTManoObra from "./pages/Informes/FlotaRenta/CostosOTManoObra";
 import InformeHojaVidaEquipos from "./pages/Informes/FlotaRenta/HojaVidaEquipo";
 import InformeUbicacionesEquipos from "./pages/Informes/FlotaRenta/UbicacionesEquipos";
 import InformeUbicacionesEquiposTotales from "./pages/Informes/FlotaRenta/UbicacionesEquiposTotal";
@@ -178,6 +184,7 @@ import CostosContrataciones from "./pages/Informes/FlotaRenta/InformeContratacio
 
 //Ventas de Servicios
 import RegistroLlamadas from "./pages/Ventas/RegistroLlamadas";
+import SeguimientoComercial from "./pages/Ventas/Informes/SeguimientoComercial";
 
 function Main(props) {
   const { metadata, componente, tipousuario, user, idUsu } = props;
@@ -235,7 +242,9 @@ function Main(props) {
                     <Route path="/almacenes/lineasproductos" component={LineasProductos} />
                     <Route path="/almacenes/crearalmacenes" component={CrearAlmacenes} />
                     <Route path="/almacenes/inventarios" component={Inventarios} />
-
+                    <Route path="/almacenes/movimientos" component={Movimientos} />
+                    <Route path="/almacenes/listarmovimientos" component={ListarMovimientos} />
+                    
                     <Route path="/mantenimiento/marcas" component={Marcas} />
                     <Route path="/mantenimiento/tiposllantas" component={TiposLlantas} />
                     <Route path="/mantenimiento/tiposequipos" component={TiposEquipos} />
@@ -249,6 +258,8 @@ function Main(props) {
                     <Route path="/mantenimiento/remisiones" component={Remisiones} />
                     <Route path="/mantenimiento/contrataciones" component={ContratacionesMtto} />
                     <Route path="/mantenimiento/repuestos" component={RepuestosMtto} />
+                   
+                   
                     <Route path="/mantenimiento/gruposequipos" component={Gruposequipos} />
                     <Route path="/mantenimiento/subgrupospartes" component={SubGrupospartes} />
                     <Route path="/mantenimiento/clasificacionABC" component={ClasificacionABC} />
@@ -332,12 +343,17 @@ function Main(props) {
                     <Route path="/costos/costorealequipoacumulado" component={CostosRealEquipoAcumulado} />
                     <Route path="/costos/consumosrepuestos" component={ConsumosRepuestos} />
                     <Route path="/costos/contrataciones" component={CostosContrataciones} />
-                    <Route path="/costos/facturacion" component={FacturacionMT} />
+                    <Route path="/costos/facturacion" component={FacturacionMT} />4
+                    <Route path="/costos/costosot" component={InformeCostosOT} />
 
                     <Route path="/flotarenta/activosrenta" component={ActivosRenta} />
                     <Route path="/flotarenta/informeseguros" component={InformeSeguros} />
                     <Route path="/flotarenta/informeequipos" component={InformeEquipos} />
                     <Route path="/flotarenta/informeot" component={InformeOT} />
+                    <Route path="/flotarenta/ReporteCostosOT" component={ReporteCostosOT} />
+                    <Route path="/flotarenta/CostosOTProveedor" component={CostosOTProveedor} />
+                    <Route path="/flotarenta/CostosOTManoObra" component={CostosOTManoObra} />
+
                     <Route path="/flotarenta/informependientes" component={InformePendientes} />
                     <Route path="/flotarenta/informehojavidaequipos" component={InformeHojaVidaEquipos} />
                     <Route path="/flotarenta/informeubicacionesequipos" component={InformeUbicacionesEquipos} />
@@ -366,6 +382,7 @@ function Main(props) {
                     <Route path="/ventasservicios/registrollamadas">
                       <RegistroLlamadas idUsu={idUsu} />
                     </Route>
+                    <Route path="/ventas/seguimientocomercial" component={SeguimientoComercial} />
 
                   </Switch>
                 </ThemeProvider>

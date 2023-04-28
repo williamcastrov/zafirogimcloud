@@ -197,6 +197,7 @@ function Contratos(props) {
   })
 
   useEffect(() => {
+    console.log("ID EQUIPO : ", equipoID)
     async function fetchDataContratos() {
       const res = await contratosServices.listUnContrato(equipoID);
       setListContratos(res.data);
